@@ -1,0 +1,56 @@
+.outerContainer {
+	--numOfElemPerRow: 20;
+	--size: calc(100vw / var(--numOfElemPerRow) - var(--margin) * 2);
+	--margin: calc(100vw / var(--numOfElemPerRow) * 0.01);
+	--f: calc(1.732 * var(--size) + 4 * var(--margin) - 1px);
+	--color-0: #800080;
+	--color-1: #b800b8;
+
+	display: flex;
+	justify-content: center;
+	overflow: hidden;
+	filter: brightness(0.75);
+	height: 100vh;
+}
+
+.innerContainer {
+	font-size: 0;
+	min-width: calc(100vw + var(--size) + var(--margin) * 2);
+	transform: translateY(calc((var(--size)*1.1547) * -0.25 - 2px))
+}
+
+.innerContainer .item {
+	width: var(--size);
+	margin: var(--margin);
+	height: calc(var(--size)*1.1547);
+	display: inline-block;
+	font-size: initial;
+	clip-path: polygon(0% 25%, 0% 75%, 50% 100%, 100% 75%, 100% 25%, 50% 0%);
+	background: var(--color-0);
+	margin-bottom: calc(var(--margin) - var(--size)*0.2885);
+}
+
+.innerContainer .item:nth-child(odd) {
+	background: var(--color-1);
+}
+
+.innerContainer::before {
+	content: "";
+	width: calc(var(--size)/2 + var(--margin));
+	float: left;
+	height: 120%;
+	shape-outside: repeating-linear-gradient(#0000 0 calc(var(--f) - 3px),
+			#000 0 var(--f));
+}
+
+@media (max-width: 1024px) {
+	.outerContainer {
+		--numOfElemPerRow: 10;
+	}
+}
+
+@media (max-width: 640px) {
+	.outerContainer {
+		--numOfElemPerRow: 5;
+	}
+}

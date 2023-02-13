@@ -1,5 +1,5 @@
 .outerContainer {
-	--numOfElemPerRow: 20;
+	--numOfElemPerRow: 10;
 	--size: calc(100vw / var(--numOfElemPerRow) - var(--margin) * 2);
 	--margin: calc(100vw / var(--numOfElemPerRow) * 0.01);
 	--f: calc(1.732 * var(--size) + 4 * var(--margin) - 1px);
@@ -11,6 +11,9 @@
 	overflow: hidden;
 	filter: brightness(0.75);
 	height: 100vh;
+	position: absolute;
+	width: 100%;
+	z-index: -999;
 }
 
 .innerContainer {
@@ -45,7 +48,7 @@
 
 @media (max-width: 1024px) {
 	.outerContainer {
-		--numOfElemPerRow: 10;
+		--numOfElemPerRow: 7;
 	}
 }
 

@@ -7,8 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class BackgroundComponent implements OnInit {
-	public numOfRows: number = 20;
-	public numOfElemPerRow: number = 20;
+	public numOfElemPerRow: number = 10;
+	public numOfRows: number = 5;
 	public marginOfElem: number = window.innerWidth / this.numOfElemPerRow * 0.025;
 	public numOfElem?: Array<null>;
 
@@ -16,7 +16,7 @@ export class BackgroundComponent implements OnInit {
 
 	ngOnInit(): void {
 		if (window.matchMedia("(max-width: 1024px)").matches) {
-			this.numOfElemPerRow = 10;
+			this.numOfElemPerRow = 7;
 			this.numOfRows = 15;
 		}
 

@@ -1,71 +1,27 @@
 <header>
-	<div class="bar">
-		<div class="menu" (click)="toggleMenu()">
-			<span class="menuburger"></span>
-		</div>
+	<nav>
+		<div class="menu-nav ">
+			<div class="menu" (click)="toggleMenu()">
+				<span class="menuburger"></span>
+			</div>
 
-		<a class="nav-img">
-			<img src="/assets/images/logo.png">
-		</a>
+			<div class="menu-nav-item">
+				<a routerLink="/home" class="menu-nav-link">Home</a>
 
-		<nav>
-			<ul class="menu-nav">
-				<li class="menu-nav-img">
+				<a class="menu-nav-link">Over Ons</a>
+			</div>
+
+			<div class="menu-nav-item">
+				<div class="menu-nav-img">
 					<img src="/assets/images/logo.png" title="logo van het berdijf">
-				</li>
+				</div>
+			</div>
 
-				<li class="menu-nav-item">
-					<a class="menu-nav-link active">Home</a>
-				</li>
+			<div class="menu-nav-item">
+				<a class="menu-nav-link">Reserveer</a>
 
-				<li class="menu-nav-item">
-					<a class="menu-nav-link">Aanbod</a>
-				</li>
-
-				<li class="menu-nav-item">
-					<a class="menu-nav-link">Inkoop</a>
-				</li>
-
-				<!-- <li class="menu-nav-item dropdown-control">
-						<a data-dropdown="1" class="menu-nav-link">Auto zoeken<i class="fa fa-chevron-down" id="arrow"
-								name="1" aria-hidden="true"></i> </a>
-						<ul class="dd-menu" name="1">
-							<li>
-								<a>Financieren</a>
-							</li>
-							<li>
-								<a>Verzekeren</a>
-							</li>
-						</ul>
-					</li>
-
-					<li class="menu-nav-item dropdown-control">
-						<a data-dropdown="2" class="menu-nav-link">Diensten<i class="fa fa-chevron-down" id="arrow"
-								name="2" aria-hidden="true"></i> </a>
-						<ul class="dd-menu diensten" name="2">
-							<li>
-								<a>Financieren</a>
-							</li>
-							<li>
-								<a>Verzekeren</a>
-							</li>
-						</ul>
-					</li> -->
-
-				<!-- <li class="menu-nav-item">
-						<a class="menu-nav-link">Contact</a>
-					</li> -->
-
-				<!-- <li class="menu-nav-item search-nav">
-						<input type="text" placeholder="Zoeken ...">
-						<button class="btn"><i class="fa fa-search" aria-hidden="true"></i></button>
-					</li> -->
-
-				<!-- <li class="menu-nav-item social-media">
-						<img src="/assets/images/logo.png" alt="">
-						<img src="/assets/images/logo.png" alt="">
-					</li> -->
-			</ul>
-		</nav>
-	</div>
+				<a class="menu-nav-link">Account</a>
+			</div>
+		</div>
+	</nav>
 </header>

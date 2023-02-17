@@ -1,5 +1,7 @@
 <?php
 
+use App\Modules\Reservation\ReservationServiceProvider;
+use App\Modules\Reservation\UserLoginServiceProvider;
 use Illuminate\Support\Facades\Facade;
 
 return [
@@ -194,6 +196,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        ReservationServiceProvider::class,
+        \App\Modules\UserLogin\UserLoginServiceProvider::class
 
     ],
 

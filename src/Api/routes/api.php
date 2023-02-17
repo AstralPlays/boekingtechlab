@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Modules\Reservation\Http\Controllers\ReservationController;
+use App\Modules\UserLogin\Http\Controllers\UserLoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/all', [ReservationController::class, 'index'])->name('all');
+
+Route::get('/users/all', [UserLoginController::class, 'index'])->name('allUsers');
+
+//route::post('/update_live_data', [ResourceController::class, 'updateLiveData']);
+

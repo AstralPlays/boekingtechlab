@@ -1,43 +1,41 @@
-<body>
-	<div class="container">
-		<div class="wrap">
-			<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-				<span class="form-title">Login</span>
-				<div class="input-container" data-validate="Email is reauired">
-					<span class="label">Email</span>
-					<div class="input-wraper">
-						<fa-icon [icon]="user"></fa-icon>
-						<input class="input" type="email" name="Email" formControlName="email"
-							placeholder="Type your Email">
-						<span class="focus"></span>
-					</div>
+<div class="container">
+	<div class="wrap">
+		<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+			<span class="form-title">Login</span>
+			<div class="input-container" data-validate="Email is reauired">
+				<span class="label">Email</span>
+				<div class="input-wraper">
+					<fa-icon [icon]="user"></fa-icon>
+					<input class="input" type="email" name="Email" formControlName="email"
+						placeholder="Type your Email">
+					<span class="focus"></span>
 				</div>
-				<div class="input-container" data-validate="Password is required">
-					<span class="label">Password</span>
-					<div class="input-wraper">
-						<fa-icon [icon]="lock"></fa-icon>
-						<input class="input" type="password" name="pass" formControlName="password"
-							placeholder="Type your password">
-						<span class="focus"></span>
-					</div>
+			</div>
+			<div class="input-container" data-validate="Password is required">
+				<span class="label">Password</span>
+				<div class="input-wraper">
+					<fa-icon [icon]="lock"></fa-icon>
+					<input class="input" type="password" name="pass" formControlName="password"
+						placeholder="Type your password">
+					<span class="focus"></span>
 				</div>
-				<div class="forgot-password">
-					<a href="#">Forgot password?</a>
+			</div>
+			<div class="forgot-password">
+				<a href="#">Forgot password?</a>
+			</div>
+			<div class="submit-container">
+				<div class="submit-wraper">
+					<button class="submit-button" type="submit">Login</button>
 				</div>
-				<div class="submit-container">
-					<div class="submit-wraper">
-						<button class="submit-button" type="submit">Login</button>
-					</div>
-				</div>
-				<div class="sign-up">
-					<span>Or Login Using</span>
-				</div>
-				<div class="social-media-container">
-					<button class="social-media-item" type="button" (click)="loginWithGoogle()">
-						<fa-icon [icon]="google"></fa-icon>
-					</button>
-				</div>
-			</form>
-		</div>
+			</div>
+			<div class="sign-up">
+				<span>Or Login Using</span>
+			</div>
+			<div class="social-media-container">
+				<button class="social-media-item" type="button" (click)="loginWithGoogle()">
+					<fa-icon [icon]="google"></fa-icon>
+				</button>
+			</div>
+		</form>
 	</div>
-</body>
+</div>

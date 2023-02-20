@@ -112,7 +112,22 @@ header {
 				}
 
 				&.expanded {
-					min-height: 100vh;
+					min-height: calc(100vh - 40px);
+
+					.menuburger {
+						transform: rotate(720deg);
+						background: transparent;
+						right: 3px;
+
+						&::before {
+							transform: rotate(45deg) translate(3px, 7px);
+						}
+
+						&::after {
+							width: 24px;
+							transform: rotate(-45deg) translate(3px, -7px);
+						}
+					}
 				}
 
 				.menu {
@@ -153,21 +168,6 @@ header {
 							height: 2px;
 							background: $nav-burger;
 							@include transition-ease(0.5);
-						}
-
-						&.open {
-							transform: rotate(720deg);
-							background: transparent;
-							right: 3px;
-
-							&::before {
-								transform: rotate(45deg) translate(3px, 7px);
-							}
-
-							&::after {
-								width: 24px;
-								transform: rotate(-45deg) translate(3px, -7px);
-							}
 						}
 					}
 				}

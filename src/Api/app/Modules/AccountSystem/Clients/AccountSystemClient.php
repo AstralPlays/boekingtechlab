@@ -18,7 +18,7 @@ class AccountSystemClient implements AccountSystemClientInterface
         return User::where($search, $variable)->get();
     }
 
-    function create(array $variable): Collection
+    function create(array $variable): User
     {
         return User::create($variable);
     }

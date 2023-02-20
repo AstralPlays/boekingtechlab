@@ -26,7 +26,6 @@ class StoreRegisterRequest extends FormRequest
         return [
             'email' => 'required|unique:users|max:255',
             'password' => 'required|min:8',
-            'body' => 'required',
         ];
     }
 }

@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/reservation/all', [ReservationController::class, 'index']);
 
 Route::get('/user/all', [AccountSystemController::class, 'index']);
+
 Route::post('/user/register', [AccountSystemController::class, 'register']);
+Route::post('/user/login', [AccountSystemController::class, 'login']);
 
 //route::post('/update_live_data', [ResourceController::class, 'updateLiveData']);
 

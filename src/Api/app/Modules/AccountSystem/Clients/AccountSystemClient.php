@@ -5,6 +5,7 @@ namespace App\Modules\AccountSystem\Clients;
 use App\Models\User;
 use App\Modules\AccountSystem\Clients\Contracts\AccountSystemClientInterface;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Hash;
 
 class AccountSystemClient implements AccountSystemClientInterface
 {
@@ -13,9 +14,18 @@ class AccountSystemClient implements AccountSystemClientInterface
         return User::all();
     }
 
-    function get(string $search, string $variable): Collection
+    function get(string $search, string $variable): User
     {
         return User::where($search, $variable)->get();
+    }
+
+    public function getUser(string $email, string $password): bool|User
+    {
+        $user = User::where('email', $email)->first();
+        if(!Hash::check($password, $user->password())){
+            return false;
+        }
+        return $user;
     }
 
     function create(array $variable): User

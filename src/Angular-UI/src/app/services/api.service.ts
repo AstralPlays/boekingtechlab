@@ -11,6 +11,6 @@ export class ApiService {
   constructor(public http: HttpClient) {}
 
   public getTestData(): Observable<any> {
-    return this.http.get<any>(this.baseApiUrl + '/Reservation/All');
+    return this.http.get<any>(this.baseApiUrl + '/reservation/all');
   }
 }

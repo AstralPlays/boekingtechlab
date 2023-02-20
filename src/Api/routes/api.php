@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/all', [ReservationController::class, 'index'])->name('all');
+Route::get('/reservation/all', [ReservationController::class, 'index'])->name('all');
 
 Route::get('/users/all', [UserLoginController::class, 'index'])->name('allUsers');
 

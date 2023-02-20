@@ -20,7 +20,6 @@ return new class extends Migration
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');
-            $table->timestamp('last_logged_in')->useCurrent();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
             $table->softDeletes();

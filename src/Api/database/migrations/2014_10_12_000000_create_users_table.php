@@ -22,8 +22,9 @@ return new class extends Migration
             $table->string('location');
             $table->string('telephone_number');
             $table->string('api_token');
-            $table->rememberToken();
-            $table->timestamps();
+            $table->timestamp('last_logged_in')->useCurrent();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
             $table->softDeletes();
         });
     }

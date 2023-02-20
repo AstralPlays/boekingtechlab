@@ -2,6 +2,7 @@
 
 namespace App\Modules\AccountSystem\Clients\Contracts;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 
 interface AccountSystemClientInterface
@@ -10,7 +11,7 @@ interface AccountSystemClientInterface
 
     function get(string $search, string $variable): Collection;
 
-    function create(array $variable): Collection;
+    function create(array $variable): User;
 
     function delete(string $search, string $variable): Collection;
 }

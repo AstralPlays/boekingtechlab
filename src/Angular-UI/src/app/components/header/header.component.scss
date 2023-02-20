@@ -20,8 +20,13 @@ $nav-underline: white;
 header {
 
 	nav {
+		position: absolute;
+		left: 0;
+		right: 0;
+		z-index: 9999;
 
 		.menu-nav {
+			position: relative;
 			height: $nav-height;
 			transition: min-height 0.5s ease-in-out;
 			min-height: 0vh;
@@ -112,18 +117,18 @@ header {
 				}
 
 				&.expanded {
-					min-height: 100vh;
+					min-height: calc(100vh - 40px);
 				}
 
 				.menu {
 					display: block;
-					position: fixed;
-					z-index: 99999;
+					position: absolute;
+					top: calc($nav-height/2 - 20px);
 					right: 16px;
-					top: 16px;
 					height: 40px;
 					width: 40px;
 					cursor: pointer;
+					z-index: 99999;
 					@include transition-ease(0.5);
 
 					&burger {

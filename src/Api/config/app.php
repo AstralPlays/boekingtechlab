@@ -197,7 +197,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         ReservationServiceProvider::class,
-        \App\Modules\UserLogin\UserLoginServiceProvider::class
+        \App\Modules\AccountSystem\AccountSystemServiceProvider::class
 
     ],
 

@@ -1,7 +1,7 @@
 <?php
 
 use App\Modules\Reservation\Http\Controllers\ReservationController;
-use App\Modules\UserLogin\Http\Controllers\UserLoginController;
+use App\Modules\AccountSystem\Http\Controllers\AccountSystemController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/reservation/all', [ReservationController::class, 'index']);
 
-Route::get('/users/all', [UserLoginController::class, 'index']);
+Route::get('/user/all', [AccountSystemController::class, 'index']);
+Route::post('/user/register', [AccountSystemController::class, 'register']);
 
 //route::post('/update_live_data', [ResourceController::class, 'updateLiveData']);
 

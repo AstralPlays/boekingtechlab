@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Modules\UserLogin\Clients;
+namespace App\Modules\AccountSystem\Clients;
 
 use App\Models\User;
-use App\Modules\UserLogin\Clients\Contracts\UserLoginClientInterface;
+use App\Modules\AccountSystem\Clients\Contracts\AccountSystemClientInterface;
 use Illuminate\Database\Eloquent\Collection;
 
-class UserLoginClient implements UserLoginClientInterface
+class AccountSystemClient implements AccountSystemClientInterface
 {
     function all(): Collection
     {

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Modules\UserLogin\Clients\Contracts;
+namespace App\Modules\AccountSystem\Clients\Contracts;
 
 use Illuminate\Database\Eloquent\Collection;
 
-interface UserLoginClientInterface
+interface AccountSystemClientInterface
 {
     function all(): Collection;
 

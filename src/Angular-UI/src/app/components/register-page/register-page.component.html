@@ -1,0 +1,33 @@
+<div class="container">
+	<div class="wrap">
+		<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+			<span class="form-title">Register</span>
+			<div class="input-container" data-validate="Email is required">
+				<span class="label">Email</span>
+				<div class="input-wraper">
+					<fa-icon [icon]="user"></fa-icon>
+					<input class="input" type="email" name="Email" formControlName="email"
+						placeholder="Type your Email">
+					<span class="focus"></span>
+				</div>
+			</div>
+			<div class="input-container" data-validate="Password is required">
+				<span class="label">Password</span>
+				<div class="input-wraper">
+					<fa-icon [icon]="lock"></fa-icon>
+					<input class="input" type="password" name="pass" formControlName="password"
+						placeholder="Type your password">
+					<span class="focus"></span>
+				</div>
+			</div>
+			<div class="submit-container">
+				<div class="submit-wraper">
+					<button class="submit-button" type="submit">Register</button>
+				</div>
+			</div>
+			<div class="sign-up">
+				<a routerLink="/user/login">Or Login</a>
+			</div>
+		</form>
+	</div>
+</div>

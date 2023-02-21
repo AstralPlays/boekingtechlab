@@ -11,6 +11,7 @@ import { BackgroundComponent } from './components/background/background.componen
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SocialMediaBarComponent } from './components/social-media-bar/social-media-bar.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
+import { RegisterPageComponent } from './components/register-page/register-page.component';
 
 @NgModule({
 	declarations: [
@@ -18,7 +19,8 @@ import { LoginPageComponent } from './components/login-page/login-page.component
 		HeaderComponent,
 		BackgroundComponent,
 		SocialMediaBarComponent,
-		LoginPageComponent
+		LoginPageComponent,
+		RegisterPageComponent
 	],
 	imports: [
 		BrowserModule,

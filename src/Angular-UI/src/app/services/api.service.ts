@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Login } from '../classes/login/login';
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
+
 export class ApiService {
-  baseApiUrl: string = 'http://localhost:8000/api';
+	baseApiUrl: string = 'http://localhost:8000/api';
 
-  constructor(public http: HttpClient) {}
+	constructor(public http: HttpClient) { }
 
-  public getTestData(): Observable<any> {
-    return this.http.get<any>(this.baseApiUrl + '/reservation/all');
-  }
+	public getTestData(): Observable<any> {
+		return this.http.get<any>(this.baseApiUrl + '/reservation/all');
+	}
+
+	public postRegister(data: Login): Observable<{ id: number, api_token: string }> {
+		return this.http.post<{ id: number, api_token: string }>(this.baseApiUrl + '/user/register', data);
+	}
 }

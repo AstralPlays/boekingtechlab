@@ -14,10 +14,10 @@ export class AppComponent implements OnInit {
   constructor(private Api: ApiService) {}
 
   ngOnInit(): void {
-    this.Api.getTestData()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((data: any) => {
-        console.log(data);
-      });
+    // this.Api.getTestData()
+    //   .pipe(takeUntil(this.unsubscribe$))
+    //   .subscribe((data: any) => {
+    //     console.log(data);
+    //   });
   }
 }

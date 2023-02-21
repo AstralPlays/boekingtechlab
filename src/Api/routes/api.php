@@ -22,5 +22,9 @@ Route::get('/user/all', [AccountSystemController::class, 'index']);
 Route::post('/user/register', [AccountSystemController::class, 'register']);
 Route::post('/user/login', [AccountSystemController::class, 'login']);
 
+Route::post('/auth', function(){
+    return Response(json_encode('Authorized'), 200);
+})->middleware('userAuth');
+
 //route::post('/update_live_data', [ResourceController::class, 'updateLiveData']);
 

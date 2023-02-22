@@ -13,7 +13,7 @@ interface AccountSystemClientInterface
 
     function getUser(string $email, string $password): bool|User;
 
-    public function getUserByIdAndToken(int $id, string $api_token);
+    function getUserByIdAndToken(int $id, string $api_token): User|Collection;
 
     function create(array $variable): User;
 

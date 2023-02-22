@@ -23,7 +23,7 @@ Route::post('/auth', function(){
 })->middleware(UserAuth::class);
 
 Route::middleware(UserAuth::class)->group(function () {
-    Route::post('/reservation/create', [ReservationController::class, 'create']);
+    Route::post('/reservations/create', [ReservationController::class, 'create']);
 });
 
 //route::post('/update_live_data', [ResourceController::class, 'updateLiveData']);

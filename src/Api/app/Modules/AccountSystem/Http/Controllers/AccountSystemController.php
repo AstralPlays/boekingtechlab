@@ -9,6 +9,7 @@ use App\Modules\AccountSystem\Requests\StoreRegisterRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use \Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Response as Response;
 
 class AccountSystemController extends Controller
 {
@@ -37,15 +38,18 @@ class AccountSystemController extends Controller
         ];
     }
 
-    public function login(StoreLoginRequest $request): array|bool
+    public function login(StoreLoginRequest $request): array|Response
     {
-        if($user = $this->userLoginClient->getUser($request['email'], $request['password'])){
-            return [
-                'id' => $user['id'],
-                'api_token' => $user['api_token']
-            ];
+        if(!$user = $this->userLoginClient->getUser($request['email'], $request['password'])){
+            return Response(json_encode('Unauthorized'), 401);
         }
-        return false;
+        if(!Hash::check($request['password'], $user->password())){
+            return Response(json_encode('Unauthorized'), 401);
+        }
+        return [
+            'id' => $user['id'],
+            'api_token' => $user['api_token']
+        ];
     }
 
 }

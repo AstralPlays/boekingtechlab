@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="890b2297-76b5-4079-8a6f-3d4f27695140" name="Changes" comment="" />
+    <list default="true" id="890b2297-76b5-4079-8a6f-3d4f27695140" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Api/app/Modules/Reservation/Http/Controllers/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Api/app/Modules/Reservation/Http/Controllers/ReservationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Api/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Api/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Api/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Api/routes/api.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,10 +35,20 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/milan/Desktop/yes/BoekingTechLab/src/Api",
+    "last_opened_file_path": "C:/Users/milan/Desktop/test/BoekingTechLab-1",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\milan\Desktop\test\BoekingTechLab-1\src\Api\app\Http\Requests" />
+      <recent name="C:\Users\milan\Desktop\test\BoekingTechLab-1\src\Api\app\Modules\Reservation\Requests" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -39,6 +58,7 @@
       <option name="presentableId" value="Default" />
       <updated>1676392224712</updated>
       <workItem from="1676392226040" duration="9000" />
+      <workItem from="1677068631988" duration="729000" />
     </task>
     <servers />
   </component>

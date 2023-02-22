@@ -21,6 +21,16 @@ class ReservationController extends Controller
 
     public function create(StoreReservationRequest $request)
     {
-        return 'test';
+        // return [
+        //     'userID',
+        //     'api_token'
+
+        //     'classroom',
+        //     'materiaals',
+        //     'user',
+        //     'start_time',
+        //     'end_time',
+        //     'date'
+        // ];
     }
 }

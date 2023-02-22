@@ -11,7 +11,7 @@ interface AccountSystemClientInterface
 
     function get(string $search, string $variable): User;
 
-    function getUser(string $email, string $password): bool|User;
+    function getUser(string $email, string $password): ?User;
 
     function getUserByIdAndToken(int $id, string $api_token): User|Collection;
 

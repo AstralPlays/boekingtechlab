@@ -19,13 +19,9 @@ class AccountSystemClient implements AccountSystemClientInterface
         return User::where($search, $variable)->get();
     }
 
-    public function getUser(string $email, string $password): bool|User
+    public function getUser(string $email, string $password): ?User
     {
-        $user = User::where('email', $email)->first();
-        if(!Hash::check($password, $user->password())){
-            return false;
-        }
-        return $user;
+        return User::where('email', $email)->first();
     }
 
     public function getUserByIdAndToken(int $id, string $api_token): User|Collection

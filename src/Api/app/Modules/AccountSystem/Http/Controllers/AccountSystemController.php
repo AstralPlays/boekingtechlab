@@ -33,7 +33,7 @@ class AccountSystemController extends Controller
                 'api_token' => $uuid
             ]);
         return [
-            'id' => $account['id'],
+            'user_id' => $account['id'],
             'api_token' => $uuid
         ];
     }
@@ -47,7 +47,7 @@ class AccountSystemController extends Controller
             return Response(json_encode('Unauthorized'), 401);
         }
         return [
-            'id' => $user['id'],
+            'user_id' => $user['id'],
             'api_token' => $user['api_token']
         ];
     }

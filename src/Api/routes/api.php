@@ -2,6 +2,7 @@
 
 use App\Modules\Reservation\Http\Controllers\ReservationController;
 use App\Modules\AccountSystem\Http\Controllers\AccountSystemController;
+use App\Modules\AccountSystem\middleware\UserAuth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,7 +25,7 @@ Route::post('/user/login', [AccountSystemController::class, 'login']);
 
 Route::post('/auth', function(){
     return Response(json_encode('Authorized'), 200);
-})->middleware('userAuth');
+})->middleware(UserAuth::class);
 
 //route::post('/update_live_data', [ResourceController::class, 'updateLiveData']);
 

@@ -12,6 +12,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SocialMediaBarComponent } from './components/social-media-bar/social-media-bar.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
+import { Test401Component } from './components/test401/test401.component';
 
 @NgModule({
 	declarations: [
@@ -20,7 +21,8 @@ import { RegisterPageComponent } from './components/register-page/register-page.
 		BackgroundComponent,
 		SocialMediaBarComponent,
 		LoginPageComponent,
-		RegisterPageComponent
+		RegisterPageComponent,
+		Test401Component,
 	],
 	imports: [
 		BrowserModule,

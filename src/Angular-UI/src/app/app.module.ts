@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -13,6 +12,7 @@ import { SocialMediaBarComponent } from './components/social-media-bar/social-me
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { Test401Component } from './components/test401/test401.component';
+import { ReservationPageComponent } from './components/reservation-page/reservation-page.component';
 
 @NgModule({
 	declarations: [
@@ -23,6 +23,7 @@ import { Test401Component } from './components/test401/test401.component';
 		LoginPageComponent,
 		RegisterPageComponent,
 		Test401Component,
+		ReservationPageComponent
 	],
 	imports: [
 		BrowserModule,
@@ -31,8 +32,9 @@ import { Test401Component } from './components/test401/test401.component';
 		ReactiveFormsModule,
 		AppRoutingModule
 	],
-	providers: [],
-	bootstrap: [AppComponent]
+	bootstrap: [
+		AppComponent
+	]
 })
 
 export class AppModule { }

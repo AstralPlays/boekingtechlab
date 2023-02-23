@@ -19,12 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::post('/user/register', [AccountSystemController::class, 'register']);
 Route::post('/user/login', [AccountSystemController::class, 'login']);
 
-Route::post('/auth', function(){
-    return Response(json_encode('Authorized'), 200);
-})->middleware(UserAuth::class);
-
 Route::middleware(UserAuth::class)->group(function () {
     Route::post('/reservations/create', [ReservationController::class, 'create']);
+    Route::post('/auth', [AccountSystemController::class, 'auth']);
 });
 
 //route::post('/update_live_data', [ResourceController::class, 'updateLiveData']);

@@ -28,8 +28,12 @@ class UserAuth
             return Response(json_encode('Missing a parameter'), 400);
         }
         $results = $this->userLoginClient->getUserByIdAndToken($request['user_id'], $request->bearerToken());
-        if($results->isempty()){
-            return Response(json_encode('Unauthorized'), 401);
+        if(!$results){
+            return Response(
+                [
+                    'auth' => 'Unauthorized',
+                    'role' => 'null'
+                ], 401);
         }
         return $next($request);
     }

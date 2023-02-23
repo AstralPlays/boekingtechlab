@@ -15,7 +15,5 @@ export class SocialMediaBarComponent implements OnInit {
 		{ icon: faYoutube, link: 'https://www.facebook.com/techlab' }];
 	email = 'techlab@example.nl';
 
-	ngOnInit(): void {
-
-	}
+	ngOnInit(): void { }
 }

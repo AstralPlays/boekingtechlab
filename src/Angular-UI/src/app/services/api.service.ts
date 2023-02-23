@@ -16,11 +16,11 @@ export class ApiService {
 		return this.http.get<any>(this.baseApiUrl + '/reservation/all');
 	}
 
-	public postRegister(data: Login): Observable<{ id: number, api_token: string }> {
-		return this.http.post<{ id: number, api_token: string }>(this.baseApiUrl + '/user/register', data);
+	public postRegister(data: Login): Observable<{ user_id: number, api_token: string }> {
+		return this.http.post<{ user_id: number, api_token: string }>(this.baseApiUrl + '/user/register', data);
 	}
 
-	public postLogin(data: Login): Observable<{ id: number, api_token: string }> {
-		return this.http.post<{ id: number, api_token: string }>(this.baseApiUrl + '/user/login', data)
+	public postLogin(data: Login): Observable<{ user_id: number, api_token: string }> {
+		return this.http.post<{ user_id: number, api_token: string }>(this.baseApiUrl + '/user/login', data)
 	}
 }

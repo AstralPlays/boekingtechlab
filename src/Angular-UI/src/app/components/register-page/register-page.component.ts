@@ -30,8 +30,10 @@ export class RegisterPageComponent implements OnInit {
 		if (this.registerForm.valid) {
 			this.Api.postRegister(this.registerForm.value)
 				.pipe(takeUntil(this.unsubscribe$))
-				.subscribe((data: { id: number, api_token: string }) => {
+				.subscribe((data: { user_id: number, api_token: string }) => {
 					console.log(data);
+					document.cookie = "id=" + data.user_id
+					document.cookie = "token=" + data.api_token
 				})
 		}
 		else {

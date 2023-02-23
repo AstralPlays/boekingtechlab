@@ -23,7 +23,7 @@ export class LoginPageComponent implements OnInit {
 	ngOnInit(): void {
 		this.loginForm = this.fb.group({
 			email: new FormControl('', [Validators.required, Validators.email]),
-			password: new FormControl('', [Validators.required, Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}/)])
+			password: new FormControl('', [Validators.required, ])
 		});
 
 		// this.Api.postRegister(this.loginForm.value)
@@ -38,8 +38,10 @@ export class LoginPageComponent implements OnInit {
 		if (this.loginForm.valid) {
 			this.Api.postLogin(this.loginForm.value)
 				.pipe(takeUntil(this.unsubscribe$))
-				.subscribe((data: any) => {
+				.subscribe((data: { user_id: number, api_token: string }) => {
 					console.log(data);
+					document.cookie = "id=" + data.user_id
+					document.cookie = "token=" + data.api_token
 				})
 		} else {
 			alert('Form not valid')

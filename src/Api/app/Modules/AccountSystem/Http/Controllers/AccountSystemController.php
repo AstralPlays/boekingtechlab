@@ -9,6 +9,7 @@ use App\Modules\AccountSystem\Requests\StoreRegisterRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use \Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response as Response;
 
 class AccountSystemController extends Controller
@@ -50,6 +51,16 @@ class AccountSystemController extends Controller
             'user_id' => $user['id'],
             'api_token' => $user['api_token']
         ];
+    }
+
+    public function auth(Request $request): Response
+    {
+        $result = $this->userLoginClient->getUserByIdAndToken($request['user_id'], $request->bearerToken());
+        return Response(
+            [
+                'auth' => 'Authorized',
+                'role' => $result['role'],
+            ], 200);
     }
 
 }

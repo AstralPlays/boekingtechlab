@@ -24,9 +24,9 @@ class AccountSystemClient implements AccountSystemClientInterface
         return User::where('email', $email)->first();
     }
 
-    public function getUserByIdAndToken(int $id, string $api_token): User|Collection
+    public function getUserByIdAndToken(int $id, string $api_token): ?User
     {
-        return User::where('id', $id)->where('api_token', $api_token)->get();
+        return User::where('id', $id)->where('api_token', $api_token)->first();
     }
 
     function create(array $variable): User

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CookieMonsterService } from 'src/app/services/cookieMonster/cookie-monster.service';
 
 @Component({
 	selector: 'app-header',
@@ -7,10 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 	public menuOpen: boolean = false;
+	public isLogged: boolean = false;
 
-	constructor() { }
+	constructor(private cookieMonster: CookieMonsterService) { }
 
 	ngOnInit(): void {
+		if (this.cookieMonster.getCookie("token") && this.cookieMonster.getCookie("id")) {
+			this.isLogged = true;
+		} else {
+			this.isLogged = false;
+		}
+
 		var elements = document.querySelectorAll(".menu-nav-link");
 		var max = 0;
 

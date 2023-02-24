@@ -22,7 +22,8 @@
 			<div class="menu-nav-item">
 				<a routerLink="/reservation" class="menu-nav-link">Reserveer</a>
 
-				<a routerLink="login" class="menu-nav-link">Account</a>
+				<a routerLink="user" class="menu-nav-link" *ngIf="isLogged">Account</a>
+				<a routerLink="login" class="menu-nav-link" *ngIf="!isLogged">Login</a>
 			</div>
 		</div>
 	</nav>

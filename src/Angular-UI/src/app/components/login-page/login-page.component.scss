@@ -146,6 +146,11 @@ $logo-color: white;
 				text-align: center;
 				font-size: 16px;
 				color: $text-color-grayed;
+
+				.register_button {
+					color: $text-color;
+					text-decoration: none;
+				}
 			}
 
 			.social-media-container {

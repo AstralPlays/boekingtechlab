@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { HeaderComponent } from './components/header/header.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { ReservationPageComponent } from './components/reservation-page/reservation-page.component';
@@ -13,12 +15,18 @@ const routes: Routes = [
 	{ path: 'register', title: "Boeking Tech Lab | Register", component: RegisterPageComponent },
 	{ path: 'unauthorized', title: "Boeking Tech Lab | unauthorized", component: Test401Component },
 	{
-		path: 'user', title: "Boeking Tech Lab | User", component: UserComponent, canActivate: [AuthGuard],
-		children: [],
+		path: 'user', title: "Boeking Tech Lab | User", canActivate: [AuthGuard],
+		children: [
+			{ path: '',redirectTo:'Dash', pathMatch: 'full' },
+			{ path: 'Dash', title: "Boeking Tech Lab | Register", component: HeaderComponent }
+		],
 	},
 	{
 		path: 'admin', title: "Boeking Tech Lab | Admin", canActivate: [AuthGuard],
-		children: [],
+		children: [
+			{ path: '',redirectTo:'Dash', pathMatch: 'full' },
+			{ path: 'Dash', title: "Boeking Tech Lab | Register", component: DashboardComponent }
+		],
 	}
 ];
 

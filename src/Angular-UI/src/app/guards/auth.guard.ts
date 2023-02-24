@@ -1,33 +1,54 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { map, Observable, Subject, takeUntil, tap } from 'rxjs';
-import { Auth } from '../classes/auth/auth';
+import { map, Observable, tap, of } from 'rxjs';
 import { AuthService } from '../services/auth/auth.service';
-
-
 
 @Injectable({
 	providedIn: 'root'
 })
+
 export class AuthGuard implements CanActivate {
+
 	constructor(private authService: AuthService, private router: Router) { }
 
 	canActivate(): Observable<boolean> {
+		console.log(this.checkPath('/user'));
 		return this.authService.checkCredentials().pipe(
-			tap((userRole:Auth | null) => {
-				if (userRole?.role === null) {
-					// Handle error case
-					this.router.navigate(['/unauthorized']);
-				} else if (userRole?.role === 'User') {
-					// Allow access to user page
-				} else if (userRole?.role === 'Admin') {
-					// Allow access to admin page
+			map(userRole => {
+				if (userRole) {
+					switch (userRole?.role) {
+						case 'User': {
+							if (this.checkPath('/user')) return true;
+							this.redirectTo('/unauthorized');
+							return false
+						}
+						case 'Admin': {
+							if (this.checkPath('/admin')) return true;
+							this.redirectTo('/unauthorized');
+							return false;
+						}
+						default: {
+							this.redirectTo('/unauthorized');
+							return false;
+						}
+					}
 				} else {
-					// Handle unknown role case
-					this.router.navigate(['/unauthorized']);
+					this.redirectTo('/login');
+					return false
 				}
-			}),
-			map(userRole => userRole !== null) // convert result to boolean
+			})
 		);
+	}
+
+	checkPath(path: string) {
+		if (location.pathname.startsWith(path)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	redirectTo(path: string) {
+		this.router.navigate([path]);
 	}
 }

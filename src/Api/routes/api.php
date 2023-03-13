@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/reservation/all', [ReservationController::class, 'index']);
+Route::get('/reservation/all', [ReservationController::class, 'index'])->middleware(\App\Http\Middleware\LoggedIn::class);
 
 Route::get('/user/all', [AccountSystemController::class, 'index']);
 

@@ -11,7 +11,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SocialMediaBarComponent } from './components/social-media-bar/social-media-bar.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
-import { Test401Component } from './components/test401/test401.component';
+import { SliderComponent } from './components/slider/slider.component';
 import { ReservationPageComponent } from './components/reservation-page/reservation-page.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DatePipe } from '@angular/common';
@@ -24,7 +24,7 @@ import { DatePipe } from '@angular/common';
 		SocialMediaBarComponent,
 		LoginPageComponent,
 		RegisterPageComponent,
-		Test401Component,
+		SliderComponent,
 		ReservationPageComponent,
 		DashboardComponent
 	],

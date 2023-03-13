@@ -24,7 +24,7 @@ class UserAuth
 
     public function handle(Request $request, Closure $next)
     {
-        if(!$request['user_id']){
+        if(!$request['user_id'] or !$request->bearerToken()){
             return Response(json_encode('Missing a parameter'), 400);
         }
         $results = $this->userLoginClient->getUserByIdAndToken($request['user_id'], $request->bearerToken());

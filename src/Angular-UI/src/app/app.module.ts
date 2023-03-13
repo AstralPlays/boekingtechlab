@@ -14,6 +14,7 @@ import { RegisterPageComponent } from './components/register-page/register-page.
 import { Test401Component } from './components/test401/test401.component';
 import { ReservationPageComponent } from './components/reservation-page/reservation-page.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
 	declarations: [
@@ -33,6 +34,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 		HttpClientModule,
 		ReactiveFormsModule,
 		AppRoutingModule
+	],
+	providers: [
+		DatePipe
 	],
 	bootstrap: [
 		AppComponent

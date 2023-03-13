@@ -1,0 +1,79 @@
+<div class="container">
+	<div class="wrapper">
+		<form action="" [formGroup]="form" (ngSubmit)="submit()">
+			<div class="formPart">
+				<div class="userInfo">
+					<div class="userInfo_item">
+						<div class="userInfo_item_part">
+							<label for="">Voornaam</label>
+							<input type="text" id="" formControlName="firstName">
+						</div>
+						<div class="userInfo_item_part">
+							<label for="">Achternaam</label>
+							<input type="text" id="" formControlName="lastName">
+						</div>
+					</div>
+					<div class="userInfo_item">
+						<div class="userInfo_item_part">
+							<label for="">Telefoonnummer</label>
+							<input type="text" id="" formControlName="phone">
+						</div>
+						<div class="userInfo_item_part">
+							<label for="">Adres</label>
+							<input type="text" id="" formControlName="address">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="formPart">
+				<div class="room_picker">
+					<app-test401 [items]="rooms" [selectBox]="true" controlName="rooms"></app-test401>
+				</div>
+			</div>
+			<div class="formPart">
+				<div class="mats_picker">
+					<app-test401 [items]="mats" [selectBox]="false" controlName="mats"></app-test401>
+				</div>
+			</div>
+			<div class="formPart">
+				<div class="time_picker">
+					<div class="times_container">
+						<div class="time_picker_item" formArrayName="times"
+							*ngFor="let time of timeTable; let i = index">
+							<input type="checkbox" id="time_picker_{{i}}" [formControlName]="i"
+								(click)="checkButtons()" />
+							<label class="whatever" for="time_picker_{{i}}">{{time}}</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="formPart">
+				<div class="date_picker">
+					<select id="" formControlName="month" (change)="changeMonth($event)">
+						<option value="1">Januari</option>
+						<option value="2">Februari</option>
+						<option value="3">Maart</option>
+						<option value="4">April</option>
+						<option value="5">Kunnen</option>
+						<option value="6">Juni</option>
+						<option value="7">Juli</option>
+						<option value="8">Augustus</option>
+						<option value="9">September</option>
+						<option value="10">Oktober</option>
+						<option value="11">November</option>
+						<option value="12">December</option>
+					</select>
+					<div class="dates_container">
+						<div class="date_picker_item" *ngFor="let date of dateTable; let i = index">
+							<input type="radio" id="{{i}}" formControlName="date" value="{{date}}" />
+							<label class="whatever" for="{{i}}">{{date|date:'dd'}}</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="submin_container">
+				<button type="submit">submit</button>
+			</div>
+		</form>
+	</div>
+</div>

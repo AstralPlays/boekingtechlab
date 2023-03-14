@@ -10,7 +10,8 @@ export class BackgroundComponent implements OnInit {
 	public numOfElemPerRow: number = 10;
 	public numOfRows: number = 5;
 	public marginOfElem: number = window.innerWidth / this.numOfElemPerRow * 0.025;
-	public numOfElem?: Array<null>;
+	public numOfElem: Array<{ imageName: string | null }> = [];
+	private images: Array<string | null> = ['3d_printer.svg', null, null, null, 'apple.svg', null, null, null, 'gears.svg', null, null, null, 'internet.svg', null, null, null, 'robot.svg', null, null, null, 'tablet.svg', null, null, null, 'vr.svg', null, null, null];
 
 	constructor() { }
 
@@ -26,7 +27,12 @@ export class BackgroundComponent implements OnInit {
 		}
 
 		const numberOfElements = Math.ceil(window.innerWidth / (window.innerWidth / (this.numOfElemPerRow * 2 + 1)) * (this.numOfRows / 2));
-		this.numOfElem = new Array(numberOfElements);
+		for (let i = 0; i < numberOfElements; i++) {
+			this.numOfElem.push({ imageName: this.images[Math.floor(Math.random() * this.images.length)] });
+		}
+		// this.numOfElem = new Array(numberOfElements);
+
+
 
 		setTimeout(() => {
 			document.querySelectorAll('.item').forEach((elem) => {

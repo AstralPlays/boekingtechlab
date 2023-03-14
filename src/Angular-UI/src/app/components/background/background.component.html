@@ -1,5 +1,8 @@
 <div class="outerContainer">
 	<div class="innerContainer">
-		<div class="item" *ngFor="let item of numOfElem"></div>
+		<div class="item" *ngFor="let item of numOfElem">
+			<img *ngIf="item.imageName != null" src="/assets/bg/{{item.imageName}}" alt="">
+			<div *ngIf="item.imageName == null" class="nullContainer"></div>
+		</div>
 	</div>
 </div>

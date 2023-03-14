@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { DatePipe } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
 import { BackgroundComponent } from './components/background/background.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -13,8 +14,10 @@ import { LoginPageComponent } from './components/login-page/login-page.component
 import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { SliderComponent } from './components/slider/slider.component';
 import { ReservationPageComponent } from './components/reservation-page/reservation-page.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { DatePipe } from '@angular/common';
+import { AdminComponent } from './components/admin/admin.component';
+import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-sidebar.component';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+
 
 @NgModule({
 	declarations: [
@@ -26,7 +29,9 @@ import { DatePipe } from '@angular/common';
 		RegisterPageComponent,
 		SliderComponent,
 		ReservationPageComponent,
-		DashboardComponent
+		AdminComponent,
+		AdminSidebarComponent,
+		AdminDashboardComponent,
 	],
 	imports: [
 		BrowserModule,

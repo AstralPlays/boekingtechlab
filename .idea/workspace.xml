@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="890b2297-76b5-4079-8a6f-3d4f27695140" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Api/app/Models/Reservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Api/app/Models/Reservation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Api/app/Modules/Reservation/Clients/Contracts/ReservationClientInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Api/app/Modules/Reservation/Clients/Contracts/ReservationClientInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Api/app/Modules/Reservation/Clients/ReservationClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Api/app/Modules/Reservation/Clients/ReservationClient.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Api/app/Modules/Reservation/Http/Controllers/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Api/app/Modules/Reservation/Http/Controllers/ReservationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Api/app/Modules/Reservation/Requests/StoreReservationRequest.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Api/database/migrations/2023_02_17_100609_create_reservations_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Api/database/migrations/2023_02_17_100609_create_reservations_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Api/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Api/routes/api.php" afterDir="false" />
-    </list>
+    <list default="true" id="890b2297-76b5-4079-8a6f-3d4f27695140" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,20 +24,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/milan/Desktop/test/BoekingTechLab-1&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/milan/Desktop/test/BoekingTechLab-1",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\milan\Desktop\test\BoekingTechLab-1\src\Api\app\Http\Requests" />
@@ -65,6 +57,7 @@
       <workItem from="1677068631988" duration="729000" />
       <workItem from="1678787842603" duration="334000" />
       <workItem from="1679403846109" duration="469000" />
+      <workItem from="1679406159531" duration="40000" />
     </task>
     <servers />
   </component>

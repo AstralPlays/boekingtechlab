@@ -51,6 +51,10 @@ class ReservationController extends Controller
 
         foreach($alloftoday as $reservering)
         {
+            if(Carbon::parse($request['start_time']) == Carbon::parse($reservering['end_time']))
+            {
+                continue;
+            }
             if(Carbon::parse($request['start_time'])->isBetween(Carbon::parse($reservering['start_time']),Carbon::parse($reservering['end_time'])))
             {
                 return Response(json_encode('Cannot Place Appointment'), 400);

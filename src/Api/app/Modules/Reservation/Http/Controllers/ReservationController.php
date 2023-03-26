@@ -84,4 +84,18 @@ class ReservationController extends Controller
                 'end_time' => $end_time,
             ]);
     }
+
+    public function getByDate(Request $request): array
+    {
+        $dateFormatted = Carbon::parse(date_create_from_format('D M d', $request['date']));
+        $Reservations = $this->reservationClient->getByDate($dateFormatted->format('Y-m-d'));
+        $list = [];
+        foreach($Reservations as $key => $reservation){
+            $list[$key + 1] = [
+                'start_time' => $reservation['start_time'],
+                'end_time' =>  $reservation['end_time']
+            ];
+        }
+        return $list;
+    }
 }

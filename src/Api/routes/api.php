@@ -21,6 +21,7 @@ Route::post('/user/login', [AccountSystemController::class, 'login']);
 
 Route::middleware(UserAuth::class)->group(function () {
     Route::post('/reservations/create', [ReservationController::class, 'create']);
+    Route::post('/reservations/getbydate', [ReservationController::class, 'getByDate']);
     Route::post('/auth', [AccountSystemController::class, 'auth']);
 });
 

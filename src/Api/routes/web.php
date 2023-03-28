@@ -1,7 +1,9 @@
 <?php
 
-use App\Modules\Reservation\Http\Controllers\ReservationController;
+use App\View\Components\homePage;
+use App\View\Components\register;
 use App\View\Components\login;
+use App\View\Components\reservation;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +16,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/', function () {
+	return Route('home');
+});
+
+Route::get('/home', [homePage::class, 'render'])->name('home');
 
 Route::get('/reservation', [reservation::class, 'render'])->name('reservation');
 

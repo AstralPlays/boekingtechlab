@@ -16,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/login', [login::class, 'render'])->name('login');
+
+Route::get('/register', [register::class, 'render'])->name('register');

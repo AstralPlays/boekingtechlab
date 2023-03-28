@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/reservation', [reservation::class, 'render'])->name('reservation');
+
 Route::get('/login', [login::class, 'render'])->name('login');
 
 Route::get('/register', [register::class, 'render'])->name('register');

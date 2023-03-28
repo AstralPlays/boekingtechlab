@@ -4,6 +4,7 @@ use App\View\Components\homePage;
 use App\View\Components\register;
 use App\View\Components\login;
 use App\View\Components\reservation;
+use App\View\Components\aboutUs;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,3 +29,5 @@ Route::get('/reservation', [reservation::class, 'render'])->name('reservation');
 Route::get('/login', [login::class, 'render'])->name('login');
 
 Route::get('/register', [register::class, 'render'])->name('register');
+
+Route::get('/about-us', [aboutUs::class, 'render'])->name('about-us');

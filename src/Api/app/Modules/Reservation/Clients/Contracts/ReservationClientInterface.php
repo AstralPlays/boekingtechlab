@@ -3,6 +3,7 @@
 namespace App\Modules\Reservation\Clients\Contracts;
 
 use Illuminate\Database\Eloquent\Collection;
+use App\Models\Reservation;
 
 interface ReservationClientInterface
 {
@@ -10,7 +11,7 @@ interface ReservationClientInterface
 
     function get(string $search, string $variable): Collection;
 
-    function create(array $variable): Collection;
+    function create(array $variable): Reservation;
 
-    function delete(string $search, string $variable): Collection;
+    function delete(string $search, string $variable): Reservation;
 }

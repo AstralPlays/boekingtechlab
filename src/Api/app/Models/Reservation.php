@@ -9,4 +9,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Reservation extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $fillable = [
+        'classroom',
+        'date',
+        'start_time',
+        'end_time',
+        'userID'
+    ];
 }

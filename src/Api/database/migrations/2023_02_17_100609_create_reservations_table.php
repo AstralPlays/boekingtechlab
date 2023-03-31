@@ -16,10 +16,11 @@ return new class extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->string('userID');
-            $table->string('verified');
+            $table->boolean('verified')->default(false);
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');
+            $table->json('materials')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
             $table->softDeletes();

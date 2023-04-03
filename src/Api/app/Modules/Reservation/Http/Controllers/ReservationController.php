@@ -28,15 +28,15 @@ class ReservationController extends Controller
         $end_time = Carbon::parse($request['end_time']);
 
         /* Convert JS Time to a Carbon Object. */
-        $date = Carbon::parse(date_create_from_format('D M d', $request['date']));
+        $date = Carbon::parse($request['date']);
         /* Check if time is not before opening time or later then closing time */
         if(($request['start_time'] < '09:00') or ($request['end_time'] > '17:00'))
         {
-            return Response(json_encode('Invalid Argument'), 412);
+            return Response(json_encode('Invalid Argument | 007.1'), 412);
         }
-        if(Carbon::tomorrow()->isBefore(Carbon::parse($date)))
+        if($date->isPast(Carbon::tomorrow()))
         {
-            return Response(json_encode('Invalid Argument'), 412);
+            return Response(json_encode('Invalid Argument | 007.2'), 412);
         }
 
         if(!str_contains($request['start_time'], ':00') and !str_contains($request['start_time'], ':15') and !str_contains($request['start_time'], ':30') and !str_contains($request['start_time'], ':45')){
@@ -91,11 +91,11 @@ class ReservationController extends Controller
 
     public function getByDate(Request $request): array
     {
-        $dateFormatted = Carbon::parse(date_create_from_format('D M d', $request['date']));
+        $dateFormatted = Carbon::parse($request['date']);
         $Reservations = $this->reservationClient->getByDate($dateFormatted->format('Y-m-d'));
         $list = [];
         foreach($Reservations as $key => $reservation){
-            $list[$key + 1] = [
+            $list[] = [
                 'start_time' => $reservation['start_time'],
                 'end_time' =>  $reservation['end_time']
             ];

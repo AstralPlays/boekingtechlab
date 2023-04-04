@@ -24,11 +24,11 @@ class UserAuth
 
     public function handle(Request $request, Closure $next)
     {
-        if(!$request['user_id'] or !$request->bearerToken()){
-            return Response(json_encode('Missing Parameter.'), 500);
+        if(!session()->get('user_id') or !session()->get('api_token')){
+            return Response(json_encode('Missing Login Token.', 500));
         }
 
-        $results = $this->userLoginClient->getUserByIdAndToken($request['user_id'], $request->bearerToken());
+        $results = $this->userLoginClient->getUserByIdAndToken(session()->get('user_id'), session()->get('api_token'));
         if(!$results){
             return Response(json_encode('Unauthorized'), 401);
         }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\AccountSystem\middleware\UserAuth;
 use App\View\Components\homePage;
 use App\View\Components\register;
 use App\View\Components\login;
@@ -17,17 +18,20 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(['middleware' => ['web']], function () {
+	Route::get('/', function () {
+		return Redirect('home');
+	});
 
-Route::get('/', function () {
-	return Route('home');
+	Route::get('/home', [homePage::class, 'render'])->name('home');
+
+	Route::middleware(UserAuth::class)->group(function () {
+		Route::get('/reservation', [reservation::class, 'render'])->name('reservation');
+	});
+	
+	Route::get('/login', [login::class, 'render'])->name('login');
+	
+	Route::get('/register', [register::class, 'render'])->name('register');
+	
+	Route::get('/about-us', [aboutUs::class, 'render'])->name('about-us');
 });
-
-Route::get('/home', [homePage::class, 'render'])->name('home');
-
-Route::get('/reservation', [reservation::class, 'render'])->name('reservation');
-
-Route::get('/login', [login::class, 'render'])->name('login');
-
-Route::get('/register', [register::class, 'render'])->name('register');
-
-Route::get('/about-us', [aboutUs::class, 'render'])->name('about-us');

@@ -159,8 +159,8 @@
             title: 'Materiaal 5',
             image: 'logo.png'
         }];
-        let getTimes = []
-        let getDates = []
+        let timeElement = []
+        let dateElement = []
 
         createTimeTable('9:00', '17:00', 15);
         createDateTable(sDate, eDate);
@@ -211,7 +211,7 @@
         }
 
         function addDateTable() {
-            // dateTable.forEach(() => getDates.push(false));
+            // dateTable.forEach(() => dateElement.push(false));
             let datesContainer = document.getElementById('dates_container');
             datesContainer.innerHTML = '';
 
@@ -250,7 +250,9 @@
             let timesContainer = document.getElementById('times_container');
             timesContainer.innerHTML = '';
 
-            timeTable.forEach((item, i) => {
+            for (let i = 0; i < (timeTable.length - 1); i++) {
+                const item = timeTable[i];
+
                 let div = document.createElement('div');
                 div.className = 'time_picker_item';
 
@@ -260,7 +262,10 @@
                 input.setAttribute('reserved', false);
                 input.id = 'time_picker_' + i;
                 input.className = 'time_picker';
-                input.value = item;
+                input.value = JSON.stringify({
+                    start_time: item,
+                    end_time: timeTable[i + 1]
+                });
                 input.onchange = function() {
                     checkButtons(event);
                     console.log(123);
@@ -269,15 +274,15 @@
                 let label = document.createElement('label');
                 label.className = 'whatever';
                 label.setAttribute('for', 'time_picker_' + i);
-                label.innerHTML = item.slice(0, -3);
+                label.innerHTML = item.slice(0, -3) + ' <br> ' + timeTable[i + 1].slice(0, -3);
 
-                getTimes.push(input)
+                timeElement.push(input)
 
                 div.appendChild(input);
                 div.appendChild(label);
 
                 timesContainer.appendChild(div);
-            });
+            }
         }
 
         function checkButtons(event) {
@@ -285,37 +290,37 @@
             setTimeout(() => {
                 blockTime(blockedTimes);
                 selectedTimes = [];
-                for (let i = 0; i < getTimes.length; i++) {
-                    if (getTimes.at(i).checked) {
-                        selectedTimes.push(getTimes.at(i).value);
+                for (let i = 0; i < timeElement.length; i++) {
+                    if (timeElement.at(i).checked) {
+                        selectedTimes.push(JSON.parse(timeElement.at(i).value));
                     }
                 }
                 if (selectedTimes.length > 0) {
-                    for (let i = 0; i < getTimes.length; i++) {
-                        getTimes.at(i).disabled = true;
+                    for (let i = 0; i < timeElement.length; i++) {
+                        timeElement.at(i).disabled = true;
                     }
 
-                    for (let i = 0; i < getTimes.length; i++) {
-                        if (getTimes.at(i).checked) {
-                            getTimes.at(i).disabled = false;
+                    for (let i = 0; i < timeElement.length; i++) {
+                        if (timeElement.at(i).checked) {
+                            timeElement.at(i).disabled = false;
 
-                            if (getTimes.at(i - 1) && i !== 0) {
-                                getTimes.at(i - 1).disabled = false;
+                            if (timeElement.at(i - 1) && i !== 0) {
+                                timeElement.at(i - 1).disabled = false;
                             }
 
-                            if (getTimes.at(i + 1) && i !== (getTimes.length - 1)) {
-                                getTimes.at(i + 1).disabled = false;
+                            if (timeElement.at(i + 1) && i !== (timeElement.length - 1)) {
+                                timeElement.at(i + 1).disabled = false;
                             }
                         }
 
-                        if (i !== 0 && getTimes.at(i - 1)?.checked && getTimes.at(i + 1)
+                        if (i !== 0 && timeElement.at(i - 1)?.checked && timeElement.at(i + 1)
                             ?.checked) {
-                            getTimes.at(i).checked = true;
+                            timeElement.at(i).checked = true;
                         }
                     }
                 } else {
-                    for (let i = 0; i < getTimes.length; i++) {
-                        getTimes.at(i).disabled = false;
+                    for (let i = 0; i < timeElement.length; i++) {
+                        timeElement.at(i).disabled = false;
                     }
                 }
                 blockTime(blockedTimes);
@@ -327,27 +332,6 @@
             if (document.querySelector('input[name="date"]:checked')) {
                 var selectedDate = document.querySelector('input[name="date"]:checked').value
             }
-            // console.log(getTimes);
-            // console.log({
-            //     selectedDate: selectedDate
-            // });
-            // console.log({
-            //     selectedDate: selectedDate
-            // });
-            // console.log(selectedTimes);
-            // console.log(selectedRooms);
-            // console.log(selectedMats);
-            // console.log({
-            //     user: '0123456789',
-            //     // date: this.form.getRawValue().date,
-            //     start_time: selectedTimes[0],
-            //     end_time: selectedTimes[selectedTimes.length - 1],
-            //     classroom: selectedRooms,
-            //     materials: selectedMats,
-            // });
-
-
-
 
             var url = 'http://localhost:8000/api/reservations/create';
 
@@ -358,8 +342,8 @@
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    "start_time": selectedTimes[0],
-                    "end_time": selectedTimes[selectedTimes.length - 1],
+                    "start_time": selectedTimes[0]['start_time'],
+                    "end_time": selectedTimes[selectedTimes.length - 1]['end_time'],
                     "date": selectedDate,
                     "_token": "{{ csrf_token() }}"
                 })
@@ -376,14 +360,12 @@
                     }
                 })
                 .then(data => {
+                    // document.location.href = "{{ Route('reservation') }}";
                     console.log('data', data);
                 })
                 .catch(error => {
                     console.log('error', error);
                 });
-
-
-
         }
 
         function getBlockedTimes(event) {
@@ -439,13 +421,23 @@
             htmlElements.forEach(element => {
                 element.disabled = false;
                 element.setAttribute('reserved', 'false');
-                element.parentElement.getElementsByTagName('label')[0].innerText =
-                    element.value.slice(0, -3);
+                element.parentElement.getElementsByTagName('label')[0].innerHTML = String(JSON.parse(element.value)[
+                        'start_time']).slice(0, -3) + ' <br> ' + String(JSON.parse(element.value)['end_time'])
+                    .slice(
+                        0, -3);
             });
             var htmlElements = document.querySelectorAll('input[type="checkbox"].time_picker');
             timeTable.forEach((time, key) => {
                 data.forEach(blocked => {
-                    if (time >= blocked.start_time && time <= blocked.end_time) {
+                    // if (time >= blocked.start_time && timeTable[key + 1] <= blocked.end_time) {
+                    if (
+                        (new Date('01/01/2000 ' + time) <= new Date('01/01/2000 ' + blocked.start_time) &&
+                            new Date('01/01/2000 ' + timeTable[key + 1]) >= new Date('01/01/2000 ' + blocked
+                                .end_time)) ||
+                        (new Date('01/01/2000 ' + time) >= new Date('01/01/2000 ' + blocked.start_time) &&
+                            new Date('01/01/2000 ' + timeTable[key + 1]) <= new Date('01/01/2000 ' + blocked
+                                .end_time))
+                    ) {
                         htmlElements[key].disabled = true;
                         htmlElements[key].setAttribute('reserved', 'true');
                         htmlElements[key].checked = false;
@@ -455,5 +447,13 @@
                 })
             });
         }
+        document.addEventListener("DOMContentLoaded", function(event) { 
+            var scrollpos = localStorage.getItem('scrollpos');
+            if (scrollpos) window.scrollTo(0, scrollpos);
+        });
+
+        window.onbeforeunload = function(e) {
+            localStorage.setItem('scrollpos', window.scrollY);
+        };
     </script>
 @endsection

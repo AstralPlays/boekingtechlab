@@ -34,15 +34,14 @@ class ReservationController extends Controller
         /* Convert JS Time to a Carbon Object. */
         $date = Carbon::parse($request['date']);
         /* Check if time is not before opening time or later then closing time */
-        if(($request['start_time'] < '09:00') or ($request['end_time'] > '17:00'))
+        if(($request['start_time'] < '09:00:00') or ($request['end_time'] > '17:00:00'))
         {
             return Response(json_encode('Invalid Argument | 007.2'), 412);
         }
-        if($date->isPast(Carbon::tomorrow()))
+        if($date->isBefore(Carbon::tomorrow()->addDay(1)))
         {
             return Response(json_encode('Invalid Argument | 007.3'), 412);
         }
-
         if(!str_contains($request['start_time'], ':00') and !str_contains($request['start_time'], ':15') and !str_contains($request['start_time'], ':30') and !str_contains($request['start_time'], ':45')){
             return Response(json_encode('Invalid Time Format'), 412);
         }
@@ -55,29 +54,17 @@ class ReservationController extends Controller
 
         foreach($alloftoday as $reservering)
         {
-            // if(Carbon::parse($request['end_time']) == Carbon::parse($reservering['start_time']))
-            // {
-            //     continue;
-            // }
-            // // -----------------
-            if(Carbon::parse($request['start_time'])->isBetween(Carbon::parse($reservering['start_time']),Carbon::parse($reservering['end_time'])))
+            if(Carbon::parse($reservering['start_time'])->isBetween($start_time,$end_time) or Carbon::parse($reservering['end_time'])->isBetween($start_time,$end_time))
             {
-                return Response(json_encode('Cannot Place Appointment'), 400);
-            }
-
-            if(Carbon::parse($request['end_time'])->isBetween(Carbon::parse($reservering['start_time']),Carbon::parse($reservering['end_time'])))
-            {
-                if((Carbon::parse($request['start_time']) == Carbon::parse($reservering['end_time'])) or (Carbon::parse($request['end_time']) == Carbon::parse($reservering['start_time'])))
-                {
+                if($start_time->eq($reservering['end_time']) or $end_time->eq($reservering['start_time'])){
                     continue;
-                } else{
-                    return Response(json_encode('Cannot Place Appointment'), 400);
                 }
+                return Response(json_encode('Cannot Place Appointment | 1'), 400);
             }
         }
 
         if(!$request['materials']){
-             return $this->reservationClient->create(
+             $this->reservationClient->create(
                 [
                     'userID' => session()->get('user_id'),
                     'date' => $date,
@@ -85,22 +72,32 @@ class ReservationController extends Controller
                     'end_time' => $end_time,
                     'materials' => json_encode($request['materials'])
                 ]);
+                return Response(json_encode('success'), 200);
         }
-        return $this->reservationClient->create(
+        $this->reservationClient->create(
             [
                 'userID' => session()->get('user_id'),
                 'date' => $date,
                 'start_time' => $start_time,
                 'end_time' => $end_time,
             ]);
+            return Response(json_encode('success'), 200);
     }
 
     public function getByDate(Request $request): array
     {
         $dateFormatted = Carbon::parse($request['date']);
+        if($dateFormatted->isBefore(Carbon::tomorrow()->addDay(1))){
+            return [
+                [
+                    'start_time' => '09:00',
+                    'end_time' => '17:00'
+                ]
+            ];
+        }
         $Reservations = $this->reservationClient->getByDate($dateFormatted->format('Y-m-d'));
         $list = [];
-        foreach($Reservations as $key => $reservation){
+        foreach($Reservations as $reservation){
             $list[] = [
                 'start_time' => $reservation['start_time'],
                 'end_time' =>  $reservation['end_time']

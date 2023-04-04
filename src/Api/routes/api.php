@@ -18,10 +18,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/user/register', [AccountSystemController::class, 'register']);
 Route::post('/user/login', [AccountSystemController::class, 'login']);
+Route::post('/reservations/create', [ReservationController::class, 'create']);
+Route::post('/reservations/getbydate', [ReservationController::class, 'getByDate']);
 
 Route::middleware(UserAuth::class)->group(function () {
-    Route::post('/reservations/create', [ReservationController::class, 'create']);
-    Route::post('/reservations/getbydate', [ReservationController::class, 'getByDate']);
     Route::post('/auth', [AccountSystemController::class, 'auth']);
 });
 

@@ -99,13 +99,6 @@
                         </select>
                         <div class="dates_container" id="dates_container">
                             {{-- Code will go here by javascript --}}
-
-                            <div class="date_picker_item">
-                                <input type="radio" id="i" name="date" value="date" />
-                                <label class="whatever"
-                                    for="i">{{ \Carbon\Carbon::parse('2020')->format('d') }}</label>
-                            </div>
-
                         </div>
                     </div>
                 </div>
@@ -129,6 +122,8 @@
         var timeTable = [];
         var sDate = new Date(new Date().setDate(1));
         var eDate = new Date(new Date().setDate(this.daysInMonth(undefined, undefined, this.sDate)));
+        var blockedTimes = [];
+        var selectedDate;
         var selectedTimes = [];
         var selectedRooms = [];
         var selectedMats = [];
@@ -207,7 +202,8 @@
                 timeTable.push(currentdate.toLocaleTimeString([], {
                     hour12: false,
                     hour: "2-digit",
-                    minute: "2-digit"
+                    minute: "2-digit",
+                    second: "2-digit"
                 }));
                 startTime.setMinutes(startTime.getMinutes() + intervalInMinuts);
             }
@@ -227,7 +223,14 @@
                 input.type = 'radio';
                 input.setAttribute('name', 'date');
                 input.id = 'date_picker_' + i;
-                input.value = item.toLocaleDateString();
+                input.value = item.toLocaleDateString([], {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                });
+                input.onclick = function() {
+                    getBlockedTimes(event);
+                };
 
                 let label = document.createElement('label');
                 label.className = 'whatever';
@@ -254,16 +257,19 @@
                 let input = document.createElement('input');
                 input.type = 'checkbox';
                 input.setAttribute('name', 'time_picker_' + i);
+                input.setAttribute('reserved', false);
                 input.id = 'time_picker_' + i;
+                input.className = 'time_picker';
                 input.value = item;
-                input.onclick = function() {
+                input.onchange = function() {
                     checkButtons(event);
+                    console.log(123);
                 };
 
                 let label = document.createElement('label');
                 label.className = 'whatever';
                 label.setAttribute('for', 'time_picker_' + i);
-                label.innerHTML = item;
+                label.innerHTML = item.slice(0, -3);
 
                 getTimes.push(input)
 
@@ -275,7 +281,9 @@
         }
 
         function checkButtons(event) {
+            blockTime(blockedTimes);
             setTimeout(() => {
+                blockTime(blockedTimes);
                 selectedTimes = [];
                 for (let i = 0; i < getTimes.length; i++) {
                     if (getTimes.at(i).checked) {
@@ -310,21 +318,142 @@
                         getTimes.at(i).disabled = false;
                     }
                 }
+                blockTime(blockedTimes);
             }, 0);
+            blockTime(blockedTimes);
         }
 
         function submity() {
-            console.log(getTimes);
-            console.log(selectedTimes);
-            console.log(selectedRooms);
-            console.log(selectedMats);
-            console.log({
-                user: '0123456789',
-                // date: this.form.getRawValue().date,
-                start_time: selectedTimes[0],
-                end_time: selectedTimes[selectedTimes.length - 1],
-                classroom: selectedRooms,
-                materials: selectedMats,
+            if (document.querySelector('input[name="date"]:checked')) {
+                var selectedDate = document.querySelector('input[name="date"]:checked').value
+            }
+            // console.log(getTimes);
+            // console.log({
+            //     selectedDate: selectedDate
+            // });
+            // console.log({
+            //     selectedDate: selectedDate
+            // });
+            // console.log(selectedTimes);
+            // console.log(selectedRooms);
+            // console.log(selectedMats);
+            // console.log({
+            //     user: '0123456789',
+            //     // date: this.form.getRawValue().date,
+            //     start_time: selectedTimes[0],
+            //     end_time: selectedTimes[selectedTimes.length - 1],
+            //     classroom: selectedRooms,
+            //     materials: selectedMats,
+            // });
+
+
+
+
+            var url = 'http://localhost:8000/api/reservations/create';
+
+            var settings = {
+                method: "POST",
+                timeout: 0,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    "user_id": "69",
+                    "start_time": selectedTimes[0],
+                    "end_time": selectedTimes[selectedTimes.length - 1],
+                    "date": selectedDate,
+                    "_token": "{{ csrf_token() }}"
+                })
+            };
+
+            fetch(url, settings)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        return response.then(error => {
+                            throw error;
+                        });
+                    }
+                })
+                .then(data => {
+                    console.log('data', data);
+                })
+                .catch(error => {
+                    console.log('error', error);
+                });
+
+
+
+        }
+
+        function getBlockedTimes(event) {
+            blockTime(blockedTimes);
+            if (selectedDate === event.target.value) {
+                return;
+            }
+
+            blockedTimes = [];
+            selectedDate = event.target.value;
+
+            var url = 'http://localhost:8000/api/reservations/getbydate';
+
+            var settings = {
+                method: "POST",
+                timeout: 0,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    "date": selectedDate,
+                    "_token": "{{ csrf_token() }}"
+                })
+            };
+
+            fetch(url, settings)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        return response.then(error => {
+                            throw error;
+                        });
+                    }
+                })
+                .then(data => {
+                    blockedTimes = data;
+                    blockTime(blockedTimes);
+                    var htmlElements = document.querySelectorAll('input[type="checkbox"].time_picker');
+                    htmlElements.forEach(element => {
+                        element.checked = false;
+                        element.disabled = false;
+                        selectedTimes = [];
+                    });
+                })
+                .catch(error => {
+                    console.log('error', error);
+                });
+        }
+
+        function blockTime(data) {
+            var htmlElements = document.querySelectorAll('input[type="checkbox"][reserved=true].time_picker');
+            htmlElements.forEach(element => {
+                element.disabled = false;
+                element.setAttribute('reserved', 'false');
+                element.parentElement.getElementsByTagName('label')[0].innerText =
+                    element.value.slice(0, -3);
+            });
+            var htmlElements = document.querySelectorAll('input[type="checkbox"].time_picker');
+            timeTable.forEach((time, key) => {
+                data.forEach(blocked => {
+                    if (time >= blocked.start_time && time <= blocked.end_time) {
+                        htmlElements[key].disabled = true;
+                        htmlElements[key].setAttribute('reserved', 'true');
+                        htmlElements[key].checked = false;
+                        htmlElements[key].parentElement.getElementsByTagName('label')[0].innerText =
+                            'Bezet';
+                    }
+                })
             });
         }
     </script>

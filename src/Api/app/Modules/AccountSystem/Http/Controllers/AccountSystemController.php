@@ -11,56 +11,61 @@ use Illuminate\Support\Str;
 use \Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as Response;
+use Illuminate\Routing\Route;
+use Stringable;
 
 class AccountSystemController extends Controller
 {
-    public function __construct(
-        private AccountSystemClientInterface $userLoginClient
-    ){
-    }
+	public function __construct(
+		private AccountSystemClientInterface $userLoginClient
+	) {
+	}
 
-    public function index(): Collection
-    {
-        return $this->userLoginClient->all();
-    }
+	public function index(): Collection
+	{
+		return $this->userLoginClient->all();
+	}
 
-    public function register(StoreRegisterRequest $request): array
-    {
-        $uuid = Str::uuid()->toString();
-        $account = $this->userLoginClient->create(
-            [
-                'email' => $request['email'],
-                'password' => Hash::make($request['password']),
-                'api_token' => $uuid
-            ]);
-        return [
-            'user_id' => $account['id'],
-            'api_token' => $uuid
-        ];
-    }
+	public function register(Request $request)
+	{
+		$uuid = Str::uuid()->toString();
+		$user = $this->userLoginClient->create(
+			[
+				'email' => $request['email'],
+				'password' => Hash::make($request['password']),
+				'api_token' => $uuid
+			]
+		);
+		session()->put('user_id', $user['id']);
+		session()->put('api_token', $user['api_token']);
+		return route('home');
+	}
 
-    public function login(StoreLoginRequest $request): array|Response
-    {
-        if(!$user = $this->userLoginClient->getUser($request['email'], $request['password'])){
-            return Response(json_encode('Unauthorized'), 401);
-        }
-        if(!Hash::check($request['password'], $user->password())){
-            return Response(json_encode('Unauthorized'), 401);
-        }
-        return [
-            'user_id' => $user['id'],
-            'api_token' => $user['api_token']
-        ];
-    }
 
-    public function auth(Request $request): Response
-    {
-        $result = $this->userLoginClient->getUserByIdAndToken($request['user_id'], $request->bearerToken());
-        return Response(
-            [
-                'auth' => 'Authorized',
-                'role' => $result['role'],
-            ], 200);
-    }
 
+	public function login(Request $request): Route|Response
+	{
+		if (!$user = $this->userLoginClient->getUser($request['email'])) {
+			return Response(json_encode('Unauthorized | Invalid Email'), 401);
+		}
+		if (!Hash::check($request['password'], $user->password())) {
+			return Response(json_encode('Unauthorized | Invalid Password'), 401);
+		}
+		
+		session()->put('user_id', $user['id']);
+		session()->put('api_token', $user['api_token']);
+		return Response(json_encode('success'), 200);
+	}
+
+	public function auth(Request $request): Response
+	{
+		$result = $this->userLoginClient->getUserByIdAndToken($request['user_id'], $request->bearerToken());
+		return Response(
+			[
+				'auth' => 'Authorized',
+				'role' => $result['role'],
+			],
+			200
+		);
+	}
 }

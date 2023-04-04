@@ -73,7 +73,7 @@ class ReservationController extends Controller
         if(!$request['materials']){
              return $this->reservationClient->create(
                 [
-                    'userID' => $request['user_id'],
+                    'userID' => session()->get('user_id'),
                     'date' => $date,
                     'start_time' => $start_time,
                     'end_time' => $end_time,
@@ -82,7 +82,7 @@ class ReservationController extends Controller
         }
         return $this->reservationClient->create(
             [
-                'userID' => $request['user_id'],
+                'userID' => session()->get('user_id'),
                 'date' => $date,
                 'start_time' => $start_time,
                 'end_time' => $end_time,

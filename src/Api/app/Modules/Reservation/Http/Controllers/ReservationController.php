@@ -27,16 +27,20 @@ class ReservationController extends Controller
         $start_time = Carbon::parse($request['start_time']);
         $end_time = Carbon::parse($request['end_time']);
 
+        if($start_time->eq($end_time))
+        {
+            return Response(json_encode('Invalid Argument | 007.1'), 412);
+        }
         /* Convert JS Time to a Carbon Object. */
         $date = Carbon::parse($request['date']);
         /* Check if time is not before opening time or later then closing time */
         if(($request['start_time'] < '09:00') or ($request['end_time'] > '17:00'))
         {
-            return Response(json_encode('Invalid Argument | 007.1'), 412);
+            return Response(json_encode('Invalid Argument | 007.2'), 412);
         }
         if($date->isPast(Carbon::tomorrow()))
         {
-            return Response(json_encode('Invalid Argument | 007.2'), 412);
+            return Response(json_encode('Invalid Argument | 007.3'), 412);
         }
 
         if(!str_contains($request['start_time'], ':00') and !str_contains($request['start_time'], ':15') and !str_contains($request['start_time'], ':30') and !str_contains($request['start_time'], ':45')){
@@ -51,14 +55,11 @@ class ReservationController extends Controller
 
         foreach($alloftoday as $reservering)
         {
-            if(Carbon::parse($request['start_time']) == Carbon::parse($reservering['end_time']))
-            {
-                continue;
-            }
-            if(Carbon::parse($request['end_time']) == Carbon::parse($reservering['start_time']))
-            {
-                continue;
-            }
+            // if(Carbon::parse($request['end_time']) == Carbon::parse($reservering['start_time']))
+            // {
+            //     continue;
+            // }
+            // // -----------------
             if(Carbon::parse($request['start_time'])->isBetween(Carbon::parse($reservering['start_time']),Carbon::parse($reservering['end_time'])))
             {
                 return Response(json_encode('Cannot Place Appointment'), 400);
@@ -66,7 +67,12 @@ class ReservationController extends Controller
 
             if(Carbon::parse($request['end_time'])->isBetween(Carbon::parse($reservering['start_time']),Carbon::parse($reservering['end_time'])))
             {
-                return Response(json_encode('Cannot Place Appointment'), 400);
+                if((Carbon::parse($request['start_time']) == Carbon::parse($reservering['end_time'])) or (Carbon::parse($request['end_time']) == Carbon::parse($reservering['start_time'])))
+                {
+                    continue;
+                } else{
+                    return Response(json_encode('Cannot Place Appointment'), 400);
+                }
             }
         }
 

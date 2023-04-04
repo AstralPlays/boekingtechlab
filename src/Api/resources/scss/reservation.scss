@@ -96,6 +96,11 @@ $item-boarder: 0px double black;
 						input[type=radio]:disabled+.whatever {
 							background-color: orange;
 						}
+
+						input[type=checkbox][reserved='true']+.whatever,
+						input[type=radio][reserved='true']+.whatever {
+							background-color: gray;
+						}
 					}
 				}
 			}

@@ -358,7 +358,6 @@
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    "user_id": "69",
                     "start_time": selectedTimes[0],
                     "end_time": selectedTimes[selectedTimes.length - 1],
                     "date": selectedDate,

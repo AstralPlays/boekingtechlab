@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
         <div class="wrap">
-            <form onsubmit="login(event)" id="form"> {{-- need milan help --}}
+            <form onsubmit="login(event)" id="form">
                 <span class="form-title">Login</span>
                 <div class="input-container" data-validate="Email is required">
                     <span class="label">Email</span>
@@ -64,22 +64,17 @@
 
             fetch(url, settings)
                 .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    } else {
-                        return response.then(error => {
-                            throw error;
-                        });
-                    }
+                    return response.json();
                 })
                 .then(data => {
-                    console.log('data', data);
                     if (data == 'success') {
                         window.location.href = 'http://localhost:8000/home';
+                    } else {
+                        alert("wrong email or password");
                     }
                 })
                 .catch(error => {
-                    console.log('error', error);
+                    console.log('error', error); // handle errors
                 });
         }
     </script>

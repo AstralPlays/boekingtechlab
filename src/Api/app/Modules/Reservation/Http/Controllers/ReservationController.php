@@ -50,7 +50,7 @@ class ReservationController extends Controller
             return Response(json_encode('Invalid Time Format'), 412);
         }
 
-        $alloftoday = $this->reservationClient->getByDate($date->format('Y-m-d'));
+        $alloftoday = $this->reservationClient->getByDate($date->format('Y-m-d'), $request['room_id']);
 
         foreach($alloftoday as $reservering)
         {
@@ -66,7 +66,8 @@ class ReservationController extends Controller
         if(!$request['materials']){
              $this->reservationClient->create(
                 [
-                    'userID' => session()->get('user_id'),
+                    'user_id' => session()->get('user_id'),
+                    'room_id' => $request['room_id'],
                     'date' => $date,
                     'start_time' => $start_time,
                     'end_time' => $end_time,
@@ -76,7 +77,8 @@ class ReservationController extends Controller
         }
         $this->reservationClient->create(
             [
-                'userID' => session()->get('user_id'),
+                'user_id' => session()->get('user_id'),
+                'room_id' => $request['room_id'],
                 'date' => $date,
                 'start_time' => $start_time,
                 'end_time' => $end_time,
@@ -95,7 +97,7 @@ class ReservationController extends Controller
                 ]
             ];
         }
-        $Reservations = $this->reservationClient->getByDate($dateFormatted->format('Y-m-d'));
+        $Reservations = $this->reservationClient->getByDate($dateFormatted->format('Y-m-d'), $request['room_id']);
         $list = [];
         foreach($Reservations as $reservation){
             $list[] = [

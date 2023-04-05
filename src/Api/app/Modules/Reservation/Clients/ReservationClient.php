@@ -19,9 +19,13 @@ class ReservationClient implements ReservationClientInterface
         return Reservation::where($search, $variable)->get();
     }
 
-    function getByDate(string $date): Collection
+    function getByDate(string $date, int $room_id): Collection
     {
-        return Reservation::where('date', $date)->get();
+        return Reservation::where(
+            [
+                'date' => $date,
+                'room_id' => $room_id
+        ])->get();
     }
 
     function create(array $variable): Reservation

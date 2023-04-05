@@ -11,10 +11,11 @@ class Reservation extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'classroom',
+        'room_id',
         'date',
         'start_time',
         'end_time',
-        'userID'
+        'userID',
+        'materials'
     ];
 }

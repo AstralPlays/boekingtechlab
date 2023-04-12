@@ -21,13 +21,10 @@ class AdminAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!session()->get('role')){
-            return Response(json_encode('Incorrect role', 500));
+        $results = $this->userLoginClient->getRole(session()->get('user_id'), session()->get('api_token'));
+        if($results['role'] === 'Admin'){
+            return $next($request);
         }
-        $results = $this->userLoginClient->getRole(session()->get('role'), session()->get('api_token'));
-        if(!$results['role'] == 'admin'){
-            return Response(json_encode('Unauthorized'), 401);
-        }
-        return $next($request);
+        return Response(json_encode('Unauthorized'), 401);
     }
 }

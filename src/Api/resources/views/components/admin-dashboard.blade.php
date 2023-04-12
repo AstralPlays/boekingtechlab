@@ -4,7 +4,7 @@
 
 @section('content')
     <x-sideBar />
-
+    {{ print_r(session()->get('role')) }}
     <div class="text-danger">
         admin page
     </div>

@@ -38,6 +38,7 @@ class AccountSystemController extends Controller
 		);
 		session()->put('user_id', $user['id']);
 		session()->put('api_token', $user['api_token']);
+		session()->put('role', $user['role']);
 		return route('home');
 	}
 
@@ -54,6 +55,7 @@ class AccountSystemController extends Controller
 		
 		session()->put('user_id', $user['id']);
 		session()->put('api_token', $user['api_token']);
+		session()->put('role', $user['role']);
 		return Response(json_encode('success'), 200);
 	}
 

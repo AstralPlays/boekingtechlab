@@ -28,7 +28,10 @@ class AccountSystemClient implements AccountSystemClientInterface
     {
         return User::where('id', $id)->where('api_token', $api_token)->first();
     }
-
+    public function getRole(string $role, string $api_token)
+    {
+        return User::where('role', $role)->where('api_token', $api_token)->first();
+    }
     function create(array $variable): User
     {
         return User::create($variable);

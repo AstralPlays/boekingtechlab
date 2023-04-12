@@ -1,11 +1,13 @@
 <?php
 
+use App\Modules\AccountSystem\middleware\AdminAuth;
 use App\Modules\AccountSystem\middleware\UserAuth;
 use App\View\Components\homePage;
 use App\View\Components\register;
 use App\View\Components\login;
 use App\View\Components\reservation;
 use App\View\Components\aboutUs;
+use App\View\Components\adminDashboard;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,8 +26,11 @@ Route::group(['middleware' => ['web']], function () {
 	});
 
 	Route::get('/home', [homePage::class, 'render'])->name('home');
-
+	
 	Route::middleware(UserAuth::class)->group(function () {
+		Route::middleware(AdminAuth::class)->group(function (){
+			Route::get('/admin', [adminDashboard::class, 'render'])->name('admin');
+		});
 		Route::get('/reservation', [reservation::class, 'render'])->name('reservation');
 	});
 	

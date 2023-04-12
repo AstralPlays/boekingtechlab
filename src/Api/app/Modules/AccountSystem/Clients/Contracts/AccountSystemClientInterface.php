@@ -15,6 +15,8 @@ interface AccountSystemClientInterface
 
     function getUserByIdAndToken(int $id, string $api_token): ?User;
 
+    function getRole(string $role, string $api_token);
+
     function create(array $variable): User;
 
     function delete(string $search, string $variable): Collection;

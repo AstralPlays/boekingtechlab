@@ -29,7 +29,10 @@ Route::group(['middleware' => ['web']], function () {
 	
 	Route::middleware(UserAuth::class)->group(function () {
 		Route::middleware(AdminAuth::class)->group(function (){
-			Route::get('/admin', [adminDashboard::class, 'render'])->name('admin');
+			Route::get('/admin', [adminDashboard::class, 'render'])->name('admin-dashboard');
+			Route::get('/admin/bookings', [homePage::class, 'render'])->name('admin-bookings');
+			Route::get('/admin/accounts', [homePage::class, 'render'])->name('admin-accounts');
+			Route::get('/admin/settings', [homePage::class, 'render'])->name('admin-settings');
 		});
 		Route::get('/reservation', [reservation::class, 'render'])->name('reservation');
 	});

@@ -21,7 +21,7 @@ class AdminAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        $results = $this->userLoginClient->getRole(session()->get('user_id'), session()->get('api_token'));
+        $results = $this->userLoginClient->getUserByIdAndToken(session()->get('user_id'), session()->get('api_token'));
         if($results['role'] === 'Admin'){
             return $next($request);
         }

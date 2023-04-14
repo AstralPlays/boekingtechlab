@@ -15,7 +15,7 @@ class Reservation extends Model
         'date',
         'start_time',
         'end_time',
-        'userID',
+        'user_id',
         'materials'
     ];
 }

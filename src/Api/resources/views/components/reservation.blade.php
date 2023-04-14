@@ -8,7 +8,7 @@
     </script> --}}
     <div class="container">
         <div class="wrapper">
-            <form id="form"> {{-- need milan help --}}
+            <form id="form">
                 <div class="formPart">
                     <div class="userInfo">
                         <div class="userInfo_item">
@@ -36,16 +36,10 @@
                 <div class="formPart">
                     <div class="room_picker">
                         <div class="swiper">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <div class="swiper_item">
-                                        <span>item 1</span>
-                                        <img src="{{ Vite::asset('resources/images/logo.png') }}" alt="">
-                                        <div class="controllers" *ngIf="selectBox" [formArrayName]="controlName">
-                                            <input type="checkbox" class="btn_check">
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="swiper-wrapper" id="rooms-wrapper">
+                                {{-- this section will be looped --}}
+
+                                {{-- this section will be looped --}}
                             </div>
                             <div class="swiper-pagination"></div>
                             <div class="swiper-button-prev"></div>
@@ -57,22 +51,10 @@
                 <div class="formPart">
                     <div class="mats_picker">
                         <div class="swiper">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <div class="swiper_item">
-                                        <span>item 1</span>
-                                        <img src="{{ Vite::asset('resources/images/logo.png') }}" alt="">
-                                        <div class="controllers" *ngIf="!selectBox">
-                                            <button type="button" class="btn_add" (click)="increaseValue(i)">
-                                                <i class="icon fa-solid fa-plus"></i>
-                                            </button>
-                                            <span>0</span>
-                                            <button type="button" class="btn_remove" (click)="decreaseValue(i)">
-                                                <i class="icon fa-solid fa-minus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="swiper-wrapper" id="mats-wrapper">
+                                {{-- this section will be looped --}}
+
+                                {{-- this section will be looped --}}
                             </div>
                             <div class="swiper-pagination"></div>
                             <div class="swiper-button-prev"></div>
@@ -88,7 +70,7 @@
                             <option value="2" @if (date('m') == 2) selected @endif>Februari</option>
                             <option value="3" @if (date('m') == 3) selected @endif>Maart</option>
                             <option value="4" @if (date('m') == 4) selected @endif>April</option>
-                            <option value="5" @if (date('m') == 5) selected @endif>Kunnen</option>
+                            <option value="5" @if (date('m') == 5) selected @endif>Mei</option>
                             <option value="6" @if (date('m') == 6) selected @endif>Juni</option>
                             <option value="7" @if (date('m') == 7) selected @endif>Juli</option>
                             <option value="8" @if (date('m') == 8) selected @endif>Augustus</option>
@@ -112,6 +94,21 @@
                 <div class="submin_container">
                     <button type="button" onclick="submity()">submit</button>
                 </div>
+                <input type="text" name="array[room_1]" value="" /><br>
+                <input type="text" name="array[room_2]" value="" /><br>
+                <input type="text" name="array[room_3]" value="" /><br>
+                <input type="text" name="array[room_4]" value="" /><br>
+                <input type="text" name="array[room_5]" value="" /><br>
+                <input type="text" name="array[room_6]" value="" /><br>
+                <input type="text" name="array[room_7]" value="" /><br>
+                <input type="text" name="array[room_8]" value="" /><br>
+                <input type="text" name="array[room_9]" value="" /><br>
+                <input type="text" name="array[room_10]" value="" /><br>
+                <input type="text" name="array[room_11]" value="" /><br>
+                <input type="text" name="array[room_12]" value="" /><br>
+                <input type="text" name="array[room_13]" value="" /><br>
+                <input type="text" name="array[room_14]" value="" /><br>
+                <input type="text" name="array[room_15]" value="" /><br>
             </form>
         </div>
     </div>
@@ -128,39 +125,53 @@
         var selectedRooms = [];
         var selectedMats = [];
         var rooms = [{
+            id: 1,
             title: 'Lokaal 1',
             image: 'logo.png'
         }, {
+            id: 2,
             title: 'Lokaal 2',
             image: 'logo.png'
         }, {
+            id: 3,
             title: 'Lokaal 3',
             image: 'logo.png'
         }, {
+            id: 4,
             title: 'Lokaal 4',
             image: 'logo.png'
         }, {
+            id: 5,
             title: 'Lokaal 5',
             image: 'logo.png'
         }];
         var mats = [{
+            id: 6,
             title: 'Materiaal 1',
-            image: 'logo.png'
+            image: 'logo.png',
+            quantity: 1
         }, {
+            id: 7,
             title: 'Materiaal 2',
-            image: 'logo.png'
+            image: 'logo.png',
+            quantity: 3
         }, {
+            id: 8,
             title: 'Materiaal 3',
-            image: 'logo.png'
+            image: 'logo.png',
+            quantity: 5
         }, {
+            id: 9,
             title: 'Materiaal 4',
-            image: 'logo.png'
+            image: 'logo.png',
+            quantity: 7
         }, {
+            id: 10,
             title: 'Materiaal 5',
-            image: 'logo.png'
+            image: 'logo.png',
+            quantity: 9
         }];
         let timeElement = []
-        let dateElement = []
 
         createTimeTable('9:00', '17:00', 15);
         createDateTable(sDate, eDate);
@@ -211,7 +222,6 @@
         }
 
         function addDateTable() {
-            // dateTable.forEach(() => dateElement.push(false));
             let datesContainer = document.getElementById('dates_container');
             datesContainer.innerHTML = '';
 
@@ -285,10 +295,57 @@
             }
         }
 
+        function addRooms() {
+            document.getElementById('rooms-wrapper').innerHTML = '';
+            rooms.forEach((item, i) => {
+                document.getElementById('rooms-wrapper').innerHTML += `
+					<div class="swiper-slide">
+                        <div class="swiper_item">
+                            <span>${item.title}</span>
+                            <img src="{{ Vite::asset('resources/images/${item.image}') }}" alt="">
+                            <div class="controllers">
+                                <input type="checkbox" class="btn_check" name="rooms[${item.id}]">
+                            </div>
+                        </div>
+                    </div>
+				`;
+
+            });
+        }
+        addRooms();
+
+        function addMats() {
+            document.getElementById('mats-wrapper').innerHTML = '';
+            mats.forEach((item, i) => {
+                document.getElementById('mats-wrapper').innerHTML += `
+					<div class="swiper-slide">
+						<div class="swiper_item">
+							<span>${item.title}</span>
+							<img src="{{ Vite::asset('resources/images/${item.image}') }}" alt="">
+							<div class="controllers">
+								<button type="button" class="btn_remove" onclick="decrement(event)">
+									<i class="icon fa-solid fa-minus"></i>
+									</button>
+									<input type="number" name="mats[${item.id}]" id="quantity${i}" min="0"
+									max="${item.quantity}" readonly value="0">
+									<button type="button" class="btn_add" onclick="increment(event)">
+										<i class="icon fa-solid fa-plus"></i>
+									</button>
+							</div>
+						</div>
+					</div>
+				`;
+
+            });
+        }
+        addMats();
+
         function checkButtons(event) {
             blockTime(blockedTimes);
+
             setTimeout(() => {
                 blockTime(blockedTimes);
+
                 selectedTimes = [];
                 for (let i = 0; i < timeElement.length; i++) {
                     if (timeElement.at(i).checked) {
@@ -323,8 +380,10 @@
                         timeElement.at(i).disabled = false;
                     }
                 }
+
                 blockTime(blockedTimes);
             }, 0);
+
             blockTime(blockedTimes);
         }
 
@@ -345,6 +404,7 @@
                     "start_time": selectedTimes[0]['start_time'],
                     "end_time": selectedTimes[selectedTimes.length - 1]['end_time'],
                     "date": selectedDate,
+                    "room_id": 1,
                     "_token": "{{ csrf_token() }}"
                 })
             };
@@ -370,6 +430,7 @@
 
         function getBlockedTimes(event) {
             blockTime(blockedTimes);
+
             if (selectedDate === event.target.value) {
                 return;
             }
@@ -387,6 +448,7 @@
                 },
                 body: JSON.stringify({
                     "date": selectedDate,
+                    "rooms_id": getSelectedRooms(),
                     "_token": "{{ csrf_token() }}"
                 })
             };
@@ -429,7 +491,6 @@
             var htmlElements = document.querySelectorAll('input[type="checkbox"].time_picker');
             timeTable.forEach((time, key) => {
                 data.forEach(blocked => {
-                    // if (time >= blocked.start_time && timeTable[key + 1] <= blocked.end_time) {
                     if (
                         (new Date('01/01/2000 ' + time) <= new Date('01/01/2000 ' + blocked.start_time) &&
                             new Date('01/01/2000 ' + timeTable[key + 1]) >= new Date('01/01/2000 ' + blocked
@@ -447,13 +508,45 @@
                 })
             });
         }
-        document.addEventListener("DOMContentLoaded", function(event) { 
-            var scrollpos = localStorage.getItem('scrollpos');
-            if (scrollpos) window.scrollTo(0, scrollpos);
-        });
 
-        window.onbeforeunload = function(e) {
-            localStorage.setItem('scrollpos', window.scrollY);
-        };
+        function increment(event) {
+            event.currentTarget.parentElement.getElementsByTagName('input')[0].stepUp();
+        }
+
+        function decrement(event) {
+            event.currentTarget.parentElement.getElementsByTagName('input')[0].stepDown();
+        }
+
+        function getSelectedRooms() {
+            var FD = new FormData(document.getElementById('form'));
+            var dataArray = [];
+            for (var pair of FD.entries()) {
+                if (pair[0].startsWith("rooms[") && pair[1]) { // Check if the input name starts with "array[room_"
+                    var i = pair[0].indexOf("[") + 1
+                    var roomName = pair[0].substring(i, pair[0].length - 1); // Extract the room name
+                    var data = {};
+                    data[roomName] = pair[1]; // Create an object with the room name and input value
+                    dataArray.push(roomName); // Add the object to the array
+                }
+            }
+            return dataArray; // Output the array of objects to the console
+        }
+
+        function logdata2() {
+            var FD = new FormData(document.getElementById('form'));
+            var dataArray = [];
+            for (var pair of FD.entries()) {
+                if (pair[0].startsWith("mats[") && pair[1] != "0") { // Check if the input name starts with "array[room_"
+                    var i = pair[0].indexOf("[") + 1
+                    var roomName = pair[0].substring(i, pair[0].length - 1); // Extract the room name
+                    var data = {
+                        'mat_id': roomName,
+                        'amount': pair[1]
+                    };
+                    dataArray.push(data); // Add the object to the array
+                }
+            }
+            console.log(dataArray); // Output the array of objects to the console
+        }
     </script>
 @endsection

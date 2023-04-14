@@ -404,7 +404,7 @@
                     "start_time": selectedTimes[0]['start_time'],
                     "end_time": selectedTimes[selectedTimes.length - 1]['end_time'],
                     "date": selectedDate,
-                    "room_id": 1,
+                    "rooms_id": getSelectedRooms(),
                     "_token": "{{ csrf_token() }}"
                 })
             };
@@ -523,7 +523,7 @@
             for (var pair of FD.entries()) {
                 if (pair[0].startsWith("rooms[") && pair[1]) { // Check if the input name starts with "array[room_"
                     var i = pair[0].indexOf("[") + 1
-                    var roomName = pair[0].substring(i, pair[0].length - 1); // Extract the room name
+                    var roomName = parseInt(pair[0].substring(i, pair[0].length - 1)); // Extract the room name
                     var data = {};
                     data[roomName] = pair[1]; // Create an object with the room name and input value
                     dataArray.push(roomName); // Add the object to the array
@@ -532,13 +532,13 @@
             return dataArray; // Output the array of objects to the console
         }
 
-        function logdata2() {
+        function getSelectedMats() {
             var FD = new FormData(document.getElementById('form'));
             var dataArray = [];
             for (var pair of FD.entries()) {
                 if (pair[0].startsWith("mats[") && pair[1] != "0") { // Check if the input name starts with "array[room_"
                     var i = pair[0].indexOf("[") + 1
-                    var roomName = pair[0].substring(i, pair[0].length - 1); // Extract the room name
+                    var roomName = parseInt(pair[0].substring(i, pair[0].length - 1)); // Extract the room name
                     var data = {
                         'mat_id': roomName,
                         'amount': pair[1]
@@ -546,7 +546,7 @@
                     dataArray.push(data); // Add the object to the array
                 }
             }
-            console.log(dataArray); // Output the array of objects to the console
+            return dataArray; // Output the array of objects to the console
         }
     </script>
 @endsection

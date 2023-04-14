@@ -1,10 +1,7 @@
 @vite(['resources/scss/side-bar.scss'])
 
-<div class="sidebar">
-    <div class="sidebar-chevron" id="sidebar-btn">
-        <i class="fa-solid fa-chevron-right fa-xl" id="sidebar-chevron"></i>
-    </div>
-    <div class="sidebar-menu" id="sidebar">
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-menu">
         <ul>
             <li class="sidebar-menu-item">
                 <a href="{{ URL::route('admin-dashboard') }}">Dashboard</a>
@@ -20,6 +17,9 @@
             </li>
         </ul>
     </div>
+    <div class="sidebar-chevron" id="sidebar-btn">
+        <i class="fa-solid fa-chevron-right fa-xl" id="sidebar-chevron"></i>
+    </div>
 </div>
 
 <script>
@@ -28,6 +28,7 @@
     const chevron = document.getElementById("sidebar-chevron")
 
     button.addEventListener("click", open)
+
     function open() {
         if (sidebar.classList.contains("open")) {
             sidebar.classList.remove("open")

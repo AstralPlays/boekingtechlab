@@ -1,40 +1,49 @@
 .sidebar {
-    z-index: 100;
-    position: relative;
-    & > &-menu {
-        position: fixed;
-        top: 120px;
-        left: 48px;
-        max-width: 150px;
-        width: 0vw;
-        transition: all 0.5s;
-        background: darken($color: #662483, $amount: 10);
-        overflow: hidden;
-        &.open {
-            width: 100vw;
-        }
-    }
-    & > &-chevron {
-        position: absolute;
-        background: darken($color: #662483, $amount: 10);
-        height: 48px;
-        width: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        i {
-            transition: all 0.3s;
-            color: #fff;
-        }
-    } 
-    & &-menu-item {
-        padding: 15px 10px;
-        &:hover {
-            background: #74398E;
-        }
-        a {
-            text-decoration: none;
-            color: #fff;
-        }
-    }
+	z-index: 100;
+	position: absolute;
+	height: calc(100% - 80px - 40px);
+	top: 120px;
+	left: -15rem;
+	transition: left 0.5s;
+
+	&.open {
+		left: 0;
+	}
+
+	&>&-menu {
+		width: 15rem;
+		height: 100%;
+		background: darken($color: #662483, $amount: 10);
+		overflow: hidden;
+	}
+
+	&>&-chevron {
+		position: absolute;
+		left: 15rem;
+		top: 0;
+		background: darken($color: #662483, $amount: 10);
+		height: 48px;
+		width: 48px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		i {
+			transition: all 0.3s;
+			color: #fff;
+		}
+	}
+
+	& &-menu-item {
+		padding: 15px 10px;
+
+		&:hover {
+			background: #74398E;
+		}
+
+		a {
+			text-decoration: none;
+			color: #fff;
+		}
+	}
 }

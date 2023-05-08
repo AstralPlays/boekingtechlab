@@ -29,6 +29,9 @@ class AdminAuth
         if(!$results){
             return Response(json_encode('Unauthorized'), 401);
         }
-        return $next($request);
+        if($results['role'] === 'Admin'){
+            return $next($request);
+        }
+        return Response(json_encode('Unauthorized'), 401);
     }
 }

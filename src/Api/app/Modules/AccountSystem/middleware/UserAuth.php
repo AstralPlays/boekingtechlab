@@ -27,10 +27,12 @@ class UserAuth
         if(!session()->get('user_id') or !session()->get('api_token')){
             return Response(json_encode('Missing Login Token.', 500));
         }
-
         $results = $this->userLoginClient->getUserByIdAndToken(session()->get('user_id'), session()->get('api_token'));
         if(!$results){
             return Response(json_encode('Unauthorized'), 401);
+        }
+        if($results['role'] === 'User'){
+            return $next($request);
         }
         return $next($request);
     }

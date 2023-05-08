@@ -26,9 +26,9 @@ class AdminAuth
         }
 
         $results = $this->userLoginClient->getUserByIdAndToken(session()->get('user_id'), session()->get('api_token'));
-        if(!$results){
-            return Response(json_encode('Unauthorized'), 401);
+        if($results['role'] === 'Admin'){
+            return $next($request);
         }
-        return $next($request);
+        return Response(json_encode('Unauthorized'), 401);
     }
 }

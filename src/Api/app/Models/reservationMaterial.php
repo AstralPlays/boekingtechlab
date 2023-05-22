@@ -10,6 +10,12 @@ class reservationMaterial extends Model
 {
 	use HasFactory, SoftDeletes;
 
+	protected $table = 'reservation_material';
+	protected $fillable = [
+		'reservation_id',
+		'material_id'
+	];
+
 	public function reservation()
 	{
 		return $this->belongsTo(Reservation::class, 'reservation_id', 'id');

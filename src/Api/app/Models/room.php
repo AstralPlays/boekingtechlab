@@ -10,5 +10,10 @@ use Laravel\Sanctum\HasApiTokens;
 
 class room extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+	use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+
+	public function reservations()
+	{
+		return $this->belongsToMany(Reservation::class, 'reservation_room');
+	}
 }

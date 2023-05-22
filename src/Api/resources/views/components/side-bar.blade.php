@@ -7,7 +7,7 @@
                 <a href="{{ URL::route('admin-dashboard') }}">Dashboard</a>
             </li>
             <li class="sidebar-menu-item">
-                <a href="{{ URL::route('admin-bookings') }}">Boekingen</a>
+                <a href="{{ URL::route('admin-reservations') }}">Boekingen</a>
             </li>
             <li class="sidebar-menu-item">
                 <a href="{{ URL::route('admin-accounts') }}">Accounts</a>

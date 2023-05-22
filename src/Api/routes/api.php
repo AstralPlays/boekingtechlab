@@ -20,6 +20,7 @@ Route::post('/user/register', [AccountSystemController::class, 'register']);
 Route::post('/user/login', [AccountSystemController::class, 'login']);
 Route::post('/reservations/create', [ReservationController::class, 'create']);
 Route::post('/reservations/getbydate', [ReservationController::class, 'getByDate']);
+Route::post('/reservations/getByDateAdmin', [ReservationController::class, 'getByDateAdmin']);
 
 Route::middleware(UserAuth::class)->group(function () {
     Route::post('/auth', [AccountSystemController::class, 'auth']);

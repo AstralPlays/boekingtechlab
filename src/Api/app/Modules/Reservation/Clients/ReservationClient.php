@@ -9,32 +9,54 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ReservationClient implements ReservationClientInterface
 {
-    function all(): Collection
-    {
-        return Reservation::all();
-    }
+	function all(): Collection
+	{
+		return Reservation::all();
+	}
 
-    function get(string $search, string $variable): Collection
-    {
-        return Reservation::where($search, $variable)->get();
-    }
+	function get(string $search, string $variable): Collection
+	{
+		return Reservation::where($search, $variable)->get();
+	}
 
-    function getByDate(string $date, int $room_id): Collection
-    {
-        return Reservation::where(
-            [
-                'date' => $date,
-                'room_id' => $room_id
-        ])->get();
-    }
+	function getByDate(string $date, int $rooms_id): Collection
+	{
+		return Reservation::where(
+			[
+				'date' => $date,
+				'rooms_id' => $rooms_id
+			]
+		)->get();
+	}
 
-    function create(array $variable): Reservation
-    {
-        return Reservation::create($variable);
-    }
+	function getByDateAdmin(string $date): Collection
+	{
+		return Reservation::with(
+			[
+				'user' => function ($query) {
+					$query->select('id', 'name', 'email', 'phone_number');
+				},
+				'rooms' => function ($query) {
+					$query->select('name');
+				},
+				'materials' => function ($query) {
+					$query->select('name');
+				}
 
-    function delete(string $search, string $variable): Reservation
-    {
-        return Reservation::where($search, $variable)->delete();
-    }
+			]
+		)
+			->select('id', 'user_id', 'start_time', 'end_time', 'verified')
+			->where('date', $date)
+			->get();
+	}
+
+	function create(array $variable): Reservation
+	{
+		return Reservation::create($variable);
+	}
+
+	function delete(string $search, string $variable): Reservation
+	{
+		return Reservation::where($search, $variable)->delete();
+	}
 }

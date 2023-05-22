@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('role')->default('User');
             $table->string('location')->nullable();
-            $table->string('telephone_number')->nullable();
+            $table->string('phone_number')->nullable();
             $table->string('api_token')->nullable();
             $table->timestamp('last_logged_in')->useCurrent();
             $table->timestamp('created_at')->useCurrent();

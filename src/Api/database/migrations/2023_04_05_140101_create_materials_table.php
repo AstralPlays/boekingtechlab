@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
-            $table->integer('room_id')->nullable();
             $table->string('name');
             $table->string('ammount');
+            $table->integer('rooms_id')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
             $table->softDeletes();

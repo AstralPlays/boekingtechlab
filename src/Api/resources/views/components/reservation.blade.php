@@ -13,22 +13,14 @@
                     <div class="userInfo">
                         <div class="userInfo_item">
                             <div class="userInfo_item_part">
-                                <label for="">Voornaam</label>
-                                <input type="text" id="" name="firstName">
-                            </div>
-                            <div class="userInfo_item_part">
-                                <label for="">Achternaam</label>
-                                <input type="text" id="" name="lastName">
+                                <label for="">Naam</label>
+                                <input type="text" id="" name="name">
                             </div>
                         </div>
                         <div class="userInfo_item">
                             <div class="userInfo_item_part">
-                                <label for="">Telefoonnummer</label>
-                                <input type="text" id="" name="phone">
-                            </div>
-                            <div class="userInfo_item_part">
-                                <label for="">Adres</label>
-                                <input type="text" id="" name="address">
+                                <label for="">Email</label>
+                                <input type="text" id="" name="email">
                             </div>
                         </div>
                     </div>
@@ -49,7 +41,35 @@
                     </div>
                 </div>
                 <div class="formPart">
-                    <div class="mats_picker">
+                    <div class="date_picker">
+                        <select name="month" onchange="changeMonth(this.value)">
+                            <option value="0" @if (date('m') == 1) selected @endif>Januari</option>
+                            <option value="1" @if (date('m') == 2) selected @endif>Februari</option>
+                            <option value="2" @if (date('m') == 3) selected @endif>Maart</option>
+                            <option value="3" @if (date('m') == 4) selected @endif>April</option>
+                            <option value="4" @if (date('m') == 5) selected @endif>Mei</option>
+                            <option value="5" @if (date('m') == 6) selected @endif>Juni</option>
+                            <option value="6" @if (date('m') == 7) selected @endif>Juli</option>
+                            <option value="7" @if (date('m') == 8) selected @endif>Augustus</option>
+                            <option value="8" @if (date('m') == 9) selected @endif>September</option>
+                            <option value="9" @if (date('m') == 10) selected @endif>Oktober</option>
+                            <option value="10" @if (date('m') == 11) selected @endif>November</option>
+                            <option value="11" @if (date('m') == 12) selected @endif>December</option>
+                        </select>
+                        <div class="dates_container" id="dates_container">
+                            {{-- Code will go here by javascript --}}
+                        </div>
+                    </div>
+                </div>
+                <div class="formPart">
+                    <div id="time_picker" class="time_picker">
+                        <div class="times_container" id="times_container">
+                            {{-- Code will go here by javascript --}}
+                        </div>
+                    </div>
+                </div>
+                <div class="formPart">
+                    <div id="material_picker" class="mats_picker">
                         <div class="swiper">
                             <div class="swiper-wrapper" id="mats-wrapper">
                                 {{-- this section will be looped --}}
@@ -63,52 +83,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="formPart">
-                    <div class="date_picker">
-                        <select name="month" onchange="changeMonth(event)">
-                            <option value="1" @if (date('m') == 1) selected @endif>Januari</option>
-                            <option value="2" @if (date('m') == 2) selected @endif>Februari</option>
-                            <option value="3" @if (date('m') == 3) selected @endif>Maart</option>
-                            <option value="4" @if (date('m') == 4) selected @endif>April</option>
-                            <option value="5" @if (date('m') == 5) selected @endif>Mei</option>
-                            <option value="6" @if (date('m') == 6) selected @endif>Juni</option>
-                            <option value="7" @if (date('m') == 7) selected @endif>Juli</option>
-                            <option value="8" @if (date('m') == 8) selected @endif>Augustus</option>
-                            <option value="9" @if (date('m') == 9) selected @endif>September</option>
-                            <option value="10" @if (date('m') == 10) selected @endif>Oktober</option>
-                            <option value="11" @if (date('m') == 11) selected @endif>November</option>
-                            <option value="12" @if (date('m') == 12) selected @endif>December</option>
-                        </select>
-                        <div class="dates_container" id="dates_container">
-                            {{-- Code will go here by javascript --}}
-                        </div>
-                    </div>
-                </div>
-                <div class="formPart">
-                    <div class="time_picker">
-                        <div class="times_container" id="times_container">
-                            {{-- Code will go here by javascript --}}
-                        </div>
-                    </div>
-                </div>
                 <div class="submin_container">
-                    <button type="button" onclick="submity()">submit</button>
+                    <button id="submit" type="button" onclick="submity()">submit</button>
                 </div>
-                <input type="text" name="array[room_1]" value="" /><br>
-                <input type="text" name="array[room_2]" value="" /><br>
-                <input type="text" name="array[room_3]" value="" /><br>
-                <input type="text" name="array[room_4]" value="" /><br>
-                <input type="text" name="array[room_5]" value="" /><br>
-                <input type="text" name="array[room_6]" value="" /><br>
-                <input type="text" name="array[room_7]" value="" /><br>
-                <input type="text" name="array[room_8]" value="" /><br>
-                <input type="text" name="array[room_9]" value="" /><br>
-                <input type="text" name="array[room_10]" value="" /><br>
-                <input type="text" name="array[room_11]" value="" /><br>
-                <input type="text" name="array[room_12]" value="" /><br>
-                <input type="text" name="array[room_13]" value="" /><br>
-                <input type="text" name="array[room_14]" value="" /><br>
-                <input type="text" name="array[room_15]" value="" /><br>
             </form>
         </div>
     </div>
@@ -117,64 +94,16 @@
         var form;
         var dateTable = [];
         var timeTable = [];
-        var sDate = new Date(new Date().setDate(1));
-        var eDate = new Date(new Date().setDate(this.daysInMonth(undefined, undefined, this.sDate)));
+        var sDate = new Date();
+        var eDate = new Date();
         var blockedTimes = [];
-        var selectedDate;
         var selectedTimes = [];
         var selectedRooms = [];
         var selectedMats = [];
-        var rooms = [{
-            id: 1,
-            title: 'Lokaal 1',
-            image: 'logo.png'
-        }, {
-            id: 2,
-            title: 'Lokaal 2',
-            image: 'logo.png'
-        }, {
-            id: 3,
-            title: 'Lokaal 3',
-            image: 'logo.png'
-        }, {
-            id: 4,
-            title: 'Lokaal 4',
-            image: 'logo.png'
-        }, {
-            id: 5,
-            title: 'Lokaal 5',
-            image: 'logo.png'
-        }];
-        var mats = [{
-            id: 6,
-            title: 'Materiaal 1',
-            image: 'logo.png',
-            quantity: 1
-        }, {
-            id: 7,
-            title: 'Materiaal 2',
-            image: 'logo.png',
-            quantity: 3
-        }, {
-            id: 8,
-            title: 'Materiaal 3',
-            image: 'logo.png',
-            quantity: 5
-        }, {
-            id: 9,
-            title: 'Materiaal 4',
-            image: 'logo.png',
-            quantity: 7
-        }, {
-            id: 10,
-            title: 'Materiaal 5',
-            image: 'logo.png',
-            quantity: 9
-        }];
         let timeElement = []
 
         createTimeTable('9:00', '17:00', 15);
-        createDateTable(sDate, eDate);
+        changeMonth(new Date().getMonth() + 0);
 
         function daysInMonth(month, year, date) {
             if (month && year) {
@@ -185,11 +114,13 @@
             return;
         }
 
-        function changeMonth(event) {
-            const month = parseInt(event.target.value) - 1;
-            sDate = new Date(new Date(new Date().setMonth(month)).setDate(1)); // 0 - 11 (January - December)
-            eDate = new Date(new Date(new Date().setMonth(month)).setDate(daysInMonth(undefined, undefined,
-                sDate))); // 0 - 11 (January - December)
+        function changeMonth(month) {
+            sDate.setDate(1);
+            sDate.setMonth(month);
+
+            eDate.setDate(daysInMonth(undefined, undefined, sDate));
+            eDate.setMonth(month);
+
             createDateTable(sDate, eDate);
         }
 
@@ -232,15 +163,13 @@
                 let input = document.createElement('input');
                 input.type = 'radio';
                 input.setAttribute('name', 'date');
+                input.classList.add('date_picker_input');
                 input.id = 'date_picker_' + i;
                 input.value = item.toLocaleDateString([], {
                     day: '2-digit',
                     month: '2-digit',
                     year: 'numeric',
                 });
-                input.onclick = function() {
-                    getBlockedTimes(event);
-                };
 
                 let label = document.createElement('label');
                 label.className = 'whatever';
@@ -295,39 +224,44 @@
             }
         }
 
-        function addRooms() {
+        function addRooms(rooms) {
             document.getElementById('rooms-wrapper').innerHTML = '';
             rooms.forEach((item, i) => {
                 document.getElementById('rooms-wrapper').innerHTML += `
 					<div class="swiper-slide">
                         <div class="swiper_item">
-                            <span>${item.title}</span>
+                            <span>${item.name}</span>
                             <img src="{{ Vite::asset('resources/images/${item.image}') }}" alt="">
                             <div class="controllers">
-                                <input type="checkbox" class="btn_check" name="rooms[${item.id}]">
+                                <input type="checkbox" class="btn_check rooms" name="rooms[${item.id}]" id="room${i}">
                             </div>
                         </div>
                     </div>
 				`;
-
             });
+            var checkbox = document.getElementsByClassName('rooms');
+            for (var i = 0; i < checkbox.length; i++) {
+                checkbox[i].addEventListener('change', function(event) {
+                    getBlockedTimes();
+                });
+            }
         }
-        addRooms();
 
-        function addMats() {
+        function addMats(mats) {
             document.getElementById('mats-wrapper').innerHTML = '';
             mats.forEach((item, i) => {
                 document.getElementById('mats-wrapper').innerHTML += `
 					<div class="swiper-slide">
 						<div class="swiper_item">
-							<span>${item.title}</span>
+							<span>${item.name}</span>
 							<img src="{{ Vite::asset('resources/images/${item.image}') }}" alt="">
 							<div class="controllers">
 								<button type="button" class="btn_remove" onclick="decrement(event)">
 									<i class="icon fa-solid fa-minus"></i>
 									</button>
-									<input type="number" name="mats[${item.id}]" id="quantity${i}" min="0"
+									<input class="materials" type="number" name="mats[${item.id}]" id="quantity${i}" min="0"
 									max="${item.quantity}" readonly value="0">
+									<span>${item.quantity}</span>
 									<button type="button" class="btn_add" onclick="increment(event)">
 										<i class="icon fa-solid fa-plus"></i>
 									</button>
@@ -335,10 +269,14 @@
 						</div>
 					</div>
 				`;
-
             });
+            var checkbox = document.getElementsByClassName('materials');
+            for (var i = 0; i < checkbox.length; i++) {
+                checkbox[i].addEventListener('change', function(event) {
+                    getBlockedTimes();
+                });
+            }
         }
-        addMats();
 
         function checkButtons(event) {
             blockTime(blockedTimes);
@@ -375,10 +313,12 @@
                             timeElement.at(i).checked = true;
                         }
                     }
+                    getMaterialsWithTime();
                 } else {
                     for (let i = 0; i < timeElement.length; i++) {
                         timeElement.at(i).disabled = false;
                     }
+                    getMaterials();
                 }
 
                 blockTime(blockedTimes);
@@ -388,12 +328,21 @@
         }
 
         function submity() {
-            if (document.querySelector('input[name="date"]:checked')) {
-                var selectedDate = document.querySelector('input[name="date"]:checked').value
+            var name = document.querySelector('input[name="name"]').value;
+            var email = document.querySelector('input[name="email"]').value;
+            var date = document.querySelector('input[name="date"]:checked').value;
+            var start_time = selectedTimes[0]['start_time'];
+            var end_time = selectedTimes[selectedTimes.length - 1]['end_time'];
+            var rooms = getSelectedRooms();
+            var materials = getSelectedMats();
+
+            if (date == '' ||
+                start_time == '' ||
+                end_time == '') {
+                alert('Vul alle velden in');
+                return;
             }
-
-            var url = 'http://localhost:8000/api/reservations/create';
-
+            submitState(false);
             var settings = {
                 method: "POST",
                 timeout: 0,
@@ -401,15 +350,18 @@
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    "start_time": selectedTimes[0]['start_time'],
-                    "end_time": selectedTimes[selectedTimes.length - 1]['end_time'],
-                    "date": selectedDate,
-                    "rooms_id": getSelectedRooms(),
+                    "name": name,
+                    "email": email,
+                    "date": date,
+                    "start_time": start_time,
+                    "end_time": end_time,
+                    "rooms": rooms,
+                    "materials": materials,
                     "_token": "{{ csrf_token() }}"
                 })
             };
 
-            fetch(url, settings)
+            fetch('http://localhost:8000/api/reservations/create', settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -420,25 +372,74 @@
                     }
                 })
                 .then(data => {
-                    // document.location.href = "{{ Route('reservation') }}";
-                    console.log('data', data);
+                    document.location.href = "{{ Route('reservation') }}";
                 })
                 .catch(error => {
                     console.log('error', error);
                 });
         }
 
-        function getBlockedTimes(event) {
-            blockTime(blockedTimes);
+        timeSelectionState(false);
+        materialSelectionState(false);
 
-            if (selectedDate === event.target.value) {
+        function timeSelectionState(state) {
+            const time_picker = document.getElementById('time_picker');
+            if (state) {
+                // remove the gray overlay from the time picker
+                time_picker.classList.remove('blocked');
+            } else {
+                // add a gray overlay to the time picker
+                time_picker.classList.add('blocked');
+            }
+            // change the submit button state
+            submitState(state);
+        }
+
+        function materialSelectionState(state) {
+            const material_picker = document.getElementById('material_picker');
+            if (state) {
+                // remove the gray overlay from the material picker
+                material_picker.classList.remove('blocked');
+            } else {
+                // add a gray overlay to the material picker
+                material_picker.classList.add('blocked');
+            }
+            // change the submit button state
+            submitState(state);
+        }
+
+        function submitState(state) {
+            const submitButton = document.getElementById('submit');
+            if (state) {
+                submitButton.disabled = false;
+                submitButton.classList.remove('blocked');
+            } else {
+                submitButton.disabled = true;
+                submitButton.classList.add('blocked');
+            }
+        }
+
+        var selectedDate = null;
+
+        document.querySelectorAll('.date_picker_item').forEach((item, i) => {
+            item.addEventListener('change', (event) => {
+                selectedDate = event.target.value;
+                getBlockedTimes(selectedDate);
+            });
+        });
+
+        function getBlockedTimes() {
+            console.log('getBlockedTimes');
+            blockedTimes = [];
+            unblockAll();
+            timeSelectionState(false);
+            materialSelectionState(false);
+            if (selectedDate == null) {
                 return;
             }
-
-            blockedTimes = [];
-            selectedDate = event.target.value;
-
-            var url = 'http://localhost:8000/api/reservations/getbydate';
+            if (getSelectedRooms().length == 0) {
+                return;
+            }
 
             var settings = {
                 method: "POST",
@@ -448,12 +449,13 @@
                 },
                 body: JSON.stringify({
                     "date": selectedDate,
-                    "rooms_id": getSelectedRooms(),
+                    "rooms": getSelectedRooms(),
+                    "materials": getSelectedMats(),
                     "_token": "{{ csrf_token() }}"
                 })
             };
 
-            fetch(url, settings)
+            fetch('http://localhost:8000/api/reservations/getbydate', settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -472,22 +474,30 @@
                         element.disabled = false;
                         selectedTimes = [];
                     });
+                    timeSelectionState(true);
+                    materialSelectionState(true);
                 })
                 .catch(error => {
                     console.log('error', error);
                 });
         }
 
-        function blockTime(data) {
+        function unblockAll() {
             var htmlElements = document.querySelectorAll('input[type="checkbox"][reserved=true].time_picker');
             htmlElements.forEach(element => {
                 element.disabled = false;
                 element.setAttribute('reserved', 'false');
-                element.parentElement.getElementsByTagName('label')[0].innerHTML = String(JSON.parse(element.value)[
-                        'start_time']).slice(0, -3) + ' <br> ' + String(JSON.parse(element.value)['end_time'])
-                    .slice(
-                        0, -3);
+                element.checked = false;
+                element.parentElement.getElementsByTagName('label')[0].innerHTML = String(
+                        JSON.parse(element.value)['start_time'])
+                    .slice(0, -3) + ' <br> ' + String(
+                        JSON.parse(element.value)['end_time'])
+                    .slice(0, -3);
             });
+        }
+
+        function blockTime(data) {
+            unblockAll();
             var htmlElements = document.querySelectorAll('input[type="checkbox"].time_picker');
             timeTable.forEach((time, key) => {
                 data.forEach(blocked => {
@@ -523,10 +533,10 @@
             for (var pair of FD.entries()) {
                 if (pair[0].startsWith("rooms[") && pair[1]) { // Check if the input name starts with "array[room_"
                     var i = pair[0].indexOf("[") + 1
-                    var roomName = parseInt(pair[0].substring(i, pair[0].length - 1)); // Extract the room name
+                    var roomId = parseInt(pair[0].substring(i, pair[0].length - 1)); // Extract the room name
                     var data = {};
-                    data[roomName] = pair[1]; // Create an object with the room name and input value
-                    dataArray.push(roomName); // Add the object to the array
+                    data[roomId] = pair[1]; // Create an object with the room name and input value
+                    dataArray.push(roomId); // Add the object to the array
                 }
             }
             return dataArray; // Output the array of objects to the console
@@ -536,17 +546,121 @@
             var FD = new FormData(document.getElementById('form'));
             var dataArray = [];
             for (var pair of FD.entries()) {
-                if (pair[0].startsWith("mats[") && pair[1] != "0") { // Check if the input name starts with "array[room_"
+                if (pair[0].startsWith("mats[") &&
+                    pair[1] != "0") { // Check if the input name starts with "array[material_"
                     var i = pair[0].indexOf("[") + 1
-                    var roomName = parseInt(pair[0].substring(i, pair[0].length - 1)); // Extract the room name
+                    var materialId = parseInt(pair[0].substring(i, pair[0].length - 1)); // Extract the material name
                     var data = {
-                        'mat_id': roomName,
-                        'amount': pair[1]
+                        'material_id': materialId,
+                        'quantity': pair[1]
                     };
                     dataArray.push(data); // Add the object to the array
                 }
             }
             return dataArray; // Output the array of objects to the console
         }
+
+        function getRoomsAndMaterials() {
+            getRooms();
+            getMaterials();
+        }
+
+        function getRooms() {
+            var settings = {
+                method: "POST",
+                timeout: 0,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    "_token": "{{ csrf_token() }}"
+                })
+            };
+
+            fetch('http://localhost:8000/api/reservations/getRooms', settings)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        return response.then(error => {
+                            throw error;
+                        });
+                    }
+                })
+                .then(data => {
+                    addRooms(data);
+                })
+                .catch(error => {
+                    console.log('error', error);
+                });
+        }
+
+        function getMaterials() {
+            var settings = {
+                method: "POST",
+                timeout: 0,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    "_token": "{{ csrf_token() }}"
+                })
+            };
+
+            fetch('http://localhost:8000/api/reservations/getMaterials', settings)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        return response.then(error => {
+                            throw error;
+                        });
+                    }
+                })
+                .then(data => {
+                    addMats(data);
+                })
+                .catch(error => {
+                    console.log('error', error);
+                });
+        }
+
+        function getMaterialsWithTime() {
+            var date = document.querySelector('input[name="date"]:checked').value;
+            var start_time = selectedTimes[0]['start_time'];
+            var end_time = selectedTimes[selectedTimes.length - 1]['end_time'];
+
+            var settings = {
+                method: "POST",
+                timeout: 0,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    "date": date,
+                    "start_time": start_time,
+                    "end_time": end_time,
+                    "_token": "{{ csrf_token() }}"
+                })
+            };
+
+            fetch('http://localhost:8000/api/reservations/getReservedMaterials', settings)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        return response.then(error => {
+                            throw error;
+                        });
+                    }
+                })
+                .then(data => {
+                    addMats(data);
+                })
+                .catch(error => {
+                    console.log('error', error);
+                });
+        }
+        getRoomsAndMaterials();
     </script>
 @endsection

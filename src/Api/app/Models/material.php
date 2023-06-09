@@ -12,6 +12,13 @@ class material extends Model
 {
 	use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
+	protected $fillable = [
+		'name',
+		'quantity',
+		'image',
+		'rooms_id'
+	];
+
 	public function reservations()
 	{
 		return $this->belongsToMany(Reservation::class, 'reservation_material');

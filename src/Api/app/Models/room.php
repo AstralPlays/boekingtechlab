@@ -12,6 +12,11 @@ class room extends Model
 {
 	use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
+	protected $fillable = [
+		'name',
+		'image'
+	];
+
 	public function reservations()
 	{
 		return $this->belongsToMany(Reservation::class, 'reservation_room');

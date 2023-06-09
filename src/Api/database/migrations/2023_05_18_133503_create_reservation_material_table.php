@@ -17,9 +17,10 @@ return new class extends Migration
 			$table->id();
 			$table->foreignId('reservation_id')->references('id')->on('reservations')->onDelete('cascade');
 			$table->foreignId('material_id')->references('id')->on('materials')->onDelete('cascade');
+			$table->integer('quantity');
 			$table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent();
-            $table->softDeletes();
+			$table->timestamp('updated_at')->useCurrent();
+			$table->softDeletes();
 		});
 	}
 

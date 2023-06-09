@@ -3,12 +3,12 @@
 namespace App\Modules\Reservation\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Reservation;
 use App\Modules\Reservation\Clients\Contracts\ReservationClientInterface;
-use app\Modules\Reservation\Requests\StoreCreateReservationRequest;
-use App\View\Components\reservation;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response as Response;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class ReservationController extends Controller
 {
@@ -24,57 +24,95 @@ class ReservationController extends Controller
 
 	public function create(Request $request)
 	{
-		$start_time = Carbon::parse($request['start_time']);
-		$end_time = Carbon::parse($request['end_time']);
+		/* Check if user is not logged in */
+		if (!session()->has('user_id')) return Response(json_encode('Unauthorized'), 401);
+		/* check if a date is selected */
+		if (!filled($request['date'])) return Response(json_encode('No date selected'), 400);
+		/* check if a room is selected */
+		if (!filled($request['rooms'])) return Response(json_encode('No room selected'), 400);
+		/* check if a start time is selected */
+		if (!filled($request['start_time'])) return Response(json_encode('No start time selected'), 400);
+		/* check if a end time is selected */
+		if (!filled($request['end_time'])) return Response(json_encode('No end time selected'), 400);
 
-		if ($start_time->eq($end_time)) return Response(json_encode('Invalid Argument | 007.1'), 412);
+		/* validation rules */
+		$validator = Validator::make($request->all(), [
+			'name' => 'string|nullable',
+			'email' => 'email|nullable',
+			'start_time' => 'required',
+			'end_time' => 'required',
+			'date' => 'required',
+			'rooms' => 'array',
+			'rooms.*' => 'numeric',
+			'materials' => 'array|nullable',
+			'materials.*.material_id' => 'required|integer',
+			'materials.*.quantity' => 'required|integer',
+		]);
+		/* validate the values */
+		try {
+			$validator->validate();
+		} catch (ValidationException $exception) {
+			return Response(json_encode(['error' => $exception->errors()]), 400);
+		}
 
 		/* Convert JS Time to a Carbon Object. */
+		$start_time = Carbon::parse($request['start_time']);
+		$end_time = Carbon::parse($request['end_time']);
 		$date = Carbon::parse($request['date']);
 
-		/* Check if time is not before opening time or later then closing time */
-		if (($request['start_time'] < '09:00:00') or ($request['end_time'] > '17:00:00')) return Response(json_encode('Invalid Argument | 007.2'), 412);
-		if ($date->isBefore(Carbon::tomorrow()->addDay(1))) return Response(json_encode('Invalid Argument | 007.3'), 412);
+		/* Check if the start time is the same as the end time */
+		if ($start_time->eq($end_time)) return Response(json_encode('The start time can\'t be the same as the end time'), 409);
+		/* Check if the start time is later than the end time */
+		if ($start_time->gt($end_time)) return Response(json_encode('The start time can\'t be later than the end time'), 409);
+		/* Check if the start time is earlier than the opening time */
+		if (($request['start_time'] < '09:00:00')) return Response(json_encode('The start time can\'t be earlier than the opening time'), 422);
+		/* Check if the end time is later than the closing time */
+		if (($request['end_time'] > '17:00:00')) return Response(json_encode('The End time can\'t be later than the closing time'), 422);
+		/* Check if the date is earlier than the day after tomorrow */
+		if ($date->isBefore(Carbon::tomorrow()->addDay(1))) return Response(json_encode('The date should be at least after 2 days from the current day'), 422);
 		if (!str_contains($request['start_time'], ':00') and !str_contains($request['start_time'], ':15') and !str_contains($request['start_time'], ':30') and !str_contains($request['start_time'], ':45')) return Response(json_encode('Invalid Time Format'), 412);
 		if (!str_contains($request['end_time'], ':00') and !str_contains($request['end_time'], ':15') and !str_contains($request['end_time'], ':30') and !str_contains($request['end_time'], ':45')) return Response(json_encode('Invalid Time Format'), 412);
 
-		$alloftoday = $this->reservationClient->getByDate($date->format('Y-m-d'), $request['rooms_id']);
+		$reservations = $this->reservationClient->getByDate($date->format('Y-m-d'), $request['rooms']);
 
-		foreach ($alloftoday as $reservering) {
+		foreach ($reservations as $reservering) {
 			if (Carbon::parse($reservering['start_time'])->isBetween($start_time, $end_time) or Carbon::parse($reservering['end_time'])->isBetween($start_time, $end_time)) {
 				if ($start_time->eq($reservering['end_time']) or $end_time->eq($reservering['start_time'])) {
 					continue;
 				}
-				return Response(json_encode('Cannot Place Appointment | 1'), 400);
+				return Response(json_encode('Cannot Place reservation'), 409);
 			}
 		}
 
 		$reservationData = [
 			'user_id' => session()->get('user_id'),
-			'date' => $date,
+			'name' => $request['name'],
+			'email' => $request['email'],
 			'start_time' => $start_time,
 			'end_time' => $end_time,
+			'date' => $date
 		];
-
-		$materials = $request['materials'] ?? [];
-		$rooms = $request['rooms'] ?? [];
 
 		$reservation = $this->reservationClient->create($reservationData);
 
-		if (!empty($materials)) {
-			$reservation->materials()->attach($materials);
+		$reservation->rooms()->attach($request['rooms']);
+
+		if (filled($request['materials'])) {
+			$reservation->materials()->attach($request['materials']);
 		}
 
-		if (!empty($rooms)) {
-			$reservation->rooms()->attach($rooms);
-		}
+		$reservation->save();
 
 		return Response(json_encode('success'), 200);
 	}
 
-	public function getByDate(Request $request): array
+	public function getByDate(Request $request)
 	{
+		if (!filled($request['date'])) return Response(json_encode('Invalid Argument | 007.4'), 412);
+		if (!filled($request['rooms'])) return Response(json_encode('Invalid Argument | 007.5'), 412);
+
 		$dateFormatted = Carbon::parse($request['date']);
+
 		if ($dateFormatted->isBefore(Carbon::tomorrow()->addDay(1))) {
 			return [
 				[
@@ -83,8 +121,9 @@ class ReservationController extends Controller
 				]
 			];
 		}
-		$Reservations = $this->reservationClient->getByDate($dateFormatted->format('Y-m-d'), $request['rooms_id']);
+		$Reservations = $this->reservationClient->getByDate($dateFormatted->format('Y-m-d'), $request['rooms']);
 		$list = [];
+		return $Reservations;
 		foreach ($Reservations as $reservation) {
 			$list[] = [
 				'start_time' => $reservation['start_time'],
@@ -101,7 +140,6 @@ class ReservationController extends Controller
 		$list = [];
 		foreach ($Reservations as $reservation) {
 			$list[] = [
-				// $reservation,
 				'id' => $reservation['id'],
 				'rooms' => $reservation['rooms'],
 				'materials' => $reservation['materials'],
@@ -113,6 +151,82 @@ class ReservationController extends Controller
 				'user_phone_number' =>  $reservation['user']['phone_number'],
 			];
 		}
+		return $list;
+	}
+
+	public function getRooms(): array
+	{
+		$rooms = $this->reservationClient->getRooms();
+		$list = [];
+		foreach ($rooms as $room) {
+			$list[] = [
+				'id' => $room['id'],
+				'name' => $room['name'],
+				'image' => $room['image'],
+			];
+		}
+		return $list;
+	}
+
+	public function getMaterials(): array
+	{
+		$mats = $this->reservationClient->getMaterials();
+		$list = [];
+		foreach ($mats as $mat) {
+			$list[] = [
+				'id' => $mat['id'],
+				'name' => $mat['name'],
+				'quantity' => $mat['quantity'],
+				'image' => $mat['image'],
+				'rooms_id' => $mat['rooms_id'],
+			];
+		}
+		return $list;
+	}
+
+	public function getReservedMaterials(Request $request): array
+	{
+		$start_time = Carbon::parse($request['start_time']);
+		$end_time = Carbon::parse($request['end_time']);
+		$date = Carbon::parse($request['date']);
+
+		$reservedMats = $this->reservationClient->getReservedMaterials($date->format('Y-m-d'));
+		$mats = $this->getMaterials();
+		$tmpList = [];
+		foreach ($reservedMats as $reservedMat) {
+			if ($start_time->isBetween(Carbon::parse($reservedMat['start_time']), Carbon::parse($reservedMat['end_time'])) or $end_time->isBetween(Carbon::parse($reservedMat['start_time']), Carbon::parse($reservedMat['end_time']))) {
+				if (!($start_time->eq($reservedMat['end_time']) or $end_time->eq($reservedMat['start_time']))) {
+					foreach ($reservedMat['materials'] as $materials) {
+						$tmpList[] = [
+							'id' => $materials['id'],
+							'quantity' => $materials['quantity'],
+						];
+					}
+				}
+			}
+		}
+
+		$list = [];
+		foreach ($mats as $item) {
+			$id = $item['id'];
+			$quantity1 = $item['quantity'];
+
+			// Find the corresponding item in array 2
+			$item2 = collect($tmpList)->firstWhere('id', $id);
+
+			if ($item2) {
+				$quantity2 = $item2['quantity'];
+				$item['quantity'] = max(0, $quantity1 - $quantity2); // Subtract the quantities
+			}
+
+			$list[] = $item;
+		}
+
+		$list = [
+			'list' => $list,
+			'tmpList' => $tmpList
+		];
+
 		return $list;
 	}
 }

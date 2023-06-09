@@ -13,7 +13,8 @@ class reservationMaterial extends Model
 	protected $table = 'reservation_material';
 	protected $fillable = [
 		'reservation_id',
-		'material_id'
+		'material_id',
+		'quantity'
 	];
 
 	public function reservation()

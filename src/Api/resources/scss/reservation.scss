@@ -193,6 +193,11 @@ $item-boarder: 0px double black;
 				cursor: pointer;
 			}
 		}
+
+		.blocked {
+			filter: brightness(50%);
+			pointer-events: none;
+		}
 	}
 
 	@media (max-width: 425px) {

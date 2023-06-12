@@ -6,7 +6,6 @@ use App\Models\material;
 use App\Models\Reservation;
 use App\Models\room;
 use App\Modules\Reservation\Clients\Contracts\ReservationClientInterface;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 
 class ReservationClient implements ReservationClientInterface
@@ -48,7 +47,7 @@ class ReservationClient implements ReservationClientInterface
 
 			]
 		)
-			->select('id', 'user_id', 'start_time', 'end_time', 'verified')
+			->select('id', 'user_id', 'start_time', 'end_time', 'state')
 			->where('date', $date)
 			->get();
 	}
@@ -84,5 +83,9 @@ class ReservationClient implements ReservationClientInterface
 	function delete(string $search, string $variable): Reservation
 	{
 		return Reservation::where($search, $variable)->delete();
+	}
+	function changeState(int $id, string $state): int
+	{
+		return Reservation::where('id', $id)->update(['state' => $state]);
 	}
 }

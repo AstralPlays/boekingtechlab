@@ -106,6 +106,17 @@ class ReservationController extends Controller
 		return Response(json_encode('success'), 200);
 	}
 
+	public function changeState(Request $request)
+	{
+		$id = $request['id'];
+		$state = $request['state'];
+
+		if ($this->reservationClient->changeState($id, $state)) {
+			return Response(json_encode('success'), 200);
+		}
+		return Response(json_encode('failed'), 400);
+	}
+
 	public function getByDate(Request $request)
 	{
 		if (!filled($request['date'])) return Response(json_encode('Invalid Argument | 007.4'), 412);
@@ -145,7 +156,7 @@ class ReservationController extends Controller
 				'materials' => $reservation['materials'],
 				'start_time' => $reservation['start_time'],
 				'end_time' =>  $reservation['end_time'],
-				'verified' =>  $reservation['verified'],
+				'state' =>  $reservation['state'],
 				'user_name' =>  $reservation['user']['name'],
 				'user_email' =>  $reservation['user']['email'],
 				'user_phone_number' =>  $reservation['user']['phone_number'],

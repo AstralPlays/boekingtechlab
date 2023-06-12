@@ -39,7 +39,7 @@ class AccountSystemController extends Controller
 		session()->put('user_id', $user['id']);
 		session()->put('api_token', $user['api_token']);
 		session()->put('role', $user['role']);
-		return route('home');
+		return Response(json_encode('success'), 200);
 	}
 
 	public function login(Request $request): Route|Response
@@ -59,9 +59,7 @@ class AccountSystemController extends Controller
 
 	public function logout(Request $request)
 	{
-		session()->forget('user_id');
-		session()->forget('api_token');
-		session()->forget('role');
+		session()->flush();
 		return redirect('/login');
 	}
 

@@ -21,7 +21,7 @@ return new class extends Migration
 			$table->date('date');
 			$table->time('start_time');
 			$table->time('end_time');
-			$table->boolean('verified')->default(false);
+			$table->enum('state', ['pending', 'approved', 'rejected'])->default('pending');
 			$table->timestamp('created_at')->useCurrent();
 			$table->timestamp('updated_at')->useCurrent();
 			$table->softDeletes();

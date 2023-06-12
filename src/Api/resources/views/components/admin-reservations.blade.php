@@ -6,7 +6,7 @@
     <x-sideBar />
     <div class="container">
         <div class="item nextAppointment">
-            <input type="datetime-local" name="dateTime" onchange="getByDate(event)" value="{{ Date::now() }}">
+            <input type="datetime-local" name="dateTime" onchange="getByDate(this.value)" value="{{ Date::now() }}">
             <table class="reservations" id="reservations">
                 <thead>
                     <tr>
@@ -17,6 +17,7 @@
                         <th>Eind Tijd</th>
                         <th>materiaal</th>
                         <th>lokaal</th>
+                        <th>staat</th>
                     </tr>
                 </thead>
                 <tbody id="dataContainer">
@@ -28,26 +29,8 @@
     </div>
 
     <script>
-        // function setMaxWidth() {
-        //     var boxes = document.querySelectorAll('.box');
-        //     let maxWidth = 0;
-        //     boxes.forEach(box => {
-        //         const width = box.offsetWidth;
-        //         if (width > maxWidth) {
-        //             maxWidth = width;
-        //         }
-        //     });
-        //     boxes.forEach(box => {
-        //         box.style.maxWidth = `${maxWidth + 10}px`;
-        //     });
-        // }
-
-        function getByDate(event) {
+        function getByDate(selectedDate) {
             const reservationsTable = document.getElementById('dataContainer');
-
-            selectedDate = event.target.value;
-
-            var url = 'http://localhost:8000/api/reservations/getByDateAdmin';
 
             var settings = {
                 method: "POST",
@@ -65,7 +48,7 @@
                 })
             };
 
-            fetch(url, settings)
+            fetch('http://localhost:8000/api/reservations/getByDateAdmin', settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -87,6 +70,7 @@
                             const cell5 = row.insertCell(4);
                             const cell6 = row.insertCell(5);
                             const cell7 = row.insertCell(6);
+                            const cell8 = row.insertCell(7);
                             cell1.classList.add('box');
                             cell2.classList.add('box');
                             cell3.classList.add('box');
@@ -94,6 +78,7 @@
                             cell5.classList.add('box');
                             cell6.classList.add('box');
                             cell7.classList.add('box');
+                            cell8.classList.add('box');
                             cell1.innerHTML = reservation.user_name;
                             cell2.innerHTML = reservation.user_email;
                             cell3.innerHTML = reservation.user_phone_number;
@@ -101,16 +86,30 @@
                             cell5.innerHTML = reservation.end_time;
                             var call6_text = [];
                             reservation.materials.forEach(material => {
-                                call6_text.push(material.name);
+                                call6_text.push(material.name + ` (${material.quantity})`);
                             });
-                            cell6.innerHTML = call6_text.toString();
+                            cell6.innerHTML = call6_text.join('<br>');
                             var call7_text = [];
                             reservation.rooms.forEach(room => {
                                 call7_text.push(room.name);
                             });
-                            cell7.innerHTML = call7_text.toString();
+                            cell7.innerHTML = call7_text.join('<br>');
+                            var x = document.createElement('SELECT');
+                            x.setAttribute('name', 'state')
+                            x.setAttribute('onchange', `updateState(${reservation.id},this.value)`);
+                            var state = ['pending', 'approved', 'rejected'];
+                            state.forEach(element => {
+                                var option = document.createElement('option');
+                                option.text = element;
+                                option.value = element;
+                                if (reservation.state == element) {
+                                    option.selected = true;
+                                }
+                                x.add(option);
+                            });
+                            cell8.classList.add('centerCheckbox');
+                            cell8.append(x);
                         });
-                        setMaxWidth();
                     } else {
                         reservationsTable.innerHTML = 'Geen reserveringen gevonden';
                     }
@@ -120,6 +119,32 @@
                 });
         }
 
-        // getByDate();
+        function updateState(id, value) {
+            event.preventDefault();
+
+            var settings = {
+                method: "POST",
+                timeout: 0,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    "id": id,
+                    "state": value,
+                    "_token": "{{ csrf_token() }}"
+                })
+            };
+
+            fetch('http://localhost:8000/api/reservations/changeState', settings)
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {})
+                .catch(error => {
+                    console.log('error', error);
+                });
+        }
+
+        getByDate(new Date());
     </script>
 @endsection

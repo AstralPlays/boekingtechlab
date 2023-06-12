@@ -9,6 +9,7 @@
 	.item {
 		padding: 2rem;
 		background-color: #74398E;
+		margin: 0 auto;
 
 		.reservations th,
 		.reservations td {
@@ -16,6 +17,10 @@
 			padding: 8px;
 			color: white;
 			white-space: pre;
+		}
+
+		.centerCheckbox {
+			text-align: center;
 		}
 
 		.reservations th {
@@ -27,6 +32,10 @@
 
 		.reservations tr:nth-child(even) {
 			background-color: #a33bcf;
+		}
+
+		.reservations tr:nth-child(odd) {
+			background-color: #74398E;
 		}
 
 		.reservations tr:hover {

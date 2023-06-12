@@ -32,10 +32,14 @@
         <div class="menu-nav-item">
             <a href="{{ URL::route('reservation') }}" class="menu-nav-link">Reserveer</a>
 
-            @if (Auth::check())
-                <a href="{{ URL::route('user') }}" class="menu-nav-link" *ngIf="isLogged">Account</a>
+            @if (session()->has('user_id'))
+                @if (session()->get('role') == 'Admin')
+                    <a href="{{ URL::route('admin-dashboard') }}" class="menu-nav-link">Account</a>
+                @else
+                    <a href="{{ URL::route('user-dashboard') }}" class="menu-nav-link">Account</a>
+                @endif
             @else
-                <a href="{{ URL::route('login') }}" class="menu-nav-link" *ngIf="!isLogged">Login</a>
+                <a href="{{ URL::route('login') }}" class="menu-nav-link">Login</a>
             @endif
         </div>
     </div>

@@ -31,9 +31,6 @@ class UserAuth
         if(!$results){
             return Response(json_encode('Unauthorized'), 401);
         }
-        if($results['role'] === 'User'){
-            return $next($request);
-        }
         return $next($request);
     }
 }

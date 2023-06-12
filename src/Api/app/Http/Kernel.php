@@ -90,6 +90,6 @@ class Kernel extends HttpKernel
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
         'userAuth' => UserAuth::class,
-        'AdminAuth' => AdminAuth::class
+        'adminAuth' => AdminAuth::class
     ];
 }

@@ -33,6 +33,7 @@ Route::group(['middleware' => ['web']], function () {
 		Route::get('/user/reservations', [homePage::class, 'render'])->name('user-reservations');
 		Route::get('/user/settings', [homePage::class, 'render'])->name('user-settings');
 	});
+	Route::get('/reservation', [reservation::class, 'render'])->name('reservation');
 
 	Route::middleware(AdminAuth::class)->group(function () {
 		Route::get('/admin', [adminDashboard::class, 'render'])->name('admin-dashboard');
@@ -41,6 +42,7 @@ Route::group(['middleware' => ['web']], function () {
 		Route::get('/admin/settings', [homePage::class, 'render'])->name('admin-settings');
 	});
 
+
 	Route::get('/home', [homePage::class, 'render'])->name('home');
 
 	Route::get('/login', [login::class, 'render'])->name('login');
@@ -48,12 +50,4 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/register', [register::class, 'render'])->name('register');
 
 	Route::get('/about-us', [aboutUs::class, 'render'])->name('about-us');
-
-	Route::middleware(UserAuth::class)->group(function () {
-	});
-	Route::get('/reservation', [reservation::class, 'render'])->name('reservation');
-
-	Route::middleware(AdminAuth::class)->group(function () {
-		return redirect('admin-reservations');
-	});
 });

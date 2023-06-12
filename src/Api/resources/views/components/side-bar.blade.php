@@ -15,6 +15,9 @@
             <li class="sidebar-menu-item">
                 <a href="{{ URL::route('admin-settings') }}">Settings</a>
             </li>
+            <li class="sidebar-menu-item">
+                <a href="{{ URL::route('logout') }}">Logout</a>
+            </li>
         </ul>
     </div>
     <div class="sidebar-chevron" id="sidebar-btn">

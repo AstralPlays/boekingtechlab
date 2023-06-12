@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\AccountSystem\Http\Controllers\AccountSystemController;
 use App\Modules\AccountSystem\middleware\AdminAuth;
 use App\Modules\AccountSystem\middleware\UserAuth;
 use App\View\Components\homePage;
@@ -46,6 +47,8 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/home', [homePage::class, 'render'])->name('home');
 
 	Route::get('/login', [login::class, 'render'])->name('login');
+
+	Route::get('/user/logout', [AccountSystemController::class, 'logout'])->name('logout');
 
 	Route::get('/register', [register::class, 'render'])->name('register');
 

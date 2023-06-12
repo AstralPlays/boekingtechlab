@@ -42,8 +42,6 @@ class AccountSystemController extends Controller
 		return route('home');
 	}
 
-
-
 	public function login(Request $request): Route|Response
 	{
 		if (!$user = $this->userLoginClient->getUser($request['email'])) {
@@ -52,11 +50,19 @@ class AccountSystemController extends Controller
 		if (!Hash::check($request['password'], $user->password())) {
 			return Response(json_encode('Unauthorized | Invalid Password'), 401);
 		}
-		
+
 		session()->put('user_id', $user['id']);
 		session()->put('api_token', $user['api_token']);
 		session()->put('role', $user['role']);
 		return Response(json_encode('success'), 200);
+	}
+
+	public function logout(Request $request)
+	{
+		session()->forget('user_id');
+		session()->forget('api_token');
+		session()->forget('role');
+		return redirect('/login');
 	}
 
 	public function auth(Request $request): Response

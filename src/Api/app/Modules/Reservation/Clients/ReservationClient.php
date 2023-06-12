@@ -84,8 +84,30 @@ class ReservationClient implements ReservationClientInterface
 	{
 		return Reservation::where($search, $variable)->delete();
 	}
+
 	function changeState(int $id, string $state): int
 	{
 		return Reservation::where('id', $id)->update(['state' => $state]);
+	}
+
+	function getUserReservations(): Collection
+	{
+		return Reservation::with(
+			[
+				'user' => function ($query) {
+					$query->select('id', 'name', 'email', 'phone_number');
+				},
+				'rooms' => function ($query) {
+					$query->select('name');
+				},
+				'materials' => function ($query) {
+					$query->select('name', 'reservation_material.quantity');
+				}
+
+			]
+		)
+			->select('id', 'user_id', 'start_time', 'end_time', 'state', 'date')
+			->where('user_id', session()->get('user_id'))
+			->get();
 	}
 }

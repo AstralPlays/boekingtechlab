@@ -11,6 +11,7 @@ use App\View\Components\aboutUs;
 use App\View\Components\adminDashboard;
 use App\View\Components\adminReservations;
 use App\View\Components\userDashboard;
+use App\View\Components\userReservations;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,7 +32,7 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::middleware(UserAuth::class)->group(function () {
 		Route::get('/user', [userDashboard::class, 'render'])->name('user-dashboard');
-		Route::get('/user/reservations', [homePage::class, 'render'])->name('user-reservations');
+		Route::get('/user/reservations', [userReservations::class, 'render'])->name('user-reservations');
 		Route::get('/user/settings', [homePage::class, 'render'])->name('user-settings');
 	});
 

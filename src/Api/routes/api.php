@@ -22,6 +22,7 @@ Route::post('/reservations/create', [ReservationController::class, 'create']);
 Route::post('/reservations/changeState', [ReservationController::class, 'changeState']);
 Route::post('/reservations/getbydate', [ReservationController::class, 'getByDate']);
 Route::post('/reservations/getByDateAdmin', [ReservationController::class, 'getByDateAdmin']);
+Route::post('/reservations/getUserReservations', [ReservationController::class, 'getUserReservations']);
 Route::post('/reservations/getRooms', [ReservationController::class, 'getRooms']);
 Route::post('/reservations/getMaterials', [ReservationController::class, 'getMaterials']);
 Route::post('/reservations/getReservedMaterials', [ReservationController::class, 'getReservedMaterials']);

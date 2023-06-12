@@ -25,5 +25,7 @@ interface ReservationClientInterface
 
 	function getReservedMaterials(string $date): Collection;
 
+	function getUserReservations(): Collection;
+
 	function delete(string $search, string $variable): Reservation;
 }

@@ -240,4 +240,25 @@ class ReservationController extends Controller
 
 		return $list;
 	}
+
+	public function getUserReservations(): array
+	{
+		$Reservations = $this->reservationClient->getUserReservations();
+		$list = [];
+		foreach ($Reservations as $reservation) {
+			$list[] = [
+				'id' => $reservation['id'],
+				'user_name' =>  $reservation['user']['name'],
+				'user_email' =>  $reservation['user']['email'],
+				'user_phone_number' =>  $reservation['user']['phone_number'],
+				'date' =>  $reservation['date'],
+				'start_time' => $reservation['start_time'],
+				'end_time' =>  $reservation['end_time'],
+				'materials' => $reservation['materials'],
+				'rooms' => $reservation['rooms'],
+				'state' =>  $reservation['state'],
+			];
+		}
+		return $list;
+	}
 }

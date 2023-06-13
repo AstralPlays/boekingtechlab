@@ -261,4 +261,13 @@ class ReservationController extends Controller
 		}
 		return $list;
 	}
+
+	public function removeUserReservation(Request $request)
+	{
+		$id = $request['id'];
+		if ($this->reservationClient->removeUserReservation($id)) {
+			return Response(json_encode('success'), 200);
+		}
+		return Response(json_encode('failed'), 400);
+	}
 }

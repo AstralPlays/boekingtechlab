@@ -27,5 +27,7 @@ interface ReservationClientInterface
 
 	function getUserReservations(): Collection;
 
+	function removeUserReservation(int $id): int;
+
 	function delete(string $search, string $variable): Reservation;
 }

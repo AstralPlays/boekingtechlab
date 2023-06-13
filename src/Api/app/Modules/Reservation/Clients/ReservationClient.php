@@ -110,4 +110,11 @@ class ReservationClient implements ReservationClientInterface
 			->where('user_id', session()->get('user_id'))
 			->get();
 	}
+
+	function removeUserReservation(int $id): int
+	{
+		return Reservation::where('user_id', session()->get('user_id'))
+			->where('id', $id)
+			->delete();
+	}
 }

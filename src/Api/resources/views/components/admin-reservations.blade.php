@@ -3,7 +3,7 @@
 @extends('layouts.default')
 
 @section('content')
-    <x-sideBar />
+    <x-side-bar />
     <div class="container">
         <div class="item nextAppointment">
             <input type="datetime-local" name="dateTime" onchange="getByDate(this.value)" value="{{ Date::now() }}">
@@ -48,7 +48,7 @@
                 })
             };
 
-            fetch('http://localhost:8000/api/reservations/getByDateAdmin', settings)
+            fetch('{{ env("APP_URL") }}/api/reservations/getByDateAdmin', settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -135,7 +135,7 @@
                 })
             };
 
-            fetch('http://localhost:8000/api/reservations/changeState', settings)
+            fetch('{{ env("APP_URL") }}/api/reservations/changeState', settings)
                 .then(response => {
                     return response.json();
                 })

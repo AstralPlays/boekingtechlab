@@ -231,7 +231,7 @@
 					<div class="swiper-slide">
                         <div class="swiper_item">
                             <span>${item.name}</span>
-                            <img src="{{ Vite::asset('resources/images/${item.image}') }}" alt="">
+                            <img src="{{ env("APP_URL") }}/images/${item.image}" alt="">
                             <div class="controllers">
                                 <input type="checkbox" class="btn_check rooms" name="rooms[${item.id}]" id="room${i}">
                             </div>
@@ -248,13 +248,14 @@
         }
 
         function addMats(mats) {
+            console.log(mats)
             document.getElementById('mats-wrapper').innerHTML = '';
             mats.forEach((item, i) => {
                 document.getElementById('mats-wrapper').innerHTML += `
 					<div class="swiper-slide">
 						<div class="swiper_item">
 							<span>${item.name}</span>
-							<img src="{{ Vite::asset('resources/images/${item.image}') }}" alt="">
+							<img src="{{ env("APP_URL") }}/images/${item.image}" alt="">
 							<div class="controllers">
 								<button type="button" class="btn_remove" onclick="decrement(event)">
 									<i class="icon fa-solid fa-minus"></i>
@@ -361,7 +362,7 @@
                 })
             };
 
-            fetch('http://localhost:8000/api/reservations/create', settings)
+            fetch('{{ env("APP_URL") }}/api/reservations/create', settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -455,7 +456,7 @@
                 })
             };
 
-            fetch('http://localhost:8000/api/reservations/getbydate', settings)
+            fetch('{{ env("APP_URL") }}/api/reservations/getbydate', settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -577,7 +578,7 @@
                 })
             };
 
-            fetch('http://localhost:8000/api/reservations/getRooms', settings)
+            fetch('{{ env("APP_URL") }}/api/reservations/getRooms', settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -607,7 +608,7 @@
                 })
             };
 
-            fetch('http://localhost:8000/api/reservations/getMaterials', settings)
+            fetch('{{ env("APP_URL") }}/api/reservations/getMaterials', settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -644,7 +645,7 @@
                 })
             };
 
-            fetch('http://localhost:8000/api/reservations/getReservedMaterials', settings)
+            fetch('{{ env("APP_URL") }}/api/reservations/getReservedMaterials', settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();

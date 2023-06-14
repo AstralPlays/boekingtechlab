@@ -38,7 +38,7 @@
     <script>
         function register(event) {
             event.preventDefault();
-            var url = 'http://localhost:8000/api/user/register';
+            var url = '{{ env("APP_URL") }}/api/user/register';
             var formData = new FormData(document.getElementById('form'));
             formData.append('_token', '{{ csrf_token() }}')
 
@@ -67,7 +67,7 @@
                 .then(data => {
                     console.log('data', data);
                     if (data == 'success') {
-                        window.location.href = '{{ Route('home') }}';
+                        window.location.href = '{{ Route("home") }}';
                     }
                 })
                 .catch(error => {

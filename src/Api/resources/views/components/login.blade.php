@@ -46,7 +46,7 @@
     <script>
         function login(event) {
             event.preventDefault();
-            var url = 'http://localhost:8000/api/user/login';
+            var url = '{{ env("APP_URL") }}/api/user/login';
             var formData = new FormData(document.getElementById('form'));
             formData.append('_token', '{{ csrf_token() }}')
 
@@ -68,7 +68,7 @@
                 })
                 .then(data => {
                     if (data == 'success') {
-                        window.location.href = 'http://localhost:8000/home';
+                        window.location.href = '{{ env("APP_URL") }}/home';
                     } else {
                         alert("wrong email or password");
                     }

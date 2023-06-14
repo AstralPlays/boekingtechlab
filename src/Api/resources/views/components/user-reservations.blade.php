@@ -85,7 +85,36 @@
             });
 
         function removeReservation(id) {
-            console.log(id);
+            var settings = {
+                method: "POST",
+                timeout: 0,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    "_token": "{{ csrf_token() }}",
+                    "id": id
+                })
+            };
+
+            fetch('http://localhost:8000/api/reservations/removeUserReservation', settings)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        return response.then(error => {
+                            throw error;
+                        });
+                    }
+                })
+                .then(data => {
+                    if (data == 'success') {
+                        window.location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
     </script>
 @endsection

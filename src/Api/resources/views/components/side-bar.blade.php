@@ -7,7 +7,11 @@
                 <a href="{{ URL::route('admin-dashboard') }}">Dashboard</a>
             </li>
             <li class="sidebar-menu-item">
-                <a href="{{ URL::route('admin-reservations') }}">Boekingen</a>
+                @if (session()->get('role') == 'Admin')
+                    <a href="{{ URL::route('admin-reservations') }}">Reserveringen</a>
+                @else
+                    <a href="{{ URL::route('user-reservations') }}">Reserveringen</a>
+                @endif
             </li>
             <li class="sidebar-menu-item">
                 <a href="{{ URL::route('admin-accounts') }}">Accounts</a>

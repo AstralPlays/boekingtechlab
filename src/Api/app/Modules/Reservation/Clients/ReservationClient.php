@@ -90,6 +90,19 @@ class ReservationClient implements ReservationClientInterface
 		return Reservation::where('id', $id)->update(['state' => $state]);
 	}
 
+	function getUserNextReservation(): Reservation
+	{
+		$id = session()->get('user_id');
+		return Reservation::where('user_id', $id)
+			->where('date', '>=', date('Y-m-d'))
+			->where('start_time', '>=', date('H:i:s'))
+			->select('date', 'start_time')
+			->orderBy('date', 'ASC')
+			->orderBy('start_time', 'ASC')
+			->get()
+			->first();
+	}
+
 	function getUserReservations(): Collection
 	{
 		return Reservation::with(
@@ -108,6 +121,7 @@ class ReservationClient implements ReservationClientInterface
 		)
 			->select('id', 'user_id', 'start_time', 'end_time', 'state', 'date')
 			->where('user_id', session()->get('user_id'))
+			->orderBy('date', 'ASC')
 			->get();
 	}
 

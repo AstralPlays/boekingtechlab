@@ -241,6 +241,11 @@ class ReservationController extends Controller
 		return $list;
 	}
 
+	public function getUserNextReservation(): Reservation
+	{
+		return $this->reservationClient->getUserNextReservation();
+	}
+
 	public function getUserReservations(): array
 	{
 		$Reservations = $this->reservationClient->getUserReservations();

@@ -3,7 +3,7 @@
 @extends('layouts.default')
 
 @section('content')
-    <x-sideBar />
+    <x-side-bar />
     <div class="text-danger">
         admin page
     </div>

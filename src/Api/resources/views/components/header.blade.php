@@ -1,14 +1,20 @@
 @vite(['resources/scss/header.scss'])
 
 <nav class="social-media">
-    <a href="mailto:{{ $email }}" class="email">{{ $email }}</a>
+    <a href="mailto:techlab@example.nl" class="email">techlab@example.nl</a>
     <hr>
-
-    @foreach ($socialMedia as $media)
-        <a href="{{ $media['link'] }}" target="_blank" class="social-media-item">
-            <i class="icon fa-brands {{ $media['icon'] }}"></i>
-        </a>
-    @endforeach
+    <a href="https://www.facebook.com/techlab" target="_blank" class="social-media-item">
+        <i class="icon fa-brands fa-facebook"></i>
+    </a>
+    <a href="https://www.facebook.com/techlab" target="_blank" class="social-media-item">
+        <i class="icon fa-brands fa-instagram"></i>
+    </a>
+    <a href="https://www.facebook.com/techlab" target="_blank" class="social-media-item">
+        <i class="icon fa-brands fa-linkedin"></i>
+    </a>
+    <a href="https://www.facebook.com/techlab" target="_blank" class="social-media-item">
+        <i class="icon fa-brands fa-youtube"></i>
+    </a>
 </nav>
 
 <nav class="navbar">
@@ -25,7 +31,7 @@
 
         <div class="menu-nav-item">
             <div class="menu-nav-img">
-                <img src="{{ Vite::asset('/resources/images/logo.png') }}" title="logo van het berdijf">
+                <img src="{{ asset('images/logo.png')}}" title="logo van het berdijf">
             </div>
         </div>
 

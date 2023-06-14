@@ -40,7 +40,7 @@
 
         if (element.imageName != null) {
             var img = document.createElement('img');
-            img.src = '{{ Vite::asset('resources/images/bg/') }}' + element.imageName;
+            img.src = '../images/bg/' + element.imageName;
             elem.appendChild(img);
         } else {
             var nullContainer = document.createElement('div');

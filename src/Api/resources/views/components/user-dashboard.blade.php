@@ -5,8 +5,8 @@
 @section('content')
     <x-side-Bar />
     <div class="container">
-        <div class="item box nextAppointment">
-            U eerst volgende afspraak start op <span id="nextAppointment"></span>
+        <div id="nextAppointment" class="item box nextAppointment">
+            U eerst volgende afspraak start op
         </div>
     </div>
 
@@ -24,7 +24,7 @@
             })
         };
 
-        fetch('http://localhost:8000/api/reservations/getUserNextReservation', settings)
+        fetch('{{ env('APP_URL') }}/api/reservations/getUserNextReservation', settings)
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -35,7 +35,13 @@
                 }
             })
             .then(data => {
-                nextAppointment.innerHTML = new Date(data.date + ' ' + data.start_time).toLocaleString('nl-NL');
+                if (data.length != 0) {
+                    data = data[0]
+                    nextAppointment.innerHTML =
+                        `U eerst volgende afspraak start op ${new Date(data.date + ' ' + data.start_time).toLocaleString('nl-NL')}`;
+                } else {
+                    nextAppointment.innerHTML = 'U heeft geen afspraken geboekt'
+                }
             })
             .catch(error => {
                 console.log(error);

@@ -7,6 +7,22 @@
         <div class="wrap">
             <form onsubmit="register(event)" id="form">
                 <span class="form-title">Register</span>
+                <div class="input-container" data-validate="name is required">
+                    <span class="label">Naam</span>
+                    <div class="input-wraper">
+                        <i class="icon fa-solid fa-user"></i>
+                        <input class="input" type="text" name="name" placeholder="Type your name">
+                        <span class="focus"></span>
+                    </div>
+                </div>
+                <div class="input-container" data-validate="phone number is required">
+                    <span class="label">Telefoon nummer</span>
+                    <div class="input-wraper">
+                        <i class="icon fa-solid fa-user"></i>
+                        <input class="input" type="text" name="phone_number" placeholder="Type your phone number">
+                        <span class="focus"></span>
+                    </div>
+                </div>
                 <div class="input-container" data-validate="Email is required">
                     <span class="label">Email</span>
                     <div class="input-wraper">
@@ -49,6 +65,8 @@
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
+                    name: formData.get('name'),
+                    phone_number: formData.get('phone_number'),
                     email: formData.get('email'),
                     password: formData.get('password'),
                 }),

@@ -31,6 +31,8 @@ class AccountSystemController extends Controller
 		$uuid = Str::uuid()->toString();
 		$user = $this->userLoginClient->create(
 			[
+				'name' => $request['name'],
+				'phone_number' => $request['phone_number'],
 				'email' => $request['email'],
 				'password' => Hash::make($request['password']),
 				'api_token' => $uuid

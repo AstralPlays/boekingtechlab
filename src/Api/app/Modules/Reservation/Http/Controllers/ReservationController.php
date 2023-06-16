@@ -209,7 +209,7 @@ class ReservationController extends Controller
 				if (!($start_time->eq($reservedMat['end_time']) or $end_time->eq($reservedMat['start_time']))) {
 					foreach ($reservedMat['materials'] as $materials) {
 						$tmpList[] = [
-							'id' => $materials['id'],
+							'id' => $materials['material_id'],
 							'quantity' => $materials['quantity'],
 						];
 					}

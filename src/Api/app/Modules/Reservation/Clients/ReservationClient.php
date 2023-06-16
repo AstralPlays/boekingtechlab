@@ -65,10 +65,10 @@ class ReservationClient implements ReservationClientInterface
 	function getReservedMaterials(string $date): Collection
 	{
 		return reservation::with([
-			'materials' => function ($query) {
-				$query->select('reservation_material.id', 'reservation_material.quantity');
-			}
-		])
+				'materials' => function ($query) {
+					$query->select('reservation_material.material_id', 'reservation_material.quantity');
+				}
+			])
 			->has('materials')
 			->select('id', 'start_time', 'end_time')
 			->where('date', '=', $date)

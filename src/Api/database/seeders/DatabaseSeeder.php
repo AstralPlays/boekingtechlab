@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\User;
+use App\Models\user;
 use App\Models\Reservation;
 use App\Models\material;
 use App\Models\room;
@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
 	public function run()
 	{
 		// admin user
-		User::create([
+		user::create([
 			'name' => 'Admin User',
 			'email' => 'admin@example.com',
 			'password' => Hash::make('password'),
@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
 			'api_token' => 'e8059899-b3a0-4136-8598-546d2fb0d620',
 		]);
 		// normal user
-		User::create([
+		user::create([
 			'name' => 'Normal User',
 			'email' => 'normal@example.com',
 			'password' => Hash::make('password'),

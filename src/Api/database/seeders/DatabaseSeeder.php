@@ -5,7 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\user;
-use App\Models\Reservation;
+use App\Models\reservation;
 use App\Models\material;
 use App\Models\room;
 use App\Models\reservationMaterial;
@@ -121,7 +121,7 @@ class DatabaseSeeder extends Seeder
 			'image' => 'logo.png',
 			'rooms_id' => '2',
 		]);
-		Reservation::create([
+		reservation::create([
 			'user_id' => '1',
 			'start_time' => '10:00:00',
 			'end_time' => '13:00:00',

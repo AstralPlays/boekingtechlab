@@ -3,7 +3,7 @@
 namespace App\Modules\Reservation\Clients;
 
 use App\Models\material;
-use App\Models\Reservation;
+use App\Models\reservation;
 use App\Models\room;
 use App\Modules\Reservation\Clients\Contracts\ReservationClientInterface;
 use Illuminate\Database\Eloquent\Collection;
@@ -12,17 +12,17 @@ class ReservationClient implements ReservationClientInterface
 {
 	function all(): Collection
 	{
-		return Reservation::all();
+		return reservation::all();
 	}
 
 	function get(string $search, string $variable): Collection
 	{
-		return Reservation::where($search, $variable)->get();
+		return reservation::where($search, $variable)->get();
 	}
 
 	function getByDate(string $date, array $rooms): Collection
 	{
-		return Reservation::with('rooms')
+		return reservation::with('rooms')
 			->has('rooms')
 			->whereHas('rooms', function ($query) use ($rooms) {
 				$query->whereIn('rooms.id', $rooms);
@@ -33,7 +33,7 @@ class ReservationClient implements ReservationClientInterface
 
 	function getByDateAdmin(string $date): Collection
 	{
-		return Reservation::with(
+		return reservation::with(
 			[
 				'user' => function ($query) {
 					$query->select('id', 'name', 'email', 'phone_number');
@@ -64,7 +64,7 @@ class ReservationClient implements ReservationClientInterface
 
 	function getReservedMaterials(string $date): Collection
 	{
-		return Reservation::with([
+		return reservation::with([
 			'materials' => function ($query) {
 				$query->select('reservation_material.id', 'reservation_material.quantity');
 			}
@@ -75,26 +75,37 @@ class ReservationClient implements ReservationClientInterface
 			->get();
 	}
 
-	function create(array $variable): Reservation
+	function create(array $variable): reservation
 	{
-		return Reservation::create($variable);
+		return reservation::create($variable);
 	}
 
-	function delete(string $search, string $variable): Reservation
+	function delete(string $search, string $variable): reservation
 	{
-		return Reservation::where($search, $variable)->delete();
+		return reservation::where($search, $variable)->delete();
 	}
 
 	function changeState(int $id, string $state): int
 	{
-		return Reservation::where('id', $id)->update(['state' => $state]);
+		return reservation::where('id', $id)->update(['state' => $state]);
 	}
 
-	function getUserNextReservation(): Reservation
+	function getUserNextReservation(): reservation|null
 	{
 		$id = session()->get('user_id');
-		return Reservation::where('user_id', $id)
+		return reservation::where('user_id', $id)
 			->where('date', '>=', date('Y-m-d'))
+			->where('start_time', '>=', date('H:i:s'))
+			->select('date', 'start_time')
+			->orderBy('date', 'ASC')
+			->orderBy('start_time', 'ASC')
+			->get()
+			->first();
+	}
+
+	function getAdminNextReservation(): reservation|null
+	{
+		return reservation::where('date', '>=', date('Y-m-d'))
 			->where('start_time', '>=', date('H:i:s'))
 			->select('date', 'start_time')
 			->orderBy('date', 'ASC')
@@ -105,7 +116,7 @@ class ReservationClient implements ReservationClientInterface
 
 	function getUserReservations(): Collection
 	{
-		return Reservation::with(
+		return reservation::with(
 			[
 				'user' => function ($query) {
 					$query->select('id', 'name', 'email', 'phone_number');
@@ -127,7 +138,7 @@ class ReservationClient implements ReservationClientInterface
 
 	function removeUserReservation(int $id): int
 	{
-		return Reservation::where('user_id', session()->get('user_id'))
+		return reservation::where('user_id', session()->get('user_id'))
 			->where('id', $id)
 			->delete();
 	}

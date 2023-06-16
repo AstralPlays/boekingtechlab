@@ -3,7 +3,7 @@
 namespace App\Modules\Reservation\Clients\Contracts;
 
 use Illuminate\Database\Eloquent\Collection;
-use App\Models\Reservation;
+use App\Models\reservation;
 
 interface ReservationClientInterface
 {
@@ -11,7 +11,7 @@ interface ReservationClientInterface
 
 	function get(string $search, string $variable): Collection;
 
-	function create(array $variable): Reservation;
+	function create(array $variable): reservation;
 
 	function changeState(int $id, string $state): int;
 
@@ -25,11 +25,13 @@ interface ReservationClientInterface
 
 	function getReservedMaterials(string $date): Collection;
 
-	function getUserNextReservation(): Reservation;
+	function getUserNextReservation(): reservation|null;
+
+	function getAdminNextReservation(): reservation|null;
 
 	function getUserReservations(): Collection;
 
 	function removeUserReservation(int $id): int;
 
-	function delete(string $search, string $variable): Reservation;
+	function delete(string $search, string $variable): reservation;
 }

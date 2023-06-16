@@ -52,6 +52,6 @@ class user extends Authenticatable
 
 	public function reservations()
 	{
-		return $this->belongsToMany(Reservation::class, 'reservations');
+		return $this->belongsToMany(reservation::class, 'reservations');
 	}
 }

@@ -28,6 +28,7 @@ class ReservationClient implements ReservationClientInterface
 				$query->whereIn('rooms.id', $rooms);
 			})
 			->where('date', $date)
+			->where('state', '!=', 'rejected')
 			->get();
 	}
 
@@ -65,13 +66,14 @@ class ReservationClient implements ReservationClientInterface
 	function getReservedMaterials(string $date): Collection
 	{
 		return reservation::with([
-				'materials' => function ($query) {
-					$query->select('reservation_material.material_id', 'reservation_material.quantity');
-				}
-			])
+			'materials' => function ($query) {
+				$query->select('reservation_material.material_id', 'reservation_material.quantity');
+			}
+		])
 			->has('materials')
 			->select('id', 'start_time', 'end_time')
 			->where('date', '=', $date)
+			->where('state', '!=', 'rejected')
 			->get();
 	}
 
@@ -94,6 +96,7 @@ class ReservationClient implements ReservationClientInterface
 	{
 		$id = session()->get('user_id');
 		return reservation::where('user_id', $id)
+			->where('state', '==', 'approved')
 			->where('date', '>=', date('Y-m-d'))
 			->where('start_time', '>=', date('H:i:s'))
 			->select('date', 'start_time')
@@ -106,6 +109,7 @@ class ReservationClient implements ReservationClientInterface
 	function getAdminNextReservation(): reservation|null
 	{
 		return reservation::where('date', '>=', date('Y-m-d'))
+			->where('state', '==', 'approved')
 			->where('start_time', '>=', date('H:i:s'))
 			->select('date', 'start_time')
 			->orderBy('date', 'ASC')

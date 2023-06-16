@@ -21,6 +21,6 @@ class material extends Model
 
 	public function reservations()
 	{
-		return $this->belongsToMany(Reservation::class, 'reservation_material');
+		return $this->belongsToMany(reservation::class, 'reservation_material');
 	}
 }

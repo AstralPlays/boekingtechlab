@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Reservation;
+namespace App\Modules\reservation;
 
 use App\Modules\Reservation\Clients\Contracts\ReservationClientInterface;
 use App\Modules\Reservation\Clients\ReservationClient;

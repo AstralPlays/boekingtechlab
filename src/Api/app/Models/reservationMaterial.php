@@ -19,6 +19,6 @@ class reservationMaterial extends Model
 
 	public function reservation()
 	{
-		return $this->belongsTo(Reservation::class, 'reservation_id', 'id');
+		return $this->belongsTo(reservation::class, 'reservation_id', 'id');
 	}
 }

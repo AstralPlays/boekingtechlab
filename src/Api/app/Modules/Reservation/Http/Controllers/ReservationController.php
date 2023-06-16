@@ -3,7 +3,7 @@
 namespace App\Modules\Reservation\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Reservation;
+use App\Models\reservation;
 use App\Modules\Reservation\Clients\Contracts\ReservationClientInterface;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -233,17 +233,27 @@ class ReservationController extends Controller
 			$list[] = $item;
 		}
 
-		$list = [
-			'list' => $list,
-			'tmpList' => $tmpList
-		];
-
 		return $list;
 	}
 
-	public function getUserNextReservation(): Reservation
+	public function getUserNextReservation(): reservation|array
 	{
-		return $this->reservationClient->getUserNextReservation();
+		$reservation = $this->reservationClient->getUserNextReservation();
+		$list = [];
+		if ($reservation != null) {
+			$list[] = $reservation;
+		}
+		return $list;
+	}
+
+	public function getAdminNextReservation(): reservation|array
+	{
+		$reservation = $this->reservationClient->getAdminNextReservation();
+		$list = [];
+		if ($reservation != null) {
+			$list[] = $reservation;
+		}
+		return $list;
 	}
 
 	public function getUserReservations(): array

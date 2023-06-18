@@ -94,8 +94,8 @@
         var form;
         var dateTable = [];
         var timeTable = [];
-        var sDate = new Date();
-        var eDate = new Date();
+        var sDate
+        var eDate;
         var blockedTimes = [];
         var selectedTimes = [];
         var selectedRooms = [];
@@ -103,23 +103,16 @@
         let timeElement = []
 
         createTimeTable('9:00', '17:00', 15);
-        changeMonth(new Date().getMonth() + 0);
+        changeMonth(new Date().getMonth());
 
-        function daysInMonth(month, year, date) {
-            if (month && year) {
-                return new Date(year, month, 0).getDate();
-            } else if (date) {
-                return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-            }
-            return;
+        function daysInMonth(date) {
+            return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
         }
 
         function changeMonth(month) {
-            sDate.setDate(1);
-            sDate.setMonth(month);
-
-            eDate.setDate(daysInMonth(undefined, undefined, sDate));
-            eDate.setMonth(month);
+            const date = new Date();
+            sDate = new Date(date.getFullYear(), month, 1);
+            eDate = new Date(date.getFullYear(), month, daysInMonth(sDate));
 
             createDateTable(sDate, eDate);
         }
@@ -231,7 +224,7 @@
 					<div class="swiper-slide">
                         <div class="swiper_item">
                             <span>${item.name}</span>
-                            <img src="{{ env("APP_URL") }}/images/${item.image}" alt="">
+                            <img src="{{ env('APP_URL') }}/images/${item.image}" alt="">
                             <div class="controllers">
                                 <input type="checkbox" class="btn_check rooms" name="rooms[${item.id}]" id="room${i}">
                             </div>
@@ -248,14 +241,13 @@
         }
 
         function addMats(mats) {
-            console.log(mats)
             document.getElementById('mats-wrapper').innerHTML = '';
             mats.forEach((item, i) => {
                 document.getElementById('mats-wrapper').innerHTML += `
 					<div class="swiper-slide">
 						<div class="swiper_item">
 							<span>${item.name}</span>
-							<img src="{{ env("APP_URL") }}/images/${item.image}" alt="">
+							<img src="{{ env('APP_URL') }}/images/${item.image}" alt="">
 							<div class="controllers">
 								<button type="button" class="btn_remove" onclick="decrement(event)">
 									<i class="icon fa-solid fa-minus"></i>
@@ -362,7 +354,7 @@
                 })
             };
 
-            fetch('{{ env("APP_URL") }}/api/reservations/create', settings)
+            fetch('{{ env('APP_URL') }}/api/reservations/create', settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -456,7 +448,7 @@
                 })
             };
 
-            fetch('{{ env("APP_URL") }}/api/reservations/getbydate', settings)
+            fetch('{{ env('APP_URL') }}/api/reservations/getbydate', settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -578,7 +570,7 @@
                 })
             };
 
-            fetch('{{ env("APP_URL") }}/api/reservations/getRooms', settings)
+            fetch('{{ env('APP_URL') }}/api/reservations/getRooms', settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -608,7 +600,7 @@
                 })
             };
 
-            fetch('{{ env("APP_URL") }}/api/reservations/getMaterials', settings)
+            fetch('{{ env('APP_URL') }}/api/reservations/getMaterials', settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -645,7 +637,7 @@
                 })
             };
 
-            fetch('{{ env("APP_URL") }}/api/reservations/getReservedMaterials', settings)
+            fetch('{{ env('APP_URL') }}/api/reservations/getReservedMaterials', settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();

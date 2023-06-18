@@ -29,6 +29,8 @@ interface ReservationClientInterface
 
 	function getAdminNextReservation(): reservation|null;
 
+	function getTotalReservationsToday(): int;
+
 	function getUserReservations(): Collection;
 
 	function removeUserReservation(int $id): int;

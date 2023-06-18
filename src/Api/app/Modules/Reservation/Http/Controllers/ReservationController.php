@@ -256,6 +256,11 @@ class ReservationController extends Controller
 		return $list;
 	}
 
+	public function getTotalReservationsToday(): int
+	{
+		return $this->reservationClient->getTotalReservationsToday();
+	}
+
 	public function getUserReservations(): array
 	{
 		$Reservations = $this->reservationClient->getUserReservations();

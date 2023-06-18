@@ -96,7 +96,7 @@ class ReservationClient implements ReservationClientInterface
 	{
 		$id = session()->get('user_id');
 		return reservation::where('user_id', $id)
-			->where('state', '==', 'approved')
+			->where('state', '=', 'approved')
 			->where('date', '>=', date('Y-m-d'))
 			->where('start_time', '>=', date('H:i:s'))
 			->select('date', 'start_time')
@@ -109,13 +109,21 @@ class ReservationClient implements ReservationClientInterface
 	function getAdminNextReservation(): reservation|null
 	{
 		return reservation::where('date', '>=', date('Y-m-d'))
-			->where('state', '==', 'approved')
+			->where('state', '=', 'approved')
 			->where('start_time', '>=', date('H:i:s'))
 			->select('date', 'start_time')
 			->orderBy('date', 'ASC')
 			->orderBy('start_time', 'ASC')
 			->get()
 			->first();
+	}
+
+	function getTotalReservationsToday(): int
+	{
+		return reservation::where('date', date('Y-m-d'))
+			->where('state', '=', 'approved')
+			->where('start_time', '>=', date('H:i:s'))
+			->count();
 	}
 
 	function getUserReservations(): Collection

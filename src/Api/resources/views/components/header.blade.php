@@ -1,8 +1,6 @@
 @vite(['resources/scss/header.scss'])
 
 <nav class="social-media">
-    <a href="mailto:techlab@example.nl" class="email">techlab@example.nl</a>
-    <hr>
     <a href="https://www.facebook.com/techlab" target="_blank" class="social-media-item">
         <i class="icon fa-brands fa-facebook"></i>
     </a>
@@ -31,7 +29,7 @@
 
         <div class="menu-nav-item">
             <div class="menu-nav-img">
-                <img src="{{ asset('images/logo.png')}}" title="logo van het berdijf">
+                <img src="{{ asset('images/logo.svg') }}" title="logo van het berdijf">
             </div>
         </div>
 

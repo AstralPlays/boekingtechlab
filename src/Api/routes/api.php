@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/user/register', [AccountSystemController::class, 'register']);
 Route::post('/user/login', [AccountSystemController::class, 'login']);
+Route::post('/user/changePassword', [AccountSystemController::class, 'changePassword']);
 Route::post('/reservations/create', [ReservationController::class, 'create']);
 Route::post('/reservations/changeState', [ReservationController::class, 'changeState']);
 Route::post('/reservations/getbydate', [ReservationController::class, 'getByDate']);

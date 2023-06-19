@@ -17,7 +17,11 @@
                 <a href="{{ URL::route('admin-accounts') }}">Accounts</a>
             </li>
             <li class="sidebar-menu-item">
-                <a href="{{ URL::route('admin-settings') }}">Settings</a>
+                @if (session()->get('role') == 'Admin')
+                    <a href="{{ URL::route('admin-settings') }}">Settings</a>
+                @else
+                    <a href="{{ URL::route('user-settings') }}">Settings</a>
+                @endif
             </li>
             <li class="sidebar-menu-item">
                 <a href="{{ URL::route('logout') }}">Logout</a>

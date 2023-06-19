@@ -59,10 +59,30 @@ class AccountSystemController extends Controller
 		return Response(json_encode('success'), 200);
 	}
 
-	public function logout(Request $request)
+	public function logout()
 	{
 		session()->flush();
 		return redirect('/login');
+	}
+
+	public function changePassword(Request $request)
+	{
+		if (!$request['old_password'] || !$request['new_password'] || !$request['confirm_password']) {
+			return Response(json_encode('Missing parameter'), 400);
+		}
+		$user = $this->userLoginClient->getUserByIdAndToken(session()->get('user_id'), session()->get('api_token'));
+		if (!$user) {
+			return Response(json_encode('Unauthorized'), 401);
+		}
+		if (!Hash::check($request['old_password'], $user->password())) {
+			return Response(json_encode('Unauthorized | Invalid Old Password'), 401);
+		}
+		if ($request['new_password'] != $request['confirm_password']) {
+			return Response(json_encode('Password does not match'), 401);
+		}
+		$user->password = Hash::make($request['new_password']);
+		$user->save();
+		return Response(json_encode('success'), 200);
 	}
 
 	public function auth(Request $request): Response

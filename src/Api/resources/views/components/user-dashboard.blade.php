@@ -3,7 +3,7 @@
 @extends('layouts.default')
 
 @section('content')
-    <x-side-Bar />
+    <x-side-bar />
     <div class="container">
         <div id="nextAppointment" class="item box nextAppointment">
             U eerst volgende afspraak start op

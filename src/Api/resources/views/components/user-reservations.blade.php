@@ -3,7 +3,7 @@
 @extends('layouts.default')
 
 @section('content')
-    <x-side-Bar />
+    <x-side-bar />
     <div class="container">
         <div class="item nextAppointment">
             <table class="reservations" id="reservations">

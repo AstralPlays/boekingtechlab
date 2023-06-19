@@ -354,7 +354,7 @@
                 })
             };
 
-            fetch('{{ env('APP_URL') }}/api/reservations/create', settings)
+            fetch("{{ env('APP_URL') }}/api/reservations/create", settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -448,7 +448,7 @@
                 })
             };
 
-            fetch('{{ env('APP_URL') }}/api/reservations/getbydate', settings)
+            fetch("{{ env('APP_URL') }}/api/reservations/getbydate", settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -570,7 +570,7 @@
                 })
             };
 
-            fetch('{{ env('APP_URL') }}/api/reservations/getRooms', settings)
+            fetch("{{ env('APP_URL') }}/api/reservations/getRooms", settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -600,7 +600,7 @@
                 })
             };
 
-            fetch('{{ env('APP_URL') }}/api/reservations/getMaterials', settings)
+            fetch("{{ env('APP_URL') }}/api/reservations/getMaterials", settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -637,7 +637,7 @@
                 })
             };
 
-            fetch('{{ env('APP_URL') }}/api/reservations/getReservedMaterials', settings)
+            fetch("{{ env('APP_URL') }}/api/reservations/getReservedMaterials", settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();

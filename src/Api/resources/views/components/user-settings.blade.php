@@ -59,7 +59,7 @@
                 })
             };
 
-            fetch('{{ env('APP_URL') }}/api/user/changePassword', settings)
+            fetch("{{ env('APP_URL') }}/api/user/changePassword", settings)
                 .then(response => {
                     return response.json();
                 })

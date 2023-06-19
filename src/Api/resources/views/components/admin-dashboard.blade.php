@@ -29,7 +29,7 @@
             })
         };
 
-        fetch('{{ env('APP_URL') }}/api/reservations/getAdminNextReservation', settings)
+        fetch("{{ env('APP_URL') }}/api/reservations/getAdminNextReservation", settings)
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -52,7 +52,7 @@
                 console.log(error);
             });
 
-        fetch('{{ env('APP_URL') }}/api/reservations/getTotalReservationsToday', settings)
+        fetch("{{ env('APP_URL') }}/api/reservations/getTotalReservationsToday", settings)
             .then(response => {
                 if (response.ok) {
                     return response.json();

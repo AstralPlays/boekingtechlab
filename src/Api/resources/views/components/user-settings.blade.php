@@ -3,7 +3,7 @@
 @extends('layouts.default')
 
 @section('content')
-    <x-side-Bar />
+    <x-side-bar />
     <div class="container">
         <div class="passwordInput">
             <span>Verander uw wachtwoord</span>

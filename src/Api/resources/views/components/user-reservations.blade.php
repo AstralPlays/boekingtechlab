@@ -43,7 +43,7 @@
             })
         };
 
-        fetch('{{ env('APP_URL') }}/api/reservations/getUserReservations', settings)
+        fetch("{{ env('APP_URL') }}/api/reservations/getUserReservations", settings)
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -97,7 +97,7 @@
                 })
             };
 
-            fetch('{{ env('APP_URL') }}/api/reservations/removeUserReservation', settings)
+            fetch("{{ env('APP_URL') }}/api/reservations/removeUserReservation", settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();

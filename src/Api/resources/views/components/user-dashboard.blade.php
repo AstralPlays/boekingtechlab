@@ -24,7 +24,7 @@
             })
         };
 
-        fetch('{{ env('APP_URL') }}/api/reservations/getUserNextReservation', settings)
+        fetch("{{ env('APP_URL') }}/api/reservations/getUserNextReservation", settings)
             .then(response => {
                 if (response.ok) {
                     return response.json();

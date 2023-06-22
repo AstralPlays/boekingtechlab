@@ -224,7 +224,7 @@
 					<div class="swiper-slide">
                         <div class="swiper_item">
                             <span>${item.name}</span>
-                            <img src="{{ env('APP_URL') }}/images/${item.image}" alt="">
+                            <img src="{{ env('APP_URL') }}/images/rooms/${item.image}" alt="">
                             <div class="controllers">
                                 <input type="checkbox" class="btn_check rooms" name="rooms[${item.id}]" id="room${i}">
                             </div>
@@ -570,7 +570,7 @@
                 })
             };
 
-            fetch("{{ env('APP_URL') }}/api/reservations/getRooms", settings)
+            fetch("{{ env('APP_URL') }}/api/room/getRooms", settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();

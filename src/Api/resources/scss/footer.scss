@@ -20,21 +20,49 @@ $nav-underline: white;
 
 .footer {
 	background: #1F1F1F;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: flex-start;
 	padding: 1rem 3rem;
 	color: white;
 
 	.copyright {
 		font-size: 1.1rem;
-		align-self: center;
+		text-align: center;
 	}
 
-	.links {
-		color: blue;
-		margin: 0.2rem 0;
-		font-size: 1.1rem;
+	.content {
+		display: flex;
+		justify-content: space-between;
+
+		.makers {
+			display: flex;
+			width: 50%;
+			flex-direction: column;
+			gap: 0.5rem;
+
+			.links {
+				color: white;
+				margin: 0.2rem 0;
+				width: fit-content;
+				font-size: 1.1rem;
+			}
+
+			.fa-brands {
+				color: #0a66c2;
+				margin-right: 0.25rem;
+			}
+		}
+
+		.logos {
+			display: flex;
+			justify-content: space-between;
+			width: 50%;
+			align-items: center;
+
+			.logo {
+				max-width: 50%;
+				margin: 0 0.5rem;
+			}
+		}
 	}
+
+
 }

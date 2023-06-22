@@ -1,4 +1,4 @@
-@vite(['resources/scss/reservation.scss', 'resources/js/reservation.js'])
+@vite(['resources/scss/reservation.scss', 'resources/js/swiper.js'])
 
 @extends('layouts.default')
 

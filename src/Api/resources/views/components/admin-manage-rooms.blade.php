@@ -60,7 +60,7 @@
                 })
                 .then(data => {
                     if (data == 'success') {
-                        alert('Kamer toegevoegd');
+                        window.location.reload();
                     } else {
                         alert(data);
                     }

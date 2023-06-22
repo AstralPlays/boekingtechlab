@@ -22,6 +22,7 @@
     </main>
 
     <footer>
+        <x-footer />
     </footer>
 </body>
 

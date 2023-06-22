@@ -1,0 +1,40 @@
+$font: 'exo 2', sans-serif, monospace;
+
+@mixin transition-ease($i) {
+	transition: all #{$i}s ease-in-out;
+}
+
+$nav-txt: white;
+$nav-txt-hover: white;
+
+$nav-height: 80px;
+
+// $nav-bg: #662483;
+$nav-bg: white; //#662483
+
+$nav-item-bg: #74398E;
+$nav-item-bg-hover: #a33bcf;
+
+$nav-burger: white;
+$nav-underline: white;
+
+.footer {
+	background: #1F1F1F;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	padding: 1rem 3rem;
+	color: white;
+
+	.copyright {
+		font-size: 1.1rem;
+		align-self: center;
+	}
+
+	.links {
+		color: blue;
+		margin: 0.2rem 0;
+		font-size: 1.1rem;
+	}
+}

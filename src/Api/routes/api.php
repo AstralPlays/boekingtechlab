@@ -3,6 +3,7 @@
 use App\Modules\Reservation\Http\Controllers\ReservationController;
 use App\Modules\AccountSystem\Http\Controllers\AccountSystemController;
 use App\Modules\AccountSystem\middleware\UserAuth;
+use App\Modules\Room\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,12 @@ use Illuminate\Support\Facades\Route;
 Route::post('/user/register', [AccountSystemController::class, 'register']);
 Route::post('/user/login', [AccountSystemController::class, 'login']);
 Route::post('/user/changePassword', [AccountSystemController::class, 'changePassword']);
+
+Route::post('/admin/addRoom', [RoomController::class, 'addRoom']);
+Route::post('/admin/removeRoom', [RoomController::class, 'removeRoom']);
+
+Route::post('/room/getRooms', [RoomController::class, 'getRooms']);
+
 Route::post('/reservations/create', [ReservationController::class, 'create']);
 Route::post('/reservations/changeState', [ReservationController::class, 'changeState']);
 Route::post('/reservations/getbydate', [ReservationController::class, 'getByDate']);
@@ -28,7 +35,6 @@ Route::post('/reservations/getAdminNextReservation', [ReservationController::cla
 Route::post('/reservations/getTotalReservationsToday', [ReservationController::class, 'getTotalReservationsToday']);
 Route::post('/reservations/getUserReservations', [ReservationController::class, 'getUserReservations']);
 Route::post('/reservations/removeUserReservation', [ReservationController::class, 'removeUserReservation']);
-Route::post('/reservations/getRooms', [ReservationController::class, 'getRooms']);
 Route::post('/reservations/getMaterials', [ReservationController::class, 'getMaterials']);
 Route::post('/reservations/getReservedMaterials', [ReservationController::class, 'getReservedMaterials']);
 

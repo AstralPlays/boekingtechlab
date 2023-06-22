@@ -53,11 +53,6 @@ class ReservationClient implements ReservationClientInterface
 			->get();
 	}
 
-	function getRooms(): Collection
-	{
-		return room::select('id', 'name', 'image')->get();
-	}
-
 	function getMaterials(): Collection
 	{
 		return material::select('id', 'name', 'quantity', 'image', 'rooms_id')->get();

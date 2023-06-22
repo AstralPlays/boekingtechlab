@@ -165,20 +165,6 @@ class ReservationController extends Controller
 		return $list;
 	}
 
-	public function getRooms(): array
-	{
-		$rooms = $this->reservationClient->getRooms();
-		$list = [];
-		foreach ($rooms as $room) {
-			$list[] = [
-				'id' => $room['id'],
-				'name' => $room['name'],
-				'image' => $room['image'],
-			];
-		}
-		return $list;
-	}
-
 	public function getMaterials(): array
 	{
 		$mats = $this->reservationClient->getMaterials();

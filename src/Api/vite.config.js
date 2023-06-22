@@ -20,7 +20,7 @@ export default defineConfig({
 				'resources/scss/user-reservations.scss',
 				'resources/scss/user-settings.scss',
 				'resources/js/app.js',
-				'resources/js/reservation.js',
+				'resources/js/swiper.js',
 			],
 			refresh: true,
 		}),

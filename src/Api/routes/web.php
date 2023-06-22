@@ -9,6 +9,7 @@ use App\View\Components\login;
 use App\View\Components\reservation;
 use App\View\Components\aboutUs;
 use App\View\Components\adminDashboard;
+use App\View\Components\adminManageRooms;
 use App\View\Components\adminReservations;
 use App\View\Components\userDashboard;
 use App\View\Components\userReservations;
@@ -45,6 +46,7 @@ Route::group(['middleware' => ['web']], function () {
 		Route::get('/admin', [adminDashboard::class, 'render'])->name('admin-dashboard');
 		Route::get('/admin/reservations', [adminReservations::class, 'render'])->name('admin-reservations');
 		Route::get('/admin/accounts', [homePage::class, 'render'])->name('admin-accounts');
+		Route::get('/admin/manage-rooms', [adminManageRooms::class, 'render'])->name('admin-manage-rooms');
 		Route::get('/admin/settings', [homePage::class, 'render'])->name('admin-settings');
 	});
 

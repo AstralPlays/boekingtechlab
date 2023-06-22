@@ -3,6 +3,7 @@ Swiper.use([Navigation, Pagination]);
 
 var swiperParams = {
 	slidesPerView: 'auto',
+	direction: 'horizontal',
 	spaceBetween: 10,
 	// slidesOffsetBefore: 35,
 	// slidesOffsetAfter: 35,
@@ -17,7 +18,7 @@ var swiperParams = {
 		dynamicBullets: true,
 		clickable: true,
 		renderBullet: function (index, className) {
-			return '<span class="' + className + '">' + (index + 1) + '</span>';
+			return `<span class="${className}"> ${(index + 1)} </span>`;
 		},
 	},
 };

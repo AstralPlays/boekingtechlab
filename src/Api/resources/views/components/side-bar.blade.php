@@ -18,13 +18,20 @@
             </li>
             <li class="sidebar-menu-item">
                 @if (session()->get('role') == 'Admin')
-                    <a href="{{ URL::route('admin-settings') }}">Settings</a>
+                    <a href="{{ URL::route('admin-settings') }}">Instellingen</a>
                 @else
-                    <a href="{{ URL::route('user-settings') }}">Settings</a>
+                    <a href="{{ URL::route('user-settings') }}">Instellingen</a>
                 @endif
             </li>
+
+            @if (session()->get('role') == 'Admin')
+                <li class="sidebar-menu-item">
+                    <a href="{{ URL::route('admin-manage-rooms') }}">Lokaal beheren</a>
+                </li>
+            @endif
+
             <li class="sidebar-menu-item">
-                <a href="{{ URL::route('logout') }}">Logout</a>
+                <a href="{{ URL::route('logout') }}">uitloggen</a>
             </li>
         </ul>
     </div>

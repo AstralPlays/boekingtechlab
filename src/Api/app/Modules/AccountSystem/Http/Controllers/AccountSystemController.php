@@ -4,8 +4,6 @@ namespace App\Modules\AccountSystem\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modules\AccountSystem\Clients\Contracts\AccountSystemClientInterface;
-use App\Modules\AccountSystem\Requests\StoreLoginRequest;
-use App\Modules\AccountSystem\Requests\StoreRegisterRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use \Illuminate\Database\Eloquent\Collection;

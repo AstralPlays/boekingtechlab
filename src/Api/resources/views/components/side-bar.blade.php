@@ -6,6 +6,7 @@
             <li class="sidebar-menu-item">
                 <a href="{{ URL::route('admin-dashboard') }}">Dashboard</a>
             </li>
+
             <li class="sidebar-menu-item">
                 @if (session()->get('role') == 'Admin')
                     <a href="{{ URL::route('admin-reservations') }}">Reserveringen</a>
@@ -13,9 +14,11 @@
                     <a href="{{ URL::route('user-reservations') }}">Reserveringen</a>
                 @endif
             </li>
+
             <li class="sidebar-menu-item">
                 <a href="{{ URL::route('admin-accounts') }}">Accounts</a>
             </li>
+
             <li class="sidebar-menu-item">
                 @if (session()->get('role') == 'Admin')
                     <a href="{{ URL::route('admin-settings') }}">Instellingen</a>
@@ -30,11 +33,18 @@
                 </li>
             @endif
 
+            @if (session()->get('role') == 'Admin')
+                <li class="sidebar-menu-item">
+                    <a href="{{ URL::route('admin-manage-materials') }}">Materiaal beheren</a>
+                </li>
+            @endif
+
             <li class="sidebar-menu-item">
                 <a href="{{ URL::route('logout') }}">uitloggen</a>
             </li>
         </ul>
     </div>
+
     <div class="sidebar-chevron" id="sidebar-btn">
         <i class="fa-solid fa-chevron-right fa-xl" id="sidebar-chevron"></i>
     </div>

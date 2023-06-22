@@ -198,7 +198,8 @@ return [
 		App\Providers\RouteServiceProvider::class,
 		ReservationServiceProvider::class,
 		\App\Modules\AccountSystem\AccountSystemServiceProvider::class,
-		\App\Modules\Room\RoomServiceProvider::class
+		\App\Modules\Room\RoomServiceProvider::class,
+		\App\Modules\Material\MaterialServiceProvider::class,
 	],
 
 	/*

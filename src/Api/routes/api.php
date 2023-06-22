@@ -3,6 +3,7 @@
 use App\Modules\Reservation\Http\Controllers\ReservationController;
 use App\Modules\AccountSystem\Http\Controllers\AccountSystemController;
 use App\Modules\AccountSystem\middleware\UserAuth;
+use App\Modules\Material\Http\Controllers\MaterialController;
 use App\Modules\Room\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,8 +24,11 @@ Route::post('/user/changePassword', [AccountSystemController::class, 'changePass
 
 Route::post('/admin/addRoom', [RoomController::class, 'addRoom']);
 Route::post('/admin/removeRoom', [RoomController::class, 'removeRoom']);
+Route::post('/admin/addMaterial', [MaterialController::class, 'addMaterial']);
+Route::post('/admin/removeMaterial', [MaterialController::class, 'removeMaterial']);
 
 Route::post('/room/getRooms', [RoomController::class, 'getRooms']);
+Route::post('/material/getMaterials', [MaterialController::class, 'getMaterials']);
 
 Route::post('/reservations/create', [ReservationController::class, 'create']);
 Route::post('/reservations/changeState', [ReservationController::class, 'changeState']);

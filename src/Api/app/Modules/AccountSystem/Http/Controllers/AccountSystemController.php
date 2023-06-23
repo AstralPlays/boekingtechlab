@@ -10,6 +10,9 @@ use \Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as Response;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Stringable;
 
 class AccountSystemController extends Controller
@@ -36,62 +39,63 @@ class AccountSystemController extends Controller
 				'api_token' => $uuid
 			]
 		);
-		session()->put('user_id', $user['id']);
-		session()->put('api_token', $user['api_token']);
-		session()->put('role', $user['role']);
+		if (!$user) {
+			return Response(json_encode('Failed to register'), 400);
+		}
 		return Response(json_encode('success'), 200);
 	}
 
-	public function login(Request $request): Route|Response
+	public function login(Request $request): Response
 	{
-		if (!$user = $this->userLoginClient->getUser($request['email'])) {
-			return Response(json_encode('Unauthorized | Invalid Email'), 401);
-		}
-		if (!Hash::check($request['password'], $user->password())) {
+		$credentials = $request->only('email', 'password');
+
+		if (Auth::attempt($credentials)) {
+			return Response(json_encode('success'), 200);
+		} else {
 			return Response(json_encode('Unauthorized | Invalid Password'), 401);
 		}
-
-		session()->put('user_id', $user['id']);
-		session()->put('api_token', $user['api_token']);
-		session()->put('role', $user['role']);
-		return Response(json_encode('success'), 200);
 	}
 
 	public function logout()
 	{
-		session()->flush();
+		Auth::logout();
+
+		session()->invalidate();
+		session()->regenerateToken();
+
 		return redirect('/login');
 	}
 
 	public function changePassword(Request $request)
 	{
-		if (!$request['old_password'] || !$request['new_password'] || !$request['confirm_password']) {
-			return Response(json_encode('Missing parameter'), 400);
+		/* validation rules */
+		$validator = Validator::make($request->all(), [
+			'old_password' => 'required',
+			'new_password' => 'required|min:8',
+			'confirm_password' => 'required|same:new_password',
+		]);
+
+		/* validate the values */
+		try {
+			$validator->validate();
+		} catch (ValidationException $exception) {
+			// return errors
+			return Response(json_encode(['error' => $exception->errors()]), 400);
 		}
-		$user = $this->userLoginClient->getUserByIdAndToken(session()->get('user_id'), session()->get('api_token'));
-		if (!$user) {
-			return Response(json_encode('Unauthorized'), 401);
-		}
-		if (!Hash::check($request['old_password'], $user->password())) {
+
+		// check if user exist in database
+		$user = $this->userLoginClient->getUserByIdAndToken(Auth::user()->id, Auth::user()->api_token);
+
+		$old_password = $request['old_password'];
+		$new_password = $request['new_password'];
+
+		if (!Hash::check($old_password, $user->password)) {
 			return Response(json_encode('Unauthorized | Invalid Old Password'), 401);
 		}
-		if ($request['new_password'] != $request['confirm_password']) {
-			return Response(json_encode('Password does not match'), 401);
-		}
-		$user->password = Hash::make($request['new_password']);
-		$user->save();
-		return Response(json_encode('success'), 200);
-	}
 
-	public function auth(Request $request): Response
-	{
-		$result = $this->userLoginClient->getUserByIdAndToken($request['user_id'], $request->bearerToken());
-		return Response(
-			[
-				'auth' => 'Authorized',
-				'role' => $result['role'],
-			],
-			200
-		);
+		$user->password = Hash::make($new_password);
+		$user->save();
+
+		return Response(json_encode('success'), 200);
 	}
 }

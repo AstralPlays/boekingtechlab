@@ -7,6 +7,7 @@ use App\Models\reservation;
 use App\Models\room;
 use App\Modules\Reservation\Clients\Contracts\ReservationClientInterface;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class ReservationClient implements ReservationClientInterface
 {
@@ -53,11 +54,6 @@ class ReservationClient implements ReservationClientInterface
 			->get();
 	}
 
-	function getMaterials(): Collection
-	{
-		return material::select('id', 'name', 'quantity', 'image', 'rooms_id')->get();
-	}
-
 	function getReservedMaterials(string $date): Collection
 	{
 		return reservation::with([
@@ -89,7 +85,7 @@ class ReservationClient implements ReservationClientInterface
 
 	function getUserNextReservation(): reservation|null
 	{
-		$id = session()->get('user_id');
+		$id = Auth::user()->id;
 		return reservation::where('user_id', $id)
 			->where('state', '=', 'approved')
 			->where('date', '>=', date('Y-m-d'))
@@ -138,14 +134,14 @@ class ReservationClient implements ReservationClientInterface
 			]
 		)
 			->select('id', 'user_id', 'start_time', 'end_time', 'state', 'date')
-			->where('user_id', session()->get('user_id'))
+			->where('user_id', Auth::user()->id)
 			->orderBy('date', 'ASC')
 			->get();
 	}
 
 	function removeUserReservation(int $id): int
 	{
-		return reservation::where('user_id', session()->get('user_id'))
+		return reservation::where('user_id', Auth::user()->id)
 			->where('id', $id)
 			->delete();
 	}

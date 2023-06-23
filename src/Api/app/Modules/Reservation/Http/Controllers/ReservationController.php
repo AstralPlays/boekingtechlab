@@ -4,16 +4,19 @@ namespace App\Modules\Reservation\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\reservation;
+use App\Modules\Material\Http\Controllers\MaterialController;
 use App\Modules\Reservation\Clients\Contracts\ReservationClientInterface;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
 class ReservationController extends Controller
 {
 	public function __construct(
-		private ReservationClientInterface $reservationClient
+		private ReservationClientInterface $reservationClient,
+		private MaterialController $materialController,
 	) {
 	}
 
@@ -24,8 +27,6 @@ class ReservationController extends Controller
 
 	public function create(Request $request)
 	{
-		/* Check if user is not logged in */
-		if (!session()->has('user_id')) return Response(json_encode('Unauthorized'), 401);
 		/* check if a date is selected */
 		if (!filled($request['date'])) return Response(json_encode('No date selected'), 400);
 		/* check if a room is selected */
@@ -85,7 +86,7 @@ class ReservationController extends Controller
 		}
 
 		$reservationData = [
-			'user_id' => session()->get('user_id'),
+			'user_id' => Auth::user()->id,
 			'name' => $request['name'],
 			'email' => $request['email'],
 			'start_time' => $start_time,
@@ -165,22 +166,6 @@ class ReservationController extends Controller
 		return $list;
 	}
 
-	public function getMaterials(): array
-	{
-		$mats = $this->reservationClient->getMaterials();
-		$list = [];
-		foreach ($mats as $mat) {
-			$list[] = [
-				'id' => $mat['id'],
-				'name' => $mat['name'],
-				'quantity' => $mat['quantity'],
-				'image' => $mat['image'],
-				'rooms_id' => $mat['rooms_id'],
-			];
-		}
-		return $list;
-	}
-
 	public function getReservedMaterials(Request $request): array
 	{
 		$start_time = Carbon::parse($request['start_time']);
@@ -188,7 +173,7 @@ class ReservationController extends Controller
 		$date = Carbon::parse($request['date']);
 
 		$reservedMats = $this->reservationClient->getReservedMaterials($date->format('Y-m-d'));
-		$mats = $this->getMaterials();
+		$mats = $this->materialController->getMaterials();
 		$tmpList = [];
 		foreach ($reservedMats as $reservedMat) {
 			if ($start_time->isBetween(Carbon::parse($reservedMat['start_time']), Carbon::parse($reservedMat['end_time'])) or $end_time->isBetween(Carbon::parse($reservedMat['start_time']), Carbon::parse($reservedMat['end_time']))) {

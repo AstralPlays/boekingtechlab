@@ -6,7 +6,7 @@
     </div>
     <div class="content">
         <div class="makers">
-            <span>Gemaakt door</span>
+            <span>Gemaakt door MBO studenten:</span>
             <a class="links" href="https://www.linkedin.com/in/ahmad-natfaji/" target="_blank">
                 <i class="fa-brands fa-linkedin"></i>
                 Ahmad Natfaji

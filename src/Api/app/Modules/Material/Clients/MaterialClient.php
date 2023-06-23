@@ -20,7 +20,7 @@ class MaterialClient implements MaterialClientInterface
 
 	public function getMaterials(): Collection
 	{
-		return material::select('id', 'name', 'quantity', 'image')->get();
+		return material::select('id', 'name', 'quantity', 'image', 'rooms_id')->get();
 	}
 
 	public function addMaterial(array $material): material

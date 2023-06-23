@@ -46,7 +46,7 @@
     <script>
         function login(event) {
             event.preventDefault();
-            var url = '{{ env("APP_URL") }}/api/user/login';
+            var url = '{{ env("APP_URL") }}/api/login';
             var formData = new FormData(document.getElementById('form'));
             formData.append('_token', '{{ csrf_token() }}')
 

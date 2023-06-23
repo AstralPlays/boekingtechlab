@@ -59,13 +59,13 @@
                 })
             };
 
-            fetch("{{ env('APP_URL') }}/api/user/changePassword", settings)
+            fetch("{{ env('APP_URL') }}/api/changePassword", settings)
                 .then(response => {
                     return response.json();
                 })
                 .then(data => {
                     if (data == 'success') {
-                        window.location.href = "{{ env('APP_URL') }}/user/settings";
+                        window.location.href = "{{ env('APP_URL') }}/home";
                     } else {
                         alert(data);
                     }

@@ -14,13 +14,13 @@
                         <div class="userInfo_item">
                             <div class="userInfo_item_part">
                                 <label for="">Naam</label>
-                                <input type="text" id="" name="name">
+                                <input type="text" id="" name="name" value="{{Auth::user()->name}}">
                             </div>
                         </div>
                         <div class="userInfo_item">
                             <div class="userInfo_item_part">
                                 <label for="">Email</label>
-                                <input type="text" id="" name="email">
+                                <input type="text" id="" name="email" value="{{Auth::user()->email}}">
                             </div>
                         </div>
                     </div>
@@ -247,7 +247,7 @@
 					<div class="swiper-slide">
 						<div class="swiper_item">
 							<span>${item.name}</span>
-							<img src="{{ env('APP_URL') }}/images/${item.image}" alt="">
+							<img src="{{ env('APP_URL') }}/images/materials/${item.image}" alt="">
 							<div class="controllers">
 								<button type="button" class="btn_remove" onclick="decrement(event)">
 									<i class="icon fa-solid fa-minus"></i>
@@ -600,7 +600,7 @@
                 })
             };
 
-            fetch("{{ env('APP_URL') }}/api/reservations/getMaterials", settings)
+            fetch("{{ env('APP_URL') }}/api/material/getMaterials", settings)
                 .then(response => {
                     if (response.ok) {
                         return response.json();

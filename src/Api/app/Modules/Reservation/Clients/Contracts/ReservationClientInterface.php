@@ -19,8 +19,6 @@ interface ReservationClientInterface
 
 	function getByDateAdmin(string $date): Collection;
 
-	function getMaterials(): Collection;
-
 	function getReservedMaterials(string $date): Collection;
 
 	function getUserNextReservation(): reservation|null;

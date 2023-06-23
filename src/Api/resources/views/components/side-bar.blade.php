@@ -4,36 +4,42 @@
     <div class="sidebar-menu">
         <ul>
             <li class="sidebar-menu-item">
-                <a href="{{ URL::route('admin-dashboard') }}">Dashboard</a>
+                @if (Auth::user()->role == 'Admin')
+                    <a href="{{ URL::route('admin-dashboard') }}">Dashboard</a>
+                @else
+                    <a href="{{ URL::route('user-dashboard') }}">Dashboard</a>
+                @endif
             </li>
 
             <li class="sidebar-menu-item">
-                @if (session()->get('role') == 'Admin')
+                @if (Auth::user()->role == 'Admin')
                     <a href="{{ URL::route('admin-reservations') }}">Reserveringen</a>
                 @else
                     <a href="{{ URL::route('user-reservations') }}">Reserveringen</a>
                 @endif
             </li>
 
-            <li class="sidebar-menu-item">
-                <a href="{{ URL::route('admin-accounts') }}">Accounts</a>
-            </li>
+            @if (Auth::user()->role == 'Admin')
+                <li class="sidebar-menu-item">
+                    <a href="{{ URL::route('admin-accounts') }}">Accounts</a>
+                </li>
+            @endif
 
             <li class="sidebar-menu-item">
-                @if (session()->get('role') == 'Admin')
+                @if (Auth::user()->role == 'Admin')
                     <a href="{{ URL::route('admin-settings') }}">Instellingen</a>
                 @else
                     <a href="{{ URL::route('user-settings') }}">Instellingen</a>
                 @endif
             </li>
 
-            @if (session()->get('role') == 'Admin')
+            @if (Auth::user()->role == 'Admin')
                 <li class="sidebar-menu-item">
                     <a href="{{ URL::route('admin-manage-rooms') }}">Lokaal beheren</a>
                 </li>
             @endif
 
-            @if (session()->get('role') == 'Admin')
+            @if (Auth::user()->role == 'Admin')
                 <li class="sidebar-menu-item">
                     <a href="{{ URL::route('admin-manage-materials') }}">Materiaal beheren</a>
                 </li>

@@ -36,8 +36,8 @@
         <div class="menu-nav-item">
             <a href="{{ URL::route('reservation') }}" class="menu-nav-link">Reserveer</a>
 
-            @if (session()->has('user_id'))
-                @if (session()->get('role') == 'Admin')
+            @if (Auth::check())
+                @if (Auth::user()->role == 'Admin')
                     <a href="{{ URL::route('admin-dashboard') }}" class="menu-nav-link">Account</a>
                 @else
                     <a href="{{ URL::route('user-dashboard') }}" class="menu-nav-link">Account</a>

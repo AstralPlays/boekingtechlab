@@ -30,6 +30,7 @@ class MaterialController extends Controller
 				'name' => $material->name,
 				'quantity' => $material->quantity,
 				'image' => $material->image,
+				'rooms_id' => $material->rooms_id,
 			];
 		}
 		return $list;

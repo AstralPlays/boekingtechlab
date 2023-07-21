@@ -20,17 +20,13 @@ $nav-underline: white;
 
 .footer {
 	background: #1F1F1F;
-	padding: 1rem 3rem;
+	padding: 2rem 1.5rem 1rem 1.5rem;
 	color: white;
-
-	.copyright {
-		font-size: 1.1rem;
-		text-align: center;
-	}
 
 	.content {
 		display: flex;
 		justify-content: space-between;
+		margin-bottom: 1rem;
 
 		.makers {
 			display: flex;
@@ -45,24 +41,37 @@ $nav-underline: white;
 				font-size: 1.1rem;
 			}
 
-			.fa-brands {
-				color: #0a66c2;
-				margin-right: 0.25rem;
+			span {
+				.fa-brands {
+					color: white;
+				}
+
+				.fa-solid {
+					color: #0a66c2;
+				}
 			}
 		}
 
 		.logos {
 			display: flex;
-			justify-content: space-between;
+			justify-content: flex-end;
+			gap: 1rem;
 			width: 50%;
 			align-items: center;
 
 			.logo {
 				max-width: 50%;
-				margin: 0 0.5rem;
+
+				&.techlab {
+					filter: invert(1);
+				}
 			}
 		}
 	}
 
-
+	.copyright {
+		font-size: 1.1rem;
+		margin-top: 1rem;
+		text-align: center;
+	}
 }

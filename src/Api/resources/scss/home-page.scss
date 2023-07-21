@@ -1,0 +1,25 @@
+.home-page {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding-block: 2rem;
+
+	.home-page-content-text {
+		text-align: center;
+		background-color: #f5f5f5;
+		padding: 1rem;
+
+		.home-page-content-text-title {
+			font-size: 3.5rem;
+			font-weight: 700;
+			margin-bottom: 1rem;
+		}
+
+		.home-page-content-text-subtitle {
+			font-size: 1.5rem;
+			font-weight: 500;
+			margin-bottom: 1rem;
+		}
+	}
+}

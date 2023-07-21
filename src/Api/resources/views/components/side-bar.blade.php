@@ -46,7 +46,7 @@
             @endif
 
             <li class="sidebar-menu-item">
-                <a href="{{ URL::route('logout') }}">uitloggen</a>
+                <a href="{{ URL::route('logout') }}">Uitloggen</a>
             </li>
         </ul>
     </div>

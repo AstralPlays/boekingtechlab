@@ -3,9 +3,12 @@
 @extends('layouts.default')
 
 @section('content')
-
-{{ session()->get('user_id') }}
-    <div class="text-danger">
-        {{ $text }}
+    <div class="home-page">
+        <div class="home-page-content">
+            <div class="home-page-content-text">
+                <h1 class="home-page-content-text-title">Techlab</h1>
+                <p class="home-page-content-text-subtitle">Welkome op de website van Techlab</p>
+            </div>
+        </div>
     </div>
 @endsection

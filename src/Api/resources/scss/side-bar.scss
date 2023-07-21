@@ -13,7 +13,7 @@
 	&>&-menu {
 		width: 15rem;
 		height: 100%;
-		background: darken($color: #662483, $amount: 10);
+		background: #1F1F1F; //darken($color: #662483, $amount: 10);
 		overflow: hidden;
 	}
 
@@ -21,7 +21,7 @@
 		position: absolute;
 		left: 15rem;
 		top: 0;
-		background: darken($color: #662483, $amount: 10);
+		background: #1F1F1F; //darken($color: #662483, $amount: 10);
 		height: 48px;
 		width: 48px;
 		display: flex;
@@ -30,12 +30,11 @@
 
 		i {
 			transition: all 0.3s;
-			color: #fff;
+			color: white;
 		}
 	}
 
 	& &-menu-item {
-		padding: 15px 10px;
 
 		&:hover {
 			background: #74398E;
@@ -44,6 +43,8 @@
 		a {
 			text-decoration: none;
 			color: #fff;
+			padding: 15px 10px;
+			display: block;
 		}
 	}
 }
